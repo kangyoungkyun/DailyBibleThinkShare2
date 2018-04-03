@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //인디케이터 시작
     func showActivityIndicator(){
         if let window = window{
-            print("showActivityIndicator 인디케이터 호출")
+            //print("showActivityIndicator 인디케이터 호출")
             container = UIView()
             container.frame = window.frame
             container.center = window.center
@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //인디케이터 삭제
     func dissmissActivityIndicator(){
         if let _ = window{
-            print("dissmiss 인디케이터 호출")
+           // print("dissmiss 인디케이터 호출")
             container.removeFromSuperview()
         }
     }

@@ -310,7 +310,7 @@ class TalkViewController: UITableViewController,UISearchBarDelegate {
     //셀을 클릭했을 때
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        print("셀 클릭")
+        //print("셀 클릭")
         
         //선택한 셀 정보 가져오기
         let cell = tableView.cellForRow(at: indexPath) as? TalkCell
@@ -363,7 +363,7 @@ class TalkViewController: UITableViewController,UISearchBarDelegate {
         let month = calendar.component(.month, from: date)  //월
         let day = calendar.component(.day, from: date)      //일
         today = "\(month)\(day)"
-        print("\(month)\(day)")
+        //print("\(month)\(day)")
         
     }
     
@@ -392,7 +392,7 @@ class TalkViewController: UITableViewController,UISearchBarDelegate {
                             todayPost = todayPost + 1
                         }
                         self.countLable.text = "오늘 작성된 묵상/ \(todayPost)편"
-                        print("오늘 작성된 시편의 개수는?  \(todayPost) ")
+                        
                     }
                     //공개를 허용한 글만 담벼락에 보이기
                     if (show as? String == "y"){
@@ -403,8 +403,7 @@ class TalkViewController: UITableViewController,UISearchBarDelegate {
                                 let key = childSnapshot.key
                                 let val = childSnapshot.value as! [String:Any]
                                 if (key == pid as? String) {
-                                    print("축복받은 개수 몇개?")
-                                    print(pid,key,val.count)
+                                   
                                     postToShow.blessCount = "\(val.count)"
                                 }
                             }
@@ -434,7 +433,7 @@ class TalkViewController: UITableViewController,UISearchBarDelegate {
                 }
             }
              todayPost = 0
-            print("초기화 됐나요1? \(todayPost)")
+            //print("초기화 됐나요1? \(todayPost)")
         }
       //print("초기화 됐나요2? \(todayPost)")
         ref.removeAllObservers()
@@ -444,22 +443,22 @@ class TalkViewController: UITableViewController,UISearchBarDelegate {
     //헤더뷰 레이아웃
     func setHeaderViewLayout(){
         headerView.addSubview(todayPostsCountLable)
-        todayPostsCountLable.topAnchor.constraint(equalTo: headerView.topAnchor,constant:55).isActive = true
+        todayPostsCountLable.topAnchor.constraint(equalTo: headerView.topAnchor,constant:40).isActive = true
         todayPostsCountLable.leadingAnchor.constraint(equalTo: headerView.leadingAnchor,constant:15).isActive = true
-        todayPostsCountLable.widthAnchor.constraint(equalTo : headerView.widthAnchor).isActive = true
-        todayPostsCountLable.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        //todayPostsCountLable.widthAnchor.constraint(equalTo : headerView.widthAnchor).isActive = true
+        //todayPostsCountLable.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
         headerView.addSubview(introLable)
-        introLable.topAnchor.constraint(equalTo: todayPostsCountLable.bottomAnchor,constant:15).isActive = true
+        introLable.topAnchor.constraint(equalTo: todayPostsCountLable.bottomAnchor,constant:10).isActive = true
         introLable.leadingAnchor.constraint(equalTo: headerView.leadingAnchor,constant:15).isActive = true
-        introLable.trailingAnchor.constraint(equalTo: headerView.trailingAnchor,constant:-35).isActive = true
-        introLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-35).isActive = true
+        //introLable.trailingAnchor.constraint(equalTo: headerView.trailingAnchor,constant:-35).isActive = true
+        //introLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-35).isActive = true
         
         headerView.addSubview(countLable)
-        countLable.topAnchor.constraint(equalTo: introLable.bottomAnchor,constant:65).isActive = true
+        countLable.topAnchor.constraint(equalTo: introLable.bottomAnchor,constant:35).isActive = true
         countLable.trailingAnchor.constraint(equalTo: headerView.trailingAnchor,constant:-15).isActive = true
-        countLable.heightAnchor.constraint(equalToConstant: 15).isActive = true
-        countLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-10).isActive = true
+        //countLable.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        countLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-5).isActive = true
         
     }
 }

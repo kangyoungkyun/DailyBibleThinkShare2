@@ -204,41 +204,34 @@ class TalkCell: UITableViewCell {
         containerView.addSubview(nameLabel)
         containerView.addSubview(txtLabel)
         containerView.addSubview(dateLabel)
-        containerView.addSubview(hitLabel)
-
+       
         
-        
-        containerView.addSubview(seeImage)
-        containerView.addSubview(likeButton)
-        containerView.addSubview(likesLabel)
+        // containerView.addSubview(hitLabel)
+        //containerView.addSubview(seeImage)
+        //containerView.addSubview(likeButton)
+        //containerView.addSubview(likesLabel)
 
         
         
         dateLabel.topAnchor.constraint(equalTo: containerView.topAnchor,constant: 35).isActive = true
         dateLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        //dateLabel.trailingAnchor.constraint(equalTo: txtLabel.trailingAnchor).isActive = true
-        //dateLabel.heightAnchor.constraint(equalToConstant: 10).isActive = true
+
         
         txtLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor,constant: 35).isActive = true
         txtLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15).isActive = true
         txtLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15).isActive = true
-        txtLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -95).isActive = true
+        txtLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -70).isActive = true
         
         
         nameLabel.topAnchor.constraint(equalTo: txtLabel.bottomAnchor, constant: 35).isActive = true
         nameLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        
-        
-        pidLabel.topAnchor.constraint(equalTo: txtLabel.bottomAnchor, constant: 5).isActive = true
-        pidLabel.leadingAnchor.constraint(equalTo: likesLabel.trailingAnchor, constant: 5).isActive = true
-        pidLabel.widthAnchor.constraint(equalToConstant: 10).isActive = true
-        pidLabel.heightAnchor.constraint(equalToConstant: 10).isActive = true
-        
-        uidLabel.topAnchor.constraint(equalTo: txtLabel.bottomAnchor, constant: 5).isActive = true
-        uidLabel.leadingAnchor.constraint(equalTo: pidLabel.trailingAnchor, constant: 5).isActive = true
-        uidLabel.widthAnchor.constraint(equalToConstant: 10).isActive = true
-        uidLabel.heightAnchor.constraint(equalToConstant: 10).isActive = true
-        
+
+
+        pidLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 1).isActive = true
+        pidLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+
+        uidLabel.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 1).isActive = true
+        uidLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -229,7 +229,7 @@ class ShowUserPostsVC: UITableViewController,UISearchBarDelegate  {
     
     //포스트 조회 함수
     func showPost(){
-        let myId = Auth.auth().currentUser?.uid
+        _ = Auth.auth().currentUser?.uid
         print("start showPost")
         let ref = Database.database().reference()
         ref.child("posts").queryOrdered(byChild: "date").observe(.value) { (snapshot) in

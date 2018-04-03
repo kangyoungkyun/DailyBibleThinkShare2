@@ -15,26 +15,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
     var searchPosts = [Post]()
     let cellId = "cellId"
     
-    //    let searchController : UISearchController = {
-    //        let uisearchController = UISearchController(searchResultsController: nil)
-    //        uisearchController.searchBar.placeholder = "검색"
-    //        uisearchController.searchBar.backgroundColor =  UIColor(red:0.13, green:0.30, blue:0.53, alpha:1.0)
-    //
-    //        return uisearchController
-    //    }()
-    
-    //검색버튼 눌렀을 때
-    
-    //    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    //        searchPosts.removeAll()
-    //        //print("서치바 \(String(describing: searchController.searchBar.text!))")
-    //        searchPosts = posts.filter({ (post) -> Bool in
-    //            guard let text = searchController.searchBar.text else{return false}
-    //            return post.text.contains(text)
-    //        })
-    //        self.tableView.reloadData()
-    //    }
-    
+
     
      //테이블 뷰 당기면 리프레쉬
     lazy var freshControl: UIRefreshControl = {
@@ -244,7 +225,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
     //셀을 클릭했을 때
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        print("셀 클릭")
+        //print("셀 클릭")
         
         //선택한 셀 정보 가져오기
         let cell = tableView.cellForRow(at: indexPath) as? TalkCell
@@ -297,7 +278,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
         let month = calendar.component(.month, from: date)  //월
         let day = calendar.component(.day, from: date)      //일
         today = "\(month)\(day)"
-        print("\(month)\(day)")
+        //print("\(month)\(day)")
         
     }
     
@@ -314,7 +295,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
                 let childSnapshot = child as! DataSnapshot //자식 DataSnapshot 가져오기
                 let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
                 
-                if let name = childValue["name"],  let date = childValue["date"], let hit = childValue["hit"], let pid = childValue["pid"], let uid = childValue["uid"], let text = childValue["text"], let reply = childValue["reply"],let show = childValue["show"] {
+                if let _ = childValue["name"],  let date = childValue["date"], let hit = childValue["hit"], let pid = childValue["pid"], let uid = childValue["uid"], let text = childValue["text"], let reply = childValue["reply"],let _ = childValue["show"] {
                     
                     //오늘 날짜에 작성된 글 개수 파악
                     if let t = date as? TimeInterval {
@@ -327,7 +308,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
                             todayPost = todayPost + 1
                         }
                         self.countLable.text = "오늘 작성된 묵상/ \(todayPost)편"
-                        print("오늘 작성된 시편의 개수는?  \(todayPost) ")
+                       
                     }
                     //공개를 허용한 글만 담벼락에 보이기
                     if (uid as? String == "i1OyLDOK7zLC6mSt20qOz7vtTQv2"){
@@ -338,8 +319,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
                                 let key = childSnapshot.key
                                 let val = childSnapshot.value as! [String:Any]
                                 if (key == pid as? String) {
-                                    print("축복받은 개수 몇개?")
-                                    print(pid,key,val.count)
+                                    
                                     postToShow.blessCount = "\(val.count)"
                                 }
                             }
@@ -370,7 +350,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
                 }
             }
             todayPost = 0
-            print("초기화 됐나요1? \(todayPost)")
+            //print("초기화 됐나요1? \(todayPost)")
         }
         //print("초기화 됐나요2? \(todayPost)")
         ref.removeAllObservers()
@@ -380,22 +360,22 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
     //헤더뷰 레이아웃
     func setHeaderViewLayout(){
         headerView.addSubview(todayPostsCountLable)
-        todayPostsCountLable.topAnchor.constraint(equalTo: headerView.topAnchor,constant:55).isActive = true
+        todayPostsCountLable.topAnchor.constraint(equalTo: headerView.topAnchor,constant:40).isActive = true
         todayPostsCountLable.leadingAnchor.constraint(equalTo: headerView.leadingAnchor,constant:15).isActive = true
-        todayPostsCountLable.widthAnchor.constraint(equalTo : headerView.widthAnchor).isActive = true
-        todayPostsCountLable.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        //todayPostsCountLable.widthAnchor.constraint(equalTo : headerView.widthAnchor).isActive = true
+        //todayPostsCountLable.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
         headerView.addSubview(introLable)
-        introLable.topAnchor.constraint(equalTo: todayPostsCountLable.bottomAnchor,constant:15).isActive = true
+        introLable.topAnchor.constraint(equalTo: todayPostsCountLable.bottomAnchor,constant:10).isActive = true
         introLable.leadingAnchor.constraint(equalTo: headerView.leadingAnchor,constant:15).isActive = true
-        introLable.trailingAnchor.constraint(equalTo: headerView.trailingAnchor,constant:-35).isActive = true
-        introLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-35).isActive = true
+        //introLable.trailingAnchor.constraint(equalTo: headerView.trailingAnchor,constant:-35).isActive = true
+        //introLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-35).isActive = true
         
         headerView.addSubview(countLable)
-        countLable.topAnchor.constraint(equalTo: introLable.bottomAnchor,constant:65).isActive = true
+        countLable.topAnchor.constraint(equalTo: introLable.bottomAnchor,constant:35).isActive = true
         countLable.trailingAnchor.constraint(equalTo: headerView.trailingAnchor,constant:-15).isActive = true
-        countLable.heightAnchor.constraint(equalToConstant: 15).isActive = true
-        countLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-10).isActive = true
+        //countLable.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        countLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-5).isActive = true
         
     }
 }

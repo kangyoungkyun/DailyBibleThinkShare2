@@ -26,38 +26,9 @@ class TodayCollectionVC: UICollectionViewController, UICollectionViewDelegateFlo
         let navController = UINavigationController(rootViewController: writeView)
         self.present(navController, animated: true, completion: nil)
         
-       /* let myUid = Auth.auth().currentUser?.uid
-        let ref = Database.database().reference()
-        ref.child("users").child(myUid!).observe(.value) { (snapshot) in
-            
-            let childSnapshot = snapshot //자식 DataSnapshot 가져오기
-            let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
-            
-            
-            if let pass = childValue["pass"] as? String{
-                if pass == "n"{
-                    let alert = UIAlertController(title: "Sorry", message:"승인 후 이용가능합니다.", preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                    return
-                }else if(pass == "y"){
-                    //글쓰기 화면
-                    let writeView = WriteViewController()
-                    //글쓰기 화면을 rootView로 만들어 주기
-                    let navController = UINavigationController(rootViewController: writeView)
-                    self.present(navController, animated: true, completion: nil)
-                }
-            }
-            
-        }*/
     }
     
     
-//    let pages = [
-//        Page(headerText: "피난처", bodyText: ""),
-//        Page(headerText: "", bodyText: "주님 나를 도와주세요\n아무것도 모르고\n아무것도 못해요\n내 생명이 항상 위험하지만\n주님은 나의 피난처에요\n주님 나를 도와주세요.\n\n <도움/송현숙>"),
-//        Page(headerText: "일일\n묵상", bodyText: "")
-//    ]
     
     var pages = [Page]()
     
@@ -86,7 +57,7 @@ class TodayCollectionVC: UICollectionViewController, UICollectionViewDelegateFlo
          let firebaseAuth = Auth.auth().currentUser?.uid
         
         if (firebaseAuth == nil){
-            print("로그아웃된것이 확인되었습니다.")
+            //print("로그아웃된것이 확인되었습니다.")
             dismiss(animated: true, completion: nil)
         }
         
@@ -120,7 +91,7 @@ class TodayCollectionVC: UICollectionViewController, UICollectionViewDelegateFlo
     var todate = ""
     //현재 날짜 한글
     func getSingle(){
-        var date = Date()
+        let date = Date()
         let calendar = Calendar.current //켈린더 객체 생성
         let year = calendar.component(.year, from: date)    //년
         let month = calendar.component(.month, from: date)  //월
@@ -134,7 +105,7 @@ class TodayCollectionVC: UICollectionViewController, UICollectionViewDelegateFlo
     func setData(){
         
          let ref = Database.database().reference()
-        print("check date ===" , todateCheck)
+        //print("check date ===" , todateCheck)
         ref.child("front").child(todateCheck).observe(.value) { (snapshot) in
             
             for child in snapshot.children{
@@ -142,10 +113,10 @@ class TodayCollectionVC: UICollectionViewController, UICollectionViewDelegateFlo
                 let childSnapshot = child as! DataSnapshot //자식 DataSnapshot 가져오기
                 let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
                 var pasge = Page(headerText: "", bodyText: "")
-                print("childvalue: ",childValue)
+                //print("childvalue: ",childValue)
                 
                 if let a = childValue["a"]{
-                    print("a : ", a)
+                    //print("a : ", a)
                     pasge = Page(headerText: a as! String, bodyText: "")
                 }else if let b = childValue["b"]{
                     pasge = Page(headerText: "" , bodyText: b as! String)

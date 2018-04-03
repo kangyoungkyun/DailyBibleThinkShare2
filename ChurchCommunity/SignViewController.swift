@@ -176,10 +176,10 @@ class SignViewController: UIViewController {
                 
                 ref.removeAllObservers()
                 
-                print("가입성공")
+                //print("가입성공")
                 
                 //tabbarController 가져오기
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                _ = UIApplication.shared.delegate as! AppDelegate
                 //let tabBarController = appDelegate.tabBarController
                 //인디케이터 종료
                 AppDelegate.instance().dissmissActivityIndicator()
@@ -208,7 +208,7 @@ class SignViewController: UIViewController {
     
     //뒤로가기 함수
     @objc func cancelAction(){
-        print("뒤로가기  버튼이 눌렀습니다.")
+        //print("뒤로가기  버튼이 눌렀습니다.")
         self.dismiss(animated: true, completion: nil)
 
     }
@@ -266,7 +266,6 @@ class SignViewController: UIViewController {
         nameTextField.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 50).isActive = true
         nameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
         nameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
-        nameTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
         
         nameSeperatorView.topAnchor.constraint(equalTo: nameTextField.bottomAnchor).isActive = true
         nameSeperatorView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor).isActive = true
@@ -276,7 +275,7 @@ class SignViewController: UIViewController {
         emailTextField.topAnchor.constraint(equalTo: nameSeperatorView.bottomAnchor, constant: 30).isActive = true
         emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
         emailTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
-        emailTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
+       
         
         emailSeperatorView.topAnchor.constraint(equalTo: emailTextField.bottomAnchor).isActive = true
         emailSeperatorView.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor).isActive = true

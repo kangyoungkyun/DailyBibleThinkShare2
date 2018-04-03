@@ -15,6 +15,7 @@ class MoreNoticeViewController: UIViewController {
             //textFiedlView.text = text
             textFiedlView.text = text?.replacingOccurrences(of: "\\n", with: "\n")
             textFiedlView.font = UIFont(name: "NanumMyeongjo-YetHangul", size: 15.5)
+            
         }
     }
     

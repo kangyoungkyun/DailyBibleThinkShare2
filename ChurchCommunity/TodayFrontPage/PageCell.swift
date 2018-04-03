@@ -37,10 +37,11 @@ class PageCell: UICollectionViewCell {
             let paragraphStyle = NSMutableParagraphStyle()
             //높이 설정
             paragraphStyle.lineSpacing = 11
-            let attributedText = NSMutableAttributedString(string: unwrappedPage.headerText, attributes: [NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 21.5)])
-            attributedText.append(NSAttributedString(string: "\n\n\n\(unwrappedPage.bodyText)", attributes: [NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 15.5), NSAttributedStringKey.foregroundColor:UIColor(red:0.17, green:0.17, blue:0.17, alpha:1.0)]))
+            let attributedText = NSMutableAttributedString(string: unwrappedPage.headerText.replacingOccurrences(of: "\\n", with: "\n"), attributes: [NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 21.5) as Any])
+            attributedText.append(NSAttributedString(string: "\n\n\n\(unwrappedPage.bodyText.replacingOccurrences(of: "\\n", with: "\n"))", attributes: [NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 15.5) as Any, NSAttributedStringKey.foregroundColor:UIColor(red:0.17, green:0.17, blue:0.17, alpha:1.0)]))
             //줄간격설정
             attributedText.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range: NSMakeRange(0, attributedText.length))
+
             myTextView.attributedText = attributedText
             myTextView.textAlignment = .center
         
@@ -59,7 +60,7 @@ class PageCell: UICollectionViewCell {
     }()
     //글쓰러가기 버튼
     @objc func writeAction(){
-        print("글쓰러가기 버튼")
+        //print("글쓰러가기 버튼")
         delegate?.writeAction()
      
 
@@ -76,7 +77,7 @@ class PageCell: UICollectionViewCell {
     }()
     //글 보러가기 버튼
     @objc func showAction(){
-          print("글보러가기 버튼")
+        
          delegate?.showAllPosts()
     }
     
@@ -150,10 +151,9 @@ class PageCell: UICollectionViewCell {
         lookButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         addSubview(pageLable)
-        pageLable.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30).isActive = true
+        pageLable.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50).isActive = true
         pageLable.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        //pageLable.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        //pageLable.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
     }
     
     required init?(coder aDecoder: NSCoder) {

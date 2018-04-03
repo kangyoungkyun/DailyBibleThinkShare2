@@ -142,11 +142,11 @@ class MainViewController: UIViewController {
             }
             //유저가 있을때
             if user != nil{
-                print("로그인 성공")
-                print(user as Any)
+                //print("로그인 성공")
+                //print(user as Any)
                 
                 //로그인 성공했을 때
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                _ = UIApplication.shared.delegate as! AppDelegate
                 //let tabBarController = appDelegate.tabBarController
                 //인디케이터 종료
                 AppDelegate.instance().dissmissActivityIndicator()
@@ -176,7 +176,7 @@ class MainViewController: UIViewController {
     }()
     
     @objc func signAction(){
-        print("가입 버튼이 눌렀습니다.")
+        //print("가입 버튼이 눌렀습니다.")
         let signView = SignViewController()
         self.present(signView, animated: true, completion: nil)
     }
@@ -265,7 +265,6 @@ class MainViewController: UIViewController {
         emailTextField.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 50).isActive = true
         emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
         emailTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
-        emailTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
         
         emailSeperatorView.topAnchor.constraint(equalTo: emailTextField.bottomAnchor).isActive = true
         emailSeperatorView.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor).isActive = true
@@ -286,7 +285,7 @@ class MainViewController: UIViewController {
         loginButton.topAnchor.constraint(equalTo: passwordSeperatorView.bottomAnchor, constant:30).isActive = true
         loginButton.leadingAnchor.constraint(equalTo: passwordSeperatorView.leadingAnchor).isActive = true
         loginButton.trailingAnchor.constraint(equalTo: passwordSeperatorView.trailingAnchor).isActive = true
-        loginButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        //loginButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         signButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant:30).isActive = true

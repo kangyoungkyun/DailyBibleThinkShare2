@@ -72,7 +72,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
     }()
     //플로팅 액션 버튼
     @objc func writeActionFlotingButton(){
-        print("바탕화면에서 글쓰기 버튼 클릭!")
+        //print("바탕화면에서 글쓰기 버튼 클릭!")
         let writeView = WriteViewController()
         //글쓰기 화면을 rootView로 만들어 주기
         let navController = UINavigationController(rootViewController: writeView)
@@ -228,7 +228,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
             OperationQueue.main.addOperation() {
                 
                 self.tableView.separatorStyle = .none
-                Thread.sleep(forTimeInterval: 1.5)
+                Thread.sleep(forTimeInterval: 1.7)
                 
                 self.activityIndicatorView.stopAnimating()
                 self.tableView.reloadData()
@@ -257,7 +257,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
         
         //네비게이션 바 버튼 아이템 글꼴 바꾸기
         self.navigationItem.leftBarButtonItem?.setTitleTextAttributes([
-            NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 13.0)!,
+            NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 14.0)!,
             NSAttributedStringKey.foregroundColor: UIColor.lightGray], for: UIControlState())
         
         
@@ -433,7 +433,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
     //셀을 클릭했을 때
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        print("셀 클릭")
+        //print("셀 클릭")
         
         //선택한 셀 정보 가져오기
         let cell = tableView.cellForRow(at: indexPath) as? MyPostCell
@@ -485,7 +485,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
         let myId = Auth.auth().currentUser?.uid
         let myName = Auth.auth().currentUser?.displayName
         self.nameLable.text = "\(myName!)의 묵상"
-        print("start showPost")
+        //print("start showPost")
         let ref = Database.database().reference()
         
         //user db에서 한줄 글 불러오기
@@ -521,7 +521,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
                                 //print(pid,key,val.count)
                                 if (key == pid as? String) {
                                     
-                                    print(pid,key,val.count)
+                                   // print(pid,key,val.count)
                                     postToShow.blessCount = "\(val.count)"
                                     
                                 }
@@ -565,23 +565,22 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
     //헤더뷰 레이아웃
     func setHeaderViewLayout(){
         headerView.addSubview(nameLable)
-        nameLable.topAnchor.constraint(equalTo: headerView.topAnchor,constant:55).isActive = true
+        nameLable.topAnchor.constraint(equalTo: headerView.topAnchor,constant:40).isActive = true
         nameLable.leadingAnchor.constraint(equalTo: headerView.leadingAnchor,constant:15).isActive = true
-        nameLable.widthAnchor.constraint(equalTo : headerView.widthAnchor).isActive = true
-        nameLable.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        //todayPostsCountLable.widthAnchor.constraint(equalTo : headerView.widthAnchor).isActive = true
+        //todayPostsCountLable.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
         headerView.addSubview(introLable)
-        introLable.topAnchor.constraint(equalTo: nameLable.bottomAnchor,constant:15).isActive = true
+        introLable.topAnchor.constraint(equalTo: nameLable.bottomAnchor,constant:10).isActive = true
         introLable.leadingAnchor.constraint(equalTo: headerView.leadingAnchor,constant:15).isActive = true
-        introLable.trailingAnchor.constraint(equalTo: headerView.trailingAnchor,constant:-35).isActive = true
-        //introLable.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        introLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-35).isActive = true
+        //introLable.trailingAnchor.constraint(equalTo: headerView.trailingAnchor,constant:-35).isActive = true
+        //introLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-35).isActive = true
         
         headerView.addSubview(countLable)
-        countLable.topAnchor.constraint(equalTo: introLable.bottomAnchor,constant:65).isActive = true
+        countLable.topAnchor.constraint(equalTo: introLable.bottomAnchor,constant:35).isActive = true
         countLable.trailingAnchor.constraint(equalTo: headerView.trailingAnchor,constant:-15).isActive = true
-        countLable.heightAnchor.constraint(equalToConstant: 15).isActive = true
-        countLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-10).isActive = true
+        //countLable.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        countLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-5).isActive = true
         
     }
 }

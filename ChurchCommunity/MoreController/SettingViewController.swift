@@ -30,7 +30,7 @@ class SettingViewController: UITableViewController, MFMailComposeViewControllerD
             }
 
         let twoDimenstionArray = [
-                ["공지사항","이용안내","버전정보","오픈소스"],
+                ["공지사항","이용안내","버전정보","라이센스"],
                 ["로그아웃"],
                 ["문의사항"]
             ]
@@ -74,14 +74,6 @@ class SettingViewController: UITableViewController, MFMailComposeViewControllerD
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: navigationTitleFont]
         
-        //네비게이션 바 버튼 아이템 글꼴 바꾸기
-        self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([
-            NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 15.5)!,
-            NSAttributedStringKey.foregroundColor: UIColor.lightGray], for: UIControlState())
-        
-        self.navigationItem.leftBarButtonItem?.setTitleTextAttributes([
-            NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 15.5)!,
-            NSAttributedStringKey.foregroundColor: UIColor.lightGray], for: UIControlState())
         
         //firebase 데이터 베이스 초기화
         ref = Database.database().reference()
@@ -93,7 +85,7 @@ class SettingViewController: UITableViewController, MFMailComposeViewControllerD
     
         let section = indexPath.section
         let row = indexPath.row
-        weak var pvc = self.presentingViewController
+
         
         //공지사항
         if(section == 0 && row == 0){
@@ -129,7 +121,7 @@ class SettingViewController: UITableViewController, MFMailComposeViewControllerD
                 
             })
         }else if (section == 0 && row == 2){
-            print("버전정보")
+           
             ref.child("more").child("ver").observe(.value, with: { (snapshot) in
                 let childSnapshot = snapshot //자식 DataSnapshot 가져오기
                 let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
@@ -143,13 +135,13 @@ class SettingViewController: UITableViewController, MFMailComposeViewControllerD
                 
             })
         }else if (section == 0 && row == 3){
-            print("오픈소스")
+           
             ref.child("more").child("open").observe(.value, with: { (snapshot) in
                 let childSnapshot = snapshot //자식 DataSnapshot 가져오기
                 let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
                 if let value = childValue["o"] as? String{
                     let viewController = MoreNoticeViewController()
-                    viewController.titleName = "오픈소스"
+                    viewController.titleName = "라이센스"
                     viewController.text = value
                     self.ref.removeAllObservers()
                     self.navigationController?.pushViewController(viewController, animated: true)
@@ -157,33 +149,20 @@ class SettingViewController: UITableViewController, MFMailComposeViewControllerD
                 
             })
         }
-        /*else if (section == 1 && row == 0){
-            print("마이페이지")
-            let viewController = ShowPageViewController()
-            self.navigationController?.pushViewController(viewController, animated: true)
-            
-        }else if (section == 1 && row == 1){
-            print("내가쓴글")
-            let viewController = MoreWriteTableViewController()
-             self.navigationController?.pushViewController(viewController, animated: true)
-            
-        }*/
             
         else if (section == 1 && row == 0){
-            print("로그아웃")
+            //print("로그아웃")
             let firebaseAuth = Auth.auth()
             do {
                 try firebaseAuth.signOut()
                 
                 self.dismiss(animated: true, completion: nil)
 
-                
-                
             } catch let signOutError as NSError {
                 print ("Error signing out: %@", signOutError)
             }
         }else if (section == 2 && row == 0){
-            print("문의사항")
+            //print("문의사항")
             
             let mailComposeViewController = configuredMailComposeViewController()
             if MFMailComposeViewController.canSendMail(){

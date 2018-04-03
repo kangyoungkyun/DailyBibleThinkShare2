@@ -232,7 +232,7 @@ class ShowUserPageViewController: UIViewController {
     }
     //유저가쓴 일기 보기
     @objc func showUserPost(){
-        print("유저가 쓴 일기 보기")
+       // print("유저가 쓴 일기 보기")
         let viewController = ShowUserPostsVC()
         viewController.userId = userUid
         self.navigationController?.pushViewController(viewController, animated: true)

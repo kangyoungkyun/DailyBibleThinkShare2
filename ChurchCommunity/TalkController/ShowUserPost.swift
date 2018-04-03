@@ -33,7 +33,21 @@
          self.tableView.reloadData()
          
          }*/
+        //테이블 뷰 당기면 리프레쉬
+        lazy var freshControl: UIRefreshControl = {
+            let refreshControl = UIRefreshControl()
+            refreshControl.addTarget(self, action:
+                #selector(handleRefresh(_:)),
+                                     for: UIControlEvents.valueChanged)
+            refreshControl.tintColor = UIColor(red:0.59, green:0.28, blue:0.27, alpha:1.0)
+            
+            return refreshControl
+        }()
         
+        @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+            self.tableView.reloadData()
+            freshControl.endRefreshing()
+        }
         
         var posts = [Post]()
         var searchPosts = [Post]()
@@ -57,7 +71,7 @@
         }()*/
         
         @objc func writeActionFlotingButton(){
-            print("바탕화면에서 글쓰기 버튼 클릭!")
+            //print("바탕화면에서 글쓰기 버튼 클릭!")
             let writeView = WriteViewController()
             //글쓰기 화면을 rootView로 만들어 주기
             let navController = UINavigationController(rootViewController: writeView)
@@ -179,7 +193,7 @@
         
         override func viewDidLoad() {
             super.viewDidLoad()
-            
+            tableView.addSubview(freshControl)
             headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height:220)
             tableView.tableHeaderView = headerView
             
@@ -387,7 +401,7 @@
         override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             
             
-            print("셀 클릭")
+            //print("셀 클릭")
             
             //선택한 셀 정보 가져오기
             let cell = tableView.cellForRow(at: indexPath) as? TalkCell
@@ -439,7 +453,7 @@
             //let myId = Auth.auth().currentUser?.uid
             //let myName = Auth.auth().currentUser?.displayName
             self.nameLable.text = "\(userName!)의 시편"
-            print("start showPost")
+            //print("start showPost")
             let ref = Database.database().reference()
             
             
@@ -479,7 +493,7 @@
                                     //print(pid,key,val.count)
                                     if (key == pid as? String) {
                                         
-                                        print(pid,key,val.count)
+                                        //print(pid,key,val.count)
                                         postToShow.blessCount = "\(val.count)"
                                         
                                     }
@@ -531,23 +545,22 @@
         //헤더뷰 레이아웃
         func setHeaderViewLayout(){
             headerView.addSubview(nameLable)
-            nameLable.topAnchor.constraint(equalTo: headerView.topAnchor,constant:55).isActive = true
+            nameLable.topAnchor.constraint(equalTo: headerView.topAnchor,constant:40).isActive = true
             nameLable.leadingAnchor.constraint(equalTo: headerView.leadingAnchor,constant:15).isActive = true
-            nameLable.widthAnchor.constraint(equalTo : headerView.widthAnchor).isActive = true
-            nameLable.heightAnchor.constraint(equalToConstant: 25).isActive = true
-            
+            //todayPostsCountLable.widthAnchor.constraint(equalTo : headerView.widthAnchor).isActive = true
+            //todayPostsCountLable.heightAnchor.constraint(equalToConstant: 25).isActive = true
             
             headerView.addSubview(introLable)
-            introLable.topAnchor.constraint(equalTo: nameLable.bottomAnchor,constant:25).isActive = true
+            introLable.topAnchor.constraint(equalTo: nameLable.bottomAnchor,constant:10).isActive = true
             introLable.leadingAnchor.constraint(equalTo: headerView.leadingAnchor,constant:15).isActive = true
-            introLable.widthAnchor.constraint(equalTo : headerView.widthAnchor).isActive = true
-            introLable.heightAnchor.constraint(equalToConstant: 20).isActive = true
+            //introLable.trailingAnchor.constraint(equalTo: headerView.trailingAnchor,constant:-35).isActive = true
+            //introLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-35).isActive = true
             
             headerView.addSubview(countLable)
-            countLable.topAnchor.constraint(equalTo: introLable.bottomAnchor,constant:65).isActive = true
+            countLable.topAnchor.constraint(equalTo: introLable.bottomAnchor,constant:35).isActive = true
             countLable.trailingAnchor.constraint(equalTo: headerView.trailingAnchor,constant:-15).isActive = true
-            countLable.heightAnchor.constraint(equalToConstant: 15).isActive = true
-            countLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-10).isActive = true
+            //countLable.heightAnchor.constraint(equalToConstant: 15).isActive = true
+            countLable.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,constant:-5).isActive = true
             
         }
     }

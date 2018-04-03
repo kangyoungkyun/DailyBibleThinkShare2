@@ -103,7 +103,7 @@ class DetailTalkViewController: UIViewController {
         starButton.setImage(#imageLiteral(resourceName: "ic_favorite.png"), for: .normal)
         starButton.tintColor = UIColor.red
         starButton.translatesAutoresizingMaskIntoConstraints = false
-        starButton.imageView?.contentMode = .scaleAspectFit
+        starButton.imageView?.contentMode = .scaleToFill
         starButton.imageEdgeInsets = UIEdgeInsets(top: -5, left: -5, bottom: -5, right: -5)
         starButton.addTarget(self, action: #selector(touchBlessBtn), for: .touchUpInside)
         return starButton
@@ -343,7 +343,7 @@ class DetailTalkViewController: UIViewController {
                 
                 if let checkUid = childValue["uid"]{
                     if(checkUid as? String == currentUid){
-                        print("이미 좋아요를 눌렀네요?")
+                        //print("이미 좋아요를 눌렀네요?")
                         self.likeButton.tintColor = UIColor.lightGray
                         self.likesLabel.textColor = UIColor.lightGray
                         self.likeButton.isEnabled = false
@@ -452,7 +452,7 @@ class DetailTalkViewController: UIViewController {
     
     //글공개
     func showAction(pid:String){
-        print("글나누기\(pid)")
+        //print("글나누기\(pid)")
         let showing = ["show" : "y"]
         //여기가 문제
         let ref = Database.database().reference()
@@ -464,7 +464,7 @@ class DetailTalkViewController: UIViewController {
     
     //글비공개
     func noShowAction(pid:String){
-        print("글비공개\(pid)")
+        //print("글비공개\(pid)")
         //fb db 연결 후 posts 테이블에 key가 pid인 데이터의 hit 개수 변경해주기
         let showing = ["show" : "n"]
         //여기가 문제
@@ -486,19 +486,19 @@ class DetailTalkViewController: UIViewController {
             preferredStyle: .alert)
         
         let showAction = UIAlertAction(title: "공개", style: .default) { (alert) in
-            print("글나누기")
+            //print("글나누기")
             self.showAction(pid:self.pidLabel.text!)
             
         }
         
         let noShowAction = UIAlertAction(title: "비공개", style: .default) { (alert) in
-            print("글비공개")
+            //print("글비공개")
             self.noShowAction(pid:self.pidLabel.text!)
         }
         
         
         let modifyAction = UIAlertAction(title: "수정", style: .default) { (alert) in
-            print("글 수정")
+            //print("글 수정")
             
             self.settingAlertAction(txt: self.txtLabel.text!, pid: self.pidLabel.text!)
         }
@@ -530,7 +530,7 @@ class DetailTalkViewController: UIViewController {
         }
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (alert) in
-            print("취소")
+            //print("취소")
         }
         
         alertController.addAction(modifyAction)
