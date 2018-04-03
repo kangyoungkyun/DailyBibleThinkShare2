@@ -28,11 +28,11 @@
 		52858A882055F524005C9BB9 /* SignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52858A872055F524005C9BB9 /* SignViewController.swift */; };
 		52858A9020562515005C9BB9 /* HideKeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52858A8F20562515005C9BB9 /* HideKeyBoard.swift */; };
 		52938A1F2060A7DB0098F9A0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52938A1E2060A7DB0098F9A0 /* MessageUI.framework */; };
+		52AC441D2073BFDB00B9D753 /* ic_view_headline.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AC441C2073BFDA00B9D753 /* ic_view_headline.png */; };
 		52C2EB4A205A5F53005B4904 /* AlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C2EB49205A5F53005B4904 /* AlertTableViewController.swift */; };
 		52CFE0EA205F4B83006BADE7 /* MoreNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CFE0E9205F4B83006BADE7 /* MoreNoticeViewController.swift */; };
 		52DA9097207238720020B893 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52858A8D20561228005C9BB9 /* GoogleService-Info.plist */; };
 		52DA9098207238D70020B893 /* bac.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 52240D9A2071CF5A008892F9 /* bac.jpg */; };
-		52DA9099207238DA0020B893 /* ic_view_headline.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DA90932071EF8F0020B893 /* ic_view_headline.png */; };
 		52DA909A207238DE0020B893 /* bac2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 52240D9B2071CF5B008892F9 /* bac2.jpg */; };
 		52DA909B207238E00020B893 /* print.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 523E791120707FCC00C9E50E /* print.jpg */; };
 		52DA909C207238E20020B893 /* ic_chrome_reader_mode.png in Resources */ = {isa = PBXBuildFile; fileRef = 523E790D20706FA900C9E50E /* ic_chrome_reader_mode.png */; };
@@ -102,12 +102,13 @@
 		52858A8D20561228005C9BB9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		52858A8F20562515005C9BB9 /* HideKeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyBoard.swift; sourceTree = "<group>"; };
 		52938A1E2060A7DB0098F9A0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		52AC44192073BF3C00B9D753 /* ChurchCommunity.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChurchCommunity.entitlements; sourceTree = "<group>"; };
+		52AC441C2073BFDA00B9D753 /* ic_view_headline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_view_headline.png; path = "../../../../Downloads/ic_view_headline_black_24dp 2/ios/ic_view_headline.imageset/ic_view_headline.png"; sourceTree = "<group>"; };
 		52C2EB49205A5F53005B4904 /* AlertTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTableViewController.swift; sourceTree = "<group>"; };
 		52C2EB4B205A674A005B4904 /* textAlert.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = textAlert.txt; sourceTree = "<group>"; };
 		52CAC7AE206ABA3400BFB176 /* NanumMyeongjo-YetHangul.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NanumMyeongjo-YetHangul.ttf"; sourceTree = "<group>"; };
 		52CFE0E9205F4B83006BADE7 /* MoreNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreNoticeViewController.swift; sourceTree = "<group>"; };
 		52D6121F205640C500F6F031 /* read.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = read.txt; sourceTree = "<group>"; };
-		52DA90932071EF8F0020B893 /* ic_view_headline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_view_headline.png; path = ../../../../Downloads/ic_view_headline_black_24dp/ios/ic_view_headline.imageset/ic_view_headline.png; sourceTree = "<group>"; };
 		52FF20092068DF6600C133D0 /* ShowUserPostsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowUserPostsVC.swift; sourceTree = "<group>"; };
 		83D6E73A6D1352F5B9816186 /* Pods-ChurchCommunity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChurchCommunity.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChurchCommunity/Pods-ChurchCommunity.release.xcconfig"; sourceTree = "<group>"; };
 		9F01414784C01122F8C96A2A /* Pods_ChurchCommunity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChurchCommunity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,6 +204,7 @@
 		52858A472055E64D005C9BB9 /* ChurchCommunity */ = {
 			isa = PBXGroup;
 			children = (
+				52AC44192073BF3C00B9D753 /* ChurchCommunity.entitlements */,
 				52CAC7AE206ABA3400BFB176 /* NanumMyeongjo-YetHangul.ttf */,
 				52858A622055EBDE005C9BB9 /* Pic */,
 				52C2EB48205A5F20005B4904 /* Func */,
@@ -230,7 +232,7 @@
 		52858A622055EBDE005C9BB9 /* Pic */ = {
 			isa = PBXGroup;
 			children = (
-				52DA90932071EF8F0020B893 /* ic_view_headline.png */,
+				52AC441C2073BFDA00B9D753 /* ic_view_headline.png */,
 				52240D9A2071CF5A008892F9 /* bac.jpg */,
 				52240D9B2071CF5B008892F9 /* bac2.jpg */,
 				523E791120707FCC00C9E50E /* print.jpg */,
@@ -325,6 +327,11 @@
 					52858A442055E64D005C9BB9 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -352,7 +359,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				52DA90A2207238EF0020B893 /* pencil.png in Resources */,
-				52DA9099207238DA0020B893 /* ic_view_headline.png in Resources */,
 				52DA909F207238E80020B893 /* pencil4.png in Resources */,
 				52DA909C207238E20020B893 /* ic_chrome_reader_mode.png in Resources */,
 				52DA909E207238E60020B893 /* ic_inbox.png in Resources */,
@@ -373,6 +379,7 @@
 				52DA90A8207239130020B893 /* NanumMyeongjo-YetHangul.ttf in Resources */,
 				52DA90A6207238EF0020B893 /* ic_favorite.png in Resources */,
 				52DA90AB207239810020B893 /* Pods-ChurchCommunity.release.xcconfig in Resources */,
+				52AC441D2073BFDB00B9D753 /* ic_view_headline.png in Resources */,
 				52DA909A207238DE0020B893 /* bac2.jpg in Resources */,
 				52DA90A4207238EF0020B893 /* ic_person_outline.png in Resources */,
 				52DA90B120725F250020B893 /* Assets.xcassets in Resources */,
@@ -606,6 +613,7 @@
 			baseConfigurationReference = FB6A786059CB56446D190FDF /* Pods-ChurchCommunity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ChurchCommunity/ChurchCommunity.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3HFR2QP3B2;
 				INFOPLIST_FILE = ChurchCommunity/Info.plist;
@@ -623,6 +631,7 @@
 			baseConfigurationReference = 83D6E73A6D1352F5B9816186 /* Pods-ChurchCommunity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ChurchCommunity/ChurchCommunity.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3HFR2QP3B2;
 				INFOPLIST_FILE = ChurchCommunity/Info.plist;
