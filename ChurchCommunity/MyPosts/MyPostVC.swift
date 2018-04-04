@@ -429,7 +429,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
         return cell!
     }
     
-    
+    var indexPath1: IndexPath?
     //셀을 클릭했을 때
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -437,7 +437,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
         
         //선택한 셀 정보 가져오기
         let cell = tableView.cellForRow(at: indexPath) as? MyPostCell
-        
+        indexPath1 = tableView.indexPath(for: cell!)
         //값 할당
         let name = cell?.nameLabel.text
         let text = cell?.txtLabel.text
@@ -476,6 +476,21 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
         detailTalkViewController.onePost = onePost
         //글쓰기 화면을 rootView로 만들어 주기
         navigationController?.pushViewController(detailTalkViewController, animated: true)
+    }
+    
+    //    override func viewDidAppear(_ animated: Bool) {
+    //        super.viewDidAppear(animated)
+    //        if let aRow = indexPath1 {
+    //             self.tableView.selectRow(at: aRow, animated: true, scrollPosition: .top)
+    //        }
+    //    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let aRow = indexPath1 {
+            self.tableView.selectRow(at: aRow, animated: true, scrollPosition: .top)
+        }
     }
     
     //포스트 조회 함수
