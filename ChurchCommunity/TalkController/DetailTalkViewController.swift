@@ -31,7 +31,7 @@ class DetailTalkViewController: UIViewController {
     
     //var replys = [Reply]()
     let cellId = "cellId"
-
+    
     let uiScrollView : UIScrollView={
         let scv = UIScrollView()
         scv.translatesAutoresizingMaskIntoConstraints = false
@@ -64,7 +64,7 @@ class DetailTalkViewController: UIViewController {
             }
             
             if let blessNum = onePost?.blessCount{
-               likesLabel.text = "좋아요 \(blessNum)"
+                likesLabel.text = "좋아요 \(blessNum)"
             }else{
                 likesLabel.text = "좋아요 0"
             }
@@ -72,6 +72,7 @@ class DetailTalkViewController: UIViewController {
             
             uidLabel.text = onePost?.uid
             showOrNotButton.setTitle(onePost?.show, for: UIControlState())
+            likeButton.setImage(#imageLiteral(resourceName: "ic_favorite.png"), for: .normal)
         }
     }
     //버튼
@@ -90,40 +91,121 @@ class DetailTalkViewController: UIViewController {
     let replyImage: UIButton = {
         let starButton = UIButton(type: .system)
         starButton.isHidden = true
-       // starButton.setImage(#imageLiteral(resourceName: "ic_comment.png"), for: .normal)
+        // starButton.setImage(#imageLiteral(resourceName: "ic_comment.png"), for: .normal)
         starButton.tintColor = UIColor.lightGray
         starButton.translatesAutoresizingMaskIntoConstraints = false
         return starButton
     }()
     
-    
     //버튼
     lazy var likeButton: UIButton = {
         let starButton = UIButton(type: .system)
-        starButton.setImage(#imageLiteral(resourceName: "ic_favorite.png"), for: .normal)
-        starButton.tintColor = UIColor.red
         starButton.translatesAutoresizingMaskIntoConstraints = false
+        starButton.tintColor = UIColor.lightGray
+        starButton.setImage(#imageLiteral(resourceName: "ic_favorite.png"), for: UIControlState())
         starButton.imageView?.contentMode = .scaleToFill
         starButton.imageEdgeInsets = UIEdgeInsets(top: -5, left: -5, bottom: -5, right: -5)
         starButton.addTarget(self, action: #selector(touchBlessBtn), for: .touchUpInside)
         return starButton
     }()
     
+    func likeBtnClicked(){
+        let image = UIImage(named: "ic_favorite")?.withRenderingMode(.alwaysTemplate)
+        self.likeButton.setImage(image, for: .normal)
+        self.likeButton.tintColor = UIColor.lightGray
+        
+    }
+    var blessCheck = true
+    var blessId:String?
     //축복해요 클릭되었을 때
     @objc func touchBlessBtn(){
-        //print("좋아요1")
-        (0...10).forEach { (_) in
-            generateAnimatedView()
-        }
+        print("좋아요 버튼 클릭0 \(blessCheck)")
+        let currentUid = Auth.auth().currentUser?.uid
         let ref = Database.database().reference()
-        //랜덤 키
+        //이미 좋아요를 눌렀다. 그래서 false 가 되어있는 상태
+        if(blessCheck == false && blessId == nil ){
+            
+            let alert = UIAlertController(title: "", message: "좋아요를 취소하시겠습니까?", preferredStyle: .alert)
+            
+            let ok = UIAlertAction(title: "확인", style: .default) { (ok) in
+                print("좋아요 버튼 클릭1 \(self.blessCheck)")
+                ref.child("bless").child(self.pidLabel.text!).observeSingleEvent(of:.value) { (snapshot) in
+                    for child in snapshot.children{
+                        let childSnapshot = child as! DataSnapshot //자식 DataSnapshot 가져오기
+                        let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
+                        let childKey = childSnapshot.key
+                        if let checkUid = childValue["uid"]{
+                            if(checkUid as? String == currentUid){
+                                
+                                print("좋아요 누를 수 없어요. 이미 좋아요를 눌렀었어요 , 그래서 좋아요가 취소되었어요.")
+                                ref.child("bless").child(self.pidLabel.text!).child(childKey).removeValue()
+                                ref.child("bless").child(self.pidLabel.text!).observeSingleEvent(of:.value, with: { (snapshot) in
+                                    self.likesLabel.text = "좋아요 \(snapshot.childrenCount)"
+                                })
+                                self.likeBtnClicked()
+                                //ref.removeAllObservers()
+                            }else{
+                                print("내아이디가 아닌 것")
+                                //ref.removeAllObservers()
+                                
+                            }
+                        }
+                    }
+                    self.blessCheck = true
+                    print("좋아요 버튼 클릭2 \(self.blessCheck)")
+                }
+                
+                ref.removeAllObservers()
+                self.blessId = currentUid
+            }
+            let cancel = UIAlertAction(title: "닫기", style: .cancel) { (cancel) in
+                //code
+            }
+            alert.addAction(cancel)
+            alert.addAction(ok)
+            
+            present(
+                alert,
+                animated: true,
+                completion: nil)
+            
+        }else{
+            
+            var timer: Timer?
+            let str = "Timer"
+            timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateMethod), userInfo: str, repeats: false)
+            
+        }
+    }
+    
+    @objc func updateMethod(){
+        print("좋아요 버튼 클릭3 \(self.blessCheck)")
+        let ref = Database.database().reference()
         let blessRef = ref.child("bless").child(self.pidLabel.text!)
         let blessKey = ref.child("bless").childByAutoId().key
         //데이터 객체 만들기
         let blessInfo: [String:Any] = [ "uid" : Auth.auth().currentUser?.uid ?? ""]
         blessRef.child(blessKey).setValue(blessInfo)
         
+        let image = UIImage(named: "heart1")?.withRenderingMode(.alwaysTemplate)
+        self.likeButton.setImage(image, for: .normal)
+        self.likeButton.tintColor = UIColor.red
+        
+        print("좋아요를 안눌러서 좋아요가 눌러져서 빨간색 하트가 됐어요")
+        (0...10).forEach { (_) in
+            self.generateAnimatedView()
+        }
+        
+        self.blessCheck = false
+        self.blessId = nil
+        print("좋아요 버튼 클릭4 \(self.blessCheck)")
+        
+        ref.child("bless").child(self.pidLabel.text!).observeSingleEvent(of:.value, with: { (snapshot) in
+            self.likesLabel.text = "좋아요 \(snapshot.childrenCount)"
+        })
+        ref.removeAllObservers()
     }
+    
     
     //버튼
     let showOrNotButton: UIButton = {
@@ -194,7 +276,7 @@ class DetailTalkViewController: UIViewController {
             viewController.userId = uidLabel.text
             viewController.userName = nameLabel.text
             let navController = UINavigationController(rootViewController: viewController)
-             //self.navigationController?.pushViewController(navController, animated: true)
+            //self.navigationController?.pushViewController(navController, animated: true)
             self.present(navController, animated: true, completion: nil)
         }
         
@@ -260,11 +342,11 @@ class DetailTalkViewController: UIViewController {
         view.addSubview(imageView)
     }
     
-
-
+    
+    
     // =====================      진입점        =================================
     override func viewDidLoad() {
-       
+        
         super.viewDidLoad()
         //self.navigationItem.title = "\(String(describing: nameLabel.text!))의 시"
         
@@ -310,48 +392,40 @@ class DetailTalkViewController: UIViewController {
         
     }
     
-    /*//탭바 숨기기
-     override func viewWillAppear(_ animated: Bool) {
-     changeTabBar(hidden: true, animated: true)
-     }
-     
-     func changeTabBar(hidden:Bool, animated: Bool){
-     print("changeTabbar")
-     guard let tabBar = self.tabBarController?.tabBar else { return; }
-     if tabBar.isHidden == hidden{ return }
-     let frame = tabBar.frame
-     let offset = hidden ? frame.size.height : -frame.size.height
-     let duration:TimeInterval = (animated ? 0.5 : 0.0)
-     tabBar.isHidden = false
-     
-     UIView.animate(withDuration: duration, animations: {
-     tabBar.frame = frame.offsetBy(dx: 0, dy: offset)
-     }, completion: { (true) in
-     tabBar.isHidden = hidden
-     })
-     }*/
     
     //축복해요 체크 버튼
     func checkBlessBtn(){
+        
         let currentUid = Auth.auth().currentUser?.uid
         let ref = Database.database().reference()
         ref.child("bless").child(pidLabel.text!).observe(.value) { (snapshot) in
             for child in snapshot.children{
-                
                 let childSnapshot = child as! DataSnapshot //자식 DataSnapshot 가져오기
                 let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
-                
+                let childKey = childSnapshot.key
                 if let checkUid = childValue["uid"]{
                     if(checkUid as? String == currentUid){
-                        //print("이미 좋아요를 눌렀네요?")
+                        print("이미 좋아요를 눌렀네요?")
+                        print("childKey - \(childKey)")
+                        let image = UIImage(named: "heart1")?.withRenderingMode(.alwaysTemplate)
+                        self.likeButton.setImage(image, for: .normal)
+                        self.likeButton.tintColor = UIColor.red
+                        self.blessCheck = false //좋아요 눌러진 상태면 false
+                        
+                    }else{
+                        print("좋아요 눌러볼래요?")
+                        let image = UIImage(named: "ic_favorite")?.withRenderingMode(.alwaysTemplate)
+                        self.likeButton.setImage(image, for: .normal)
                         self.likeButton.tintColor = UIColor.lightGray
-                        self.likesLabel.textColor = UIColor.lightGray
-                        self.likeButton.isEnabled = false
+                        self.blessCheck = true
+                        
                     }
                 }
                 
             }
         }
+        ref.removeAllObservers()
+        print("들어올때 축복 체크버튼 확인 - \(self.blessCheck)")
     }
     
     
@@ -382,7 +456,7 @@ class DetailTalkViewController: UIViewController {
         myView.widthAnchor.constraint(equalTo: uiScrollView.widthAnchor).isActive = true
         //myView.heightAnchor.constraint(equalToConstant: 2000).isActive = true
         
-
+        
         myView.addSubview(dateLabel)
         
         dateLabel.topAnchor.constraint(equalTo: myView.topAnchor,constant: 120).isActive = true
@@ -423,9 +497,9 @@ class DetailTalkViewController: UIViewController {
         //showOrNotButton.heightAnchor.constraint(equalToConstant: 12).isActive = true
         //showOrNotButton.bottomAnchor.constraint(equalTo: myView.bottomAnchor, constant:-80).isActive = true
         
-     
-
-         
+        
+        
+        
         /*
          // seeImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 80).isActive = true
          //seeImage.widthAnchor.constraint(equalToConstant: 30).isActive = true
@@ -479,7 +553,7 @@ class DetailTalkViewController: UIViewController {
     
     //글 설정 네비게이션 바 버튼 아이템을 눌렀을 때
     @objc func goSettingAlertAction(){
-        print(" 글 설정 얼러트 창 뛰우기")
+        //print(" 글 설정 얼러트 창 뛰우기")
         let alertController = UIAlertController(
             title: nil,
             message: nil,

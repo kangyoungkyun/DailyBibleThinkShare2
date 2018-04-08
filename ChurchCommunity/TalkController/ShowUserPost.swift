@@ -396,7 +396,7 @@
             return cell!
         }
         
-        
+        var indexPath1: IndexPath?
         //셀을 클릭했을 때
         override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             
@@ -405,7 +405,7 @@
             
             //선택한 셀 정보 가져오기
             let cell = tableView.cellForRow(at: indexPath) as? TalkCell
-            
+             indexPath1 = tableView.indexPath(for: cell!)
             //값 할당
             let name = cell?.nameLabel.text
             let text = cell?.txtLabel.text
@@ -445,7 +445,12 @@
             //글쓰기 화면을 rootView로 만들어 주기
             navigationController?.pushViewController(detailTalkViewController, animated: true)
         }
-        
+        override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            if let aRow = indexPath1 {
+                self.tableView.selectRow(at: aRow, animated: true, scrollPosition: .top)
+            }
+        }
         //포스트 조회 함수
         func showPost(){
             var allCount = 0

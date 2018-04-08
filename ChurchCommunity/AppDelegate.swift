@@ -81,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //collectionView layout - 반드시 넣어줘야 함
         //let layout = UICollectionViewFlowLayout()
-
+        let todayQT = TodayBibleTextVC()
         let talkVC = TalkViewController()
         
         //let memoryVC = MemoryViewController()
@@ -92,20 +92,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //let jobAH = JobAHVC()
         //let makating = MakatingAHVC()
         
-        
+        let group = GroupListVC()
         let settingVC = SettingViewController()
         
-        let todayQT = TodayBibleTextVC()
+        
         
         
         let talkNavVC = UINavigationController(rootViewController: talkVC)
         let noticeNavVC = UINavigationController(rootViewController: noticeAH)
         let todayNavQT = UINavigationController(rootViewController: todayQT)
-         //let makatingNavVC = UINavigationController(rootViewController: makating)
+         let groupNavVC = UINavigationController(rootViewController: group)
         let settingNavVC = UINavigationController(rootViewController: settingVC)
         
         
-        tabBarController?.setViewControllers([todayNavQT,noticeNavVC,talkNavVC,settingNavVC], animated: false)
+        tabBarController?.setViewControllers([todayNavQT,noticeNavVC,talkNavVC,groupNavVC,settingNavVC], animated: false)
         
     
         //탭바 이미지 넣기
@@ -113,7 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         talkNavVC.tabBarItem.image = UIImage(named:"ic_inbox")?.withRenderingMode(.alwaysTemplate)
         noticeNavVC.tabBarItem.image = UIImage(named:"ic_account_circle")?.withRenderingMode(.alwaysTemplate)
         //writeNavVC.tabBarItem.image = UIImage(named:"ic_event_note")?.withRenderingMode(.alwaysTemplate)
-        //makatingNavVC.tabBarItem.image = UIImage(named:"ic_add_alert")?.withRenderingMode(.alwaysTemplate)
+        groupNavVC.tabBarItem.image = UIImage(named:"ic_chrome_reader_mode")?.withRenderingMode(.alwaysTemplate)
         settingNavVC.tabBarItem.image = UIImage(named:"ic_view_headline")?.withRenderingMode(.alwaysTemplate)
         
         
@@ -123,14 +123,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         talkNavVC.tabBarItem.selectedImage = UIImage(named:"ic_inbox")?.withRenderingMode(.alwaysOriginal)
         noticeNavVC.tabBarItem.selectedImage = UIImage(named:"ic_account_circle")?.withRenderingMode(.alwaysOriginal)
         //writeNavVC.tabBarItem.selectedImage = UIImage(named:"ic_event_note_white")?.withRenderingMode(.alwaysOriginal)
-        //makatingNavVC.tabBarItem.image = UIImage(named:"ic_add_alert")?.withRenderingMode(.alwaysTemplate)
+        groupNavVC.tabBarItem.image = UIImage(named:"ic_chrome_reader_mode")?.withRenderingMode(.alwaysTemplate)
         settingNavVC.tabBarItem.selectedImage = UIImage(named:"ic_view_headline")?.withRenderingMode(.alwaysOriginal)
        
         todayNavQT.tabBarItem.title = "묵상글"
         talkNavVC.tabBarItem.title = "글모음"
         noticeNavVC.tabBarItem.title = "나의글"
         //writeNavVC.tabBarItem.title = "시편기록"
-        //makatingNavVC.tabBarItem.title = "친구일기"
+        groupNavVC.tabBarItem.title = "공동체"
         settingNavVC.tabBarItem.title = "더보기"
         
         
