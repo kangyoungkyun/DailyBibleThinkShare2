@@ -257,7 +257,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
         
         //네비게이션 바 버튼 아이템 글꼴 바꾸기
         self.navigationItem.leftBarButtonItem?.setTitleTextAttributes([
-            NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 14.0)!,
+            NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 15.0)!,
             NSAttributedStringKey.foregroundColor: UIColor.lightGray], for: UIControlState())
         
         

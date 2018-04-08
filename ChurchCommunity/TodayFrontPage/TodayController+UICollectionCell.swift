@@ -47,7 +47,7 @@ extension TodayCollectionVC{
             cell.dateLable.text = ""
             cell.pageLable.text = "3/3 page"
         }
-        
+
         return cell
     }
     //커스텀 셀의 크기를 view에 꽉차게 해주었다.

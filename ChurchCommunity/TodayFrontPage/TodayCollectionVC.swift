@@ -50,12 +50,20 @@ class TodayCollectionVC: UICollectionViewController, UICollectionViewDelegateFlo
         
     }
     
+    //창이 사라질때 값 1 더해주기
+    override func viewWillDisappear(_ animated: Bool) {
+        howMany += 1
+
+    }
     
+    //즉 묵상 탭 안으로 들어갔다가 뒤로 눌렀을때 2가 되어 있다. 즉,
+    var index = IndexPath(item: 0, section: 0)
     override func viewWillAppear(_ animated: Bool) {
+        if(howMany > 1){
+            self.collectionView?.selectItem(at: index, animated: true, scrollPosition: .left)
+        }
         //페이지 안에서 로그아웃 버튼을 눌렀을 때 한번더 로그아웃 해주기
-        
          let firebaseAuth = Auth.auth().currentUser?.uid
-        
         if (firebaseAuth == nil){
             //print("로그아웃된것이 확인되었습니다.")
             dismiss(animated: true, completion: nil)
@@ -64,10 +72,11 @@ class TodayCollectionVC: UICollectionViewController, UICollectionViewDelegateFlo
     }
     
     
-    
+    var howMany = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBottomControls()
+        howMany = 1
         //SwipingController 객체를 생성하고 최상위 뷰로 설정
         
         //배경색을 흰색
@@ -131,10 +140,7 @@ class TodayCollectionVC: UICollectionViewController, UICollectionViewDelegateFlo
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-      
-    }
-  
+
     override func viewDidLayoutSubviews() {
           self.setupBottomControls()
     }

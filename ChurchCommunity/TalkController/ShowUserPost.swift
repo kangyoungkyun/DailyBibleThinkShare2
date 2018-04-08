@@ -457,7 +457,7 @@
             var showPostCount = 0
             //let myId = Auth.auth().currentUser?.uid
             //let myName = Auth.auth().currentUser?.displayName
-            self.nameLable.text = "\(userName!)의 시편"
+            self.nameLable.text = "\(userName!)의 묵상글"
             //print("start showPost")
             let ref = Database.database().reference()
             

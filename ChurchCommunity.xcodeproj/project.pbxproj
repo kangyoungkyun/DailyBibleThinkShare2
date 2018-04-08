@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52018A67207AE09D00D66D12 /* ic_account_balance.png in Resources */ = {isa = PBXBuildFile; fileRef = 52018A66207AE09C00D66D12 /* ic_account_balance.png */; };
 		520DFE092058A3A600AF5A2E /* DetailTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DFE082058A3A600AF5A2E /* DetailTalkViewController.swift */; };
 		52124EF7206C8D69000B65EA /* ShowUserPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52124EF6206C8D69000B65EA /* ShowUserPost.swift */; };
 		521E73862069CE7400C56EF6 /* TodayCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521E73852069CE7400C56EF6 /* TodayCollectionVC.swift */; };
@@ -61,6 +62,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		52018A66207AE09C00D66D12 /* ic_account_balance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_account_balance.png; sourceTree = "<group>"; };
 		520DFE082058A3A600AF5A2E /* DetailTalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTalkViewController.swift; sourceTree = "<group>"; };
 		52124EF6206C8D69000B65EA /* ShowUserPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowUserPost.swift; sourceTree = "<group>"; };
 		521936CC2068790300FB624C /* ic_favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_favorite.png; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				526DD63E206E32BD00E5C8D2 /* ic_inbox.png */,
 				526DD63A206E306F00E5C8D2 /* pencil4.png */,
 				521E738F206A2BA100C56EF6 /* see.png */,
+				52018A66207AE09C00D66D12 /* ic_account_balance.png */,
 				521E738D206A2B0500C56EF6 /* pencil.png */,
 				521E736F2069A32500C56EF6 /* heart.png */,
 				521936D220688BB600FB624C /* ic_person_outline.png */,
@@ -393,6 +396,7 @@
 				52DA909A207238DE0020B893 /* bac2.jpg in Resources */,
 				52DA90A4207238EF0020B893 /* ic_person_outline.png in Resources */,
 				5238EC81207A216F00A481E9 /* heart1.png in Resources */,
+				52018A67207AE09D00D66D12 /* ic_account_balance.png in Resources */,
 				52DA90B120725F250020B893 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

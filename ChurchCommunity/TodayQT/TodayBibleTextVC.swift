@@ -125,6 +125,19 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
         self.navigationController?.navigationBar.isTranslucent = false
         
         
+        //self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "home", style: .plain, target: self, action:  #selector(firstPage))
+        
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_account_balance.png"), style: .plain, target: self, action: #selector(firstPage))
+        
+        //ic_account_balance
+        
+        //네비게이션 바 버튼 아이템 글꼴 바꾸기
+        self.navigationItem.leftBarButtonItem?.setTitleTextAttributes([
+            NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 13.0)!,
+            NSAttributedStringKey.foregroundColor: UIColor.lightGray], for: UIControlState())
+        
+        
         //네비게이션 바 색깔 변경
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.98, green:0.98, blue:0.98, alpha:1.0)
         self.navigationController?.navigationBar.tintColor = UIColor.lightGray
@@ -142,10 +155,12 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
         //동적 테이블 셀 높이
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 140
-        
-        
-        
-        
+
+    }
+
+    
+    @objc func firstPage (){
+        dismiss(animated: true, completion: nil)
     }
     
     //동적 테이블 함수
