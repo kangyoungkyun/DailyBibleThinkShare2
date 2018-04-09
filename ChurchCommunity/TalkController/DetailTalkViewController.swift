@@ -27,7 +27,14 @@ func customPath() -> UIBezierPath{
 
 import UIKit
 import Firebase
-class DetailTalkViewController: UIViewController {
+class DetailTalkViewController: UIViewController,ChildViewControllerDelegate {
+    
+    
+    func childViewControllerResponse(text: String) {
+         print("넘어온 데이터는")
+        print(text)
+    }
+    
     
     //var replys = [Reply]()
     let cellId = "cellId"
@@ -75,6 +82,7 @@ class DetailTalkViewController: UIViewController {
             likeButton.setImage(#imageLiteral(resourceName: "ic_favorite.png"), for: .normal)
         }
     }
+    
     //버튼
     let seeImage: UIButton = {
         let starButton = UIButton(type: .system)
@@ -342,6 +350,17 @@ class DetailTalkViewController: UIViewController {
         view.addSubview(imageView)
     }
     
+    //수정완료하고 돌아올때 마다 바로 반영 하기
+    override func viewWillAppear(_ animated: Bool) {
+        let ref = Database.database().reference()
+        ref.child("posts").child(pidLabel.text!).observeSingleEvent(of: .value) { (snpat) in
+
+            let childSnapshot = snpat //자식 DataSnapshot 가져오기
+                let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
+                self.txtLabel.text = childValue["text"] as? String
+        }
+        ref.removeAllObservers()
+    }
     
     
     // =====================      진입점        =================================
@@ -425,7 +444,7 @@ class DetailTalkViewController: UIViewController {
             }
         }
         ref.removeAllObservers()
-        print("들어올때 축복 체크버튼 확인 - \(self.blessCheck)")
+        //print("들어올때 축복 체크버튼 확인 - \(self.blessCheck)")
     }
     
     
@@ -574,7 +593,12 @@ class DetailTalkViewController: UIViewController {
         let modifyAction = UIAlertAction(title: "수정", style: .default) { (alert) in
             //print("글 수정")
             
-            self.settingAlertAction(txt: self.txtLabel.text!, pid: self.pidLabel.text!)
+            //self.settingAlertAction(txt: self.txtLabel.text!, pid: self.pidLabel.text!)
+            let viewController = ModifyVC()
+            
+            viewController.textFiedlView.text = self.txtLabel.text!
+            viewController.pid = self.pidLabel.text
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
         
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { (alert) in
