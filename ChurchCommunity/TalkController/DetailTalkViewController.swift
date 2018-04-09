@@ -362,7 +362,6 @@ class DetailTalkViewController: UIViewController,ChildViewControllerDelegate {
         ref.removeAllObservers()
     }
     
-    
     // =====================      진입점        =================================
     override func viewDidLoad() {
         

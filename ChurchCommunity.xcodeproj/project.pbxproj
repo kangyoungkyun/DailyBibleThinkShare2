@@ -58,6 +58,8 @@
 		52DA90AF207239910020B893 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52858A512055E64D005C9BB9 /* LaunchScreen.storyboard */; };
 		52DA90B0207239960020B893 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52858A4C2055E64D005C9BB9 /* Main.storyboard */; };
 		52DA90B120725F250020B893 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52858A4F2055E64D005C9BB9 /* Assets.xcassets */; };
+		52F4380E207B3DA30057ABEC /* GroupInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4380D207B3DA30057ABEC /* GroupInfo.swift */; };
+		52F43810207B3E2B0057ABEC /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4380F207B3E2B0057ABEC /* GroupCell.swift */; };
 		52FF200A2068DF6600C133D0 /* ShowUserPostsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF20092068DF6600C133D0 /* ShowUserPostsVC.swift */; };
 		B1A4D96097D35122300563B8 /* Pods_ChurchCommunity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F01414784C01122F8C96A2A /* Pods_ChurchCommunity.framework */; };
 /* End PBXBuildFile section */
@@ -115,6 +117,8 @@
 		52CAC7AE206ABA3400BFB176 /* NanumMyeongjo-YetHangul.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NanumMyeongjo-YetHangul.ttf"; sourceTree = "<group>"; };
 		52CFE0E9205F4B83006BADE7 /* MoreNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreNoticeViewController.swift; sourceTree = "<group>"; };
 		52D6121F205640C500F6F031 /* read.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = read.txt; sourceTree = "<group>"; };
+		52F4380D207B3DA30057ABEC /* GroupInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInfo.swift; sourceTree = "<group>"; };
+		52F4380F207B3E2B0057ABEC /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
 		52FF20092068DF6600C133D0 /* ShowUserPostsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowUserPostsVC.swift; sourceTree = "<group>"; };
 		83D6E73A6D1352F5B9816186 /* Pods-ChurchCommunity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChurchCommunity.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChurchCommunity/Pods-ChurchCommunity.release.xcconfig"; sourceTree = "<group>"; };
 		9F01414784C01122F8C96A2A /* Pods_ChurchCommunity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChurchCommunity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +152,7 @@
 			children = (
 				5242FF9620576FFD00548FD4 /* Post.swift */,
 				52299E5A205B6F9F00B9D118 /* Notices.swift */,
+				52F4380D207B3DA30057ABEC /* GroupInfo.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -157,6 +162,7 @@
 			children = (
 				5242FF942057634D00548FD4 /* TalkCell.swift */,
 				5250B5C6206497710094F1B8 /* MyPostCell.swift */,
+				52F4380F207B3E2B0057ABEC /* GroupCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -480,6 +486,7 @@
 				5237A96520665C1F0027D0AB /* ShowUserPageViewController.swift in Sources */,
 				52B463122079C9FD009FF82E /* GroupListVC.swift in Sources */,
 				521E738A206A14C500C56EF6 /* PageCell.swift in Sources */,
+				52F43810207B3E2B0057ABEC /* GroupCell.swift in Sources */,
 				52124EF7206C8D69000B65EA /* ShowUserPost.swift in Sources */,
 				52858A882055F524005C9BB9 /* SignViewController.swift in Sources */,
 				523E790C2070604800C9E50E /* TodayBibleTextVC.swift in Sources */,
@@ -490,6 +497,7 @@
 				52CFE0EA205F4B83006BADE7 /* MoreNoticeViewController.swift in Sources */,
 				52858A4B2055E64D005C9BB9 /* MainViewController.swift in Sources */,
 				52299E5B205B6F9F00B9D118 /* Notices.swift in Sources */,
+				52F4380E207B3DA30057ABEC /* GroupInfo.swift in Sources */,
 				52858A492055E64D005C9BB9 /* AppDelegate.swift in Sources */,
 				52858A5B2055E7EA005C9BB9 /* TalkViewController.swift in Sources */,
 				52858A9020562515005C9BB9 /* HideKeyBoard.swift in Sources */,
