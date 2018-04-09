@@ -101,7 +101,7 @@ class GroupCell: UITableViewCell {
         containerView.addSubview(groupTitleLabel)
         containerView.addSubview(groupNameLabel)
         containerView.addSubview(groupCountLabel)
-
+        containerView.addSubview(passwordLabel)
 
 
         groupTitleLabel.topAnchor.constraint(equalTo: containerView.topAnchor,constant: 28).isActive = true
