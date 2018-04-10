@@ -193,15 +193,16 @@ class GroupListVC: UITableViewController {
             let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
             
             if let checkGroup = childValue["groupid"]{
-                self.checkGroupid = checkGroup as! String
+                self.checkGroupid = checkGroup as? String
                 
-                if checkGroup as! String != nil{
+                if checkGroup as? String != nil{
                     print("그룹이 있네요")
                     ref.child("group").child(self.checkGroupid!).observeSingleEvent(of:.value) { (snapshot) in
                         self.groupList.removeAll() //배열을 안지워 주면 계속 중복해서 쌓이게 된다.
                         let groupToShow = GroupInfo() //데이터를 담을 클래스
                         let childValue = snapshot.value as! [String:Any] //자식의 value 값 가져오기
-                        groupToShow.groupid = childSnapshot.key
+                        groupToShow.groupid = self.checkGroupid
+                        
                         
                         print("만들어진 그룹 방 보여줘요.   \(childValue)")
                         if let leaderid = childValue["leaderid"],  let leadername = childValue["leadername"], let groupname = childValue["groupname"], let count = childValue["count"],let password = childValue["password"]{
@@ -287,7 +288,7 @@ class GroupListVC: UITableViewController {
             print("목록으로 들어갑니다.")
             let groupInfo = GroupInfo()
             groupInfo.groupid = groupid
-            groupInfo.groupname = name
+            groupInfo.groupname = title
             groupInfo.count = count
             groupInfo.password = password
             
@@ -347,13 +348,13 @@ class GroupListVC: UITableViewController {
                     let alert = UIAlertController(title: "알림 ", message:"\(String(describing: title!)) 가입을 축하합니다.", preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: { (action) in
                         
-                        self.tableView.reloadData()
+                        
                         self.navigationItem.leftBarButtonItem = nil
                         self.navigationItem.hidesBackButton = true
                         self.navigationItem.rightBarButtonItem = nil
                         let groupInfo = GroupInfo()
                         groupInfo.groupid = groupid
-                        groupInfo.groupname = name
+                         groupInfo.groupname = title
                         groupInfo.count = count
                         groupInfo.password = password
                         
@@ -382,6 +383,8 @@ class GroupListVC: UITableViewController {
     
     
     //그룹 만들기 - 나중에 그룹을 몇개 만들었는지 체크 하고 그룹 삭제 기능도 넣자 그리고 그룹 탈퇴 기능도..
+    var groupKeyOne: String = ""
+    var groupNameOne: String = ""
     @objc func makeGroup(){
         var txt : String?
         var pass: String?
@@ -418,14 +421,14 @@ class GroupListVC: UITableViewController {
             //print(txt,pass)
             let userKey = Auth.auth().currentUser?.uid
             let userName = Auth.auth().currentUser?.displayName
-            print(userKey)
+      
             //nil 값 검사
             if let groupname = alert.textFields?[0].text, let password = alert.textFields?[1].text,
                 let leaderid = userKey, let leadername = userName{
                 let ref = Database.database().reference()
                 let groupKey = ref.child("group").childByAutoId().key
-                
-                
+                self.groupNameOne = groupname
+               self.groupKeyOne = groupKey
                 //그룹 db 만들어 준다.
                 ref.child("group").child(groupKey).setValue(["leaderid" : leaderid,
                                                              "leadername" : leadername,
@@ -441,8 +444,24 @@ class GroupListVC: UITableViewController {
             }
             
             
-            let alert = UIAlertController(title: "축하합니다", message:"묵상방이 생성되었습니다.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
+            //가입성공하면
+            let alert = UIAlertController(title: "축하합니다.", message:"묵상방이 생성되었습니다.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: { (action) in
+                
+                
+                self.navigationItem.leftBarButtonItem = nil
+                self.navigationItem.hidesBackButton = true
+                self.navigationItem.rightBarButtonItem = nil
+                let groupInfo = GroupInfo()
+                groupInfo.groupid = self.groupKeyOne
+                groupInfo.groupname = self.groupNameOne
+                let viewController = GroupPost()
+                viewController.groupInfo = groupInfo
+                self.navigationController?.pushViewController(viewController, animated: true)
+            }))
+            
+            
+            
             self.present(alert, animated: true, completion: nil)
         }
         

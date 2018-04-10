@@ -35,6 +35,7 @@
 		52B463122079C9FD009FF82E /* GroupListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B463112079C9FD009FF82E /* GroupListVC.swift */; };
 		52C2EB4A205A5F53005B4904 /* AlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C2EB49205A5F53005B4904 /* AlertTableViewController.swift */; };
 		52CFE0EA205F4B83006BADE7 /* MoreNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CFE0E9205F4B83006BADE7 /* MoreNoticeViewController.swift */; };
+		52D8B78E207CB597004A9673 /* ic_group.png in Resources */ = {isa = PBXBuildFile; fileRef = 52D8B78D207CB597004A9673 /* ic_group.png */; };
 		52DA9097207238720020B893 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52858A8D20561228005C9BB9 /* GoogleService-Info.plist */; };
 		52DA9098207238D70020B893 /* bac.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 52240D9A2071CF5A008892F9 /* bac.jpg */; };
 		52DA909A207238DE0020B893 /* bac2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 52240D9B2071CF5B008892F9 /* bac2.jpg */; };
@@ -118,6 +119,7 @@
 		52CAC7AE206ABA3400BFB176 /* NanumMyeongjo-YetHangul.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NanumMyeongjo-YetHangul.ttf"; sourceTree = "<group>"; };
 		52CFE0E9205F4B83006BADE7 /* MoreNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreNoticeViewController.swift; sourceTree = "<group>"; };
 		52D6121F205640C500F6F031 /* read.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = read.txt; sourceTree = "<group>"; };
+		52D8B78D207CB597004A9673 /* ic_group.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_group.png; sourceTree = "<group>"; };
 		52EBE997207C4D2000D32857 /* GroupPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPost.swift; sourceTree = "<group>"; };
 		52F4380D207B3DA30057ABEC /* GroupInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInfo.swift; sourceTree = "<group>"; };
 		52F4380F207B3E2B0057ABEC /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 		52858A622055EBDE005C9BB9 /* Pic */ = {
 			isa = PBXGroup;
 			children = (
+				52D8B78D207CB597004A9673 /* ic_group.png */,
 				5238EC80207A216F00A481E9 /* heart1.png */,
 				52AC441C2073BFDA00B9D753 /* ic_view_headline.png */,
 				52240D9A2071CF5A008892F9 /* bac.jpg */,
@@ -409,6 +412,7 @@
 				52DA90A4207238EF0020B893 /* ic_person_outline.png in Resources */,
 				5238EC81207A216F00A481E9 /* heart1.png in Resources */,
 				52018A67207AE09D00D66D12 /* ic_account_balance.png in Resources */,
+				52D8B78E207CB597004A9673 /* ic_group.png in Resources */,
 				52DA90B120725F250020B893 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

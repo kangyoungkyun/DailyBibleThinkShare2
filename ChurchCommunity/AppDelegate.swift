@@ -105,7 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settingNavVC = UINavigationController(rootViewController: settingVC)
         
         
-        tabBarController?.setViewControllers([todayNavQT,noticeNavVC,talkNavVC,groupNavVC,settingNavVC], animated: false)
+        tabBarController?.setViewControllers([todayNavQT,noticeNavVC,groupNavVC,talkNavVC,settingNavVC], animated: false)
         
     
         //탭바 이미지 넣기
@@ -113,7 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         talkNavVC.tabBarItem.image = UIImage(named:"ic_inbox")?.withRenderingMode(.alwaysTemplate)
         noticeNavVC.tabBarItem.image = UIImage(named:"ic_account_circle")?.withRenderingMode(.alwaysTemplate)
         //writeNavVC.tabBarItem.image = UIImage(named:"ic_event_note")?.withRenderingMode(.alwaysTemplate)
-        groupNavVC.tabBarItem.image = UIImage(named:"ic_chrome_reader_mode")?.withRenderingMode(.alwaysTemplate)
+        groupNavVC.tabBarItem.image = UIImage(named:"ic_group")?.withRenderingMode(.alwaysTemplate)
         settingNavVC.tabBarItem.image = UIImage(named:"ic_view_headline")?.withRenderingMode(.alwaysTemplate)
         
         
@@ -123,14 +123,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         talkNavVC.tabBarItem.selectedImage = UIImage(named:"ic_inbox")?.withRenderingMode(.alwaysOriginal)
         noticeNavVC.tabBarItem.selectedImage = UIImage(named:"ic_account_circle")?.withRenderingMode(.alwaysOriginal)
         //writeNavVC.tabBarItem.selectedImage = UIImage(named:"ic_event_note_white")?.withRenderingMode(.alwaysOriginal)
-        groupNavVC.tabBarItem.image = UIImage(named:"ic_chrome_reader_mode")?.withRenderingMode(.alwaysTemplate)
+        groupNavVC.tabBarItem.image = UIImage(named:"ic_group")?.withRenderingMode(.alwaysTemplate)
         settingNavVC.tabBarItem.selectedImage = UIImage(named:"ic_view_headline")?.withRenderingMode(.alwaysOriginal)
        
         todayNavQT.tabBarItem.title = "묵상글"
-        talkNavVC.tabBarItem.title = "글모음"
+        talkNavVC.tabBarItem.title = "우리글"
         noticeNavVC.tabBarItem.title = "나의글"
         //writeNavVC.tabBarItem.title = "시편기록"
-        groupNavVC.tabBarItem.title = "공동체"
+        groupNavVC.tabBarItem.title = "함께묵상"
         settingNavVC.tabBarItem.title = "더보기"
         
         

@@ -34,7 +34,7 @@ class SignViewController: UIViewController {
     //이름 필드
     let nameTextField: UITextField = {
         let name = UITextField()
-        name.placeholder = "필명"
+        name.placeholder = "닉네임"
         name.autocorrectionType = .no
         name.autocapitalizationType = .none
         name.font = UIFont(name: "NanumMyeongjo-YetHangul", size: 16.5)
