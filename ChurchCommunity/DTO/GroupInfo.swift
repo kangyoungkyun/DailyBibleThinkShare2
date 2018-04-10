@@ -10,6 +10,7 @@ import UIKit
 
 class GroupInfo: NSObject {
 
+    var groupid : String!
     
     var leaderid: String!
     

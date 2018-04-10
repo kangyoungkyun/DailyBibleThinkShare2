@@ -53,32 +53,22 @@ class GroupCell: UITableViewCell {
     
     let passwordLabel: UILabel = {
         let label = UILabel()
-        label.text = "1명,묵상중"
+       
         label.font = UIFont(name: "NanumMyeongjo-YetHangul", size: 11.5)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true
         return label
     }()
     
-//    //텍스트
-//    var txtLabel: UILabel = {
-//        let label = UILabel()
-//
-//        label.setLineSpacing(lineSpacing: 18.0)
-//        label.lineBreakMode = .byWordWrapping
-//        label.numberOfLines = 0
-//        label.textAlignment = .center
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.font = UIFont(name: "NanumMyeongjo-YetHangul", size: 13.5)
-//
-//        return label
-//    }()
-    
-    
-    
+    let groupIdLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = UIFont(name: "NanumMyeongjo-YetHangul", size: 11.5)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        return label
+    }()
 
-
- 
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -102,7 +92,7 @@ class GroupCell: UITableViewCell {
         containerView.addSubview(groupNameLabel)
         containerView.addSubview(groupCountLabel)
         containerView.addSubview(passwordLabel)
-
+        containerView.addSubview(groupIdLabel)
 
         groupTitleLabel.topAnchor.constraint(equalTo: containerView.topAnchor,constant: 28).isActive = true
         groupTitleLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
@@ -121,7 +111,8 @@ class GroupCell: UITableViewCell {
         passwordLabel.leadingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
         passwordLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15).isActive = true
         
-
+        passwordLabel.trailingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+        passwordLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15).isActive = true
         
     }
     

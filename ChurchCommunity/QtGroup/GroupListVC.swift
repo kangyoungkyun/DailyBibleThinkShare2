@@ -105,7 +105,7 @@ class GroupListVC: UITableViewController {
         //동적 테이블 셀 높이
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 140
-
+        
         self.navigationController?.navigationBar.isTranslucent = false
         
         
@@ -122,10 +122,14 @@ class GroupListVC: UITableViewController {
             NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 15.0)!,
             NSAttributedStringKey.foregroundColor: UIColor.darkGray], for: UIControlState())
         
-        
-        
         showGroupList()
         groupidAndLeaderCheck()
+        
+        
+        var timer: Timer?
+        //let str = "Timer"
+        //timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(showGroupList), userInfo: str, repeats: false)
+        
     }
     
     
@@ -138,33 +142,42 @@ class GroupListVC: UITableViewController {
         return UITableViewAutomaticDimension
     }
     
+    
+    
+    
     //그룹을 만든 유저인지 or 그룹에 가입한 유저인지 체크
     func groupidAndLeaderCheck(){
         
         let ref = Database.database().reference()
         let userKey = Auth.auth().currentUser?.uid
+        
         ref.child("users").child(userKey!).observeSingleEvent(of: .value) { (snpat) in
             
             let childSnapshot = snpat //자식 DataSnapshot 가져오기
             let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
-            let groupid = childValue["groupid"] as? String
-            let leader = childValue["leader"] as? String
-            let group = childValue["group"] as? String
             
-            if (groupid != "" && leader == "y"){
-                print("방을 이미 만드셨습니다.")
-                self.navigationItem.leftBarButtonItem = nil
-                self.navigationItem.hidesBackButton = true
-                self.navigationItem.rightBarButtonItem = nil
-                return
-            }
-            
-            if(groupid != "" && group == "y"){
-                print("가입한 방이 있습니다.")
-                self.navigationItem.leftBarButtonItem = nil
-                self.navigationItem.hidesBackButton = true
-                self.navigationItem.rightBarButtonItem = nil
-                return
+            if let groupid = childValue["groupid"] as? String, let leader = childValue["leader"] as? String, let group = childValue["group"] as? String{
+                
+                // self.checkGroupid = groupid
+                
+                //print("내 그룹 아이디를 보여줘: \(self.checkGroupid)")
+                
+                if (groupid != "" && leader == "y"){
+                    print("방을 이미 만드셨습니다.")
+                    self.navigationItem.leftBarButtonItem = nil
+                    self.navigationItem.hidesBackButton = true
+                    self.navigationItem.rightBarButtonItem = nil
+                    return
+                }
+                
+                if(groupid != "" && group == "y"){
+                    print("가입한 방이 있습니다.")
+                    self.navigationItem.leftBarButtonItem = nil
+                    self.navigationItem.hidesBackButton = true
+                    self.navigationItem.rightBarButtonItem = nil
+                    return
+                }
+                
             }
         }
         ref.removeAllObservers()
@@ -172,48 +185,95 @@ class GroupListVC: UITableViewController {
     
     
     //그룹 리스트 가져오기
-    func showGroupList(){
+    var checkGroupid:String?
+    @objc func showGroupList(){
+        
         let ref = Database.database().reference()
-        ref.child("group").observe(.value) { (snapshot) in
-            self.groupList.removeAll() //배열을 안지워 주면 계속 중복해서 쌓이게 된다.
-            for child in snapshot.children{
+        let userKey = Auth.auth().currentUser?.uid
+        ref.child("users").child(userKey!).observeSingleEvent(of: .value) { (snpat) in
+            
+            let childSnapshot = snpat //자식 DataSnapshot 가져오기
+            let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
+            
+            if let checkGroup = childValue["groupid"]{
+                self.checkGroupid = checkGroup as! String
                 
-                let groupToShow = GroupInfo() //데이터를 담을 클래스
-                let childSnapshot = child as! DataSnapshot //자식 DataSnapshot 가져오기
-                let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
-                
-                print("만들어진 그룹 방 보여줘요.   \(childValue)")
-                if let leaderid = childValue["leaderid"],  let leadername = childValue["leadername"], let groupname = childValue["groupname"], let count = childValue["count"],let password = childValue["password"]{
-                    
-                    groupToShow.leaderid = leaderid as! String
-                    groupToShow.leadername = leadername as! String
-                    groupToShow.groupname = groupname as! String
-                    groupToShow.password = password as! String
-                    groupToShow.count = String(describing: count)
-                    
-                    self.groupList.insert(groupToShow, at: 0)
+                if checkGroup as! String != nil{
+                    print("그룹이 있네요")
+                    ref.child("group").child(self.checkGroupid!).observeSingleEvent(of:.value) { (snapshot) in
+                        self.groupList.removeAll() //배열을 안지워 주면 계속 중복해서 쌓이게 된다.
+                        let groupToShow = GroupInfo() //데이터를 담을 클래스
+                        let childValue = snapshot.value as! [String:Any] //자식의 value 값 가져오기
+                        groupToShow.groupid = childSnapshot.key
+                        
+                        print("만들어진 그룹 방 보여줘요.   \(childValue)")
+                        if let leaderid = childValue["leaderid"],  let leadername = childValue["leadername"], let groupname = childValue["groupname"], let count = childValue["count"],let password = childValue["password"]{
+                            
+                            groupToShow.leaderid = leaderid as! String
+                            groupToShow.leadername = leadername as! String
+                            groupToShow.groupname = groupname as! String
+                            groupToShow.password = password as! String
+                            groupToShow.count = String(describing: count)
+                            
+                            self.groupList.insert(groupToShow, at: 0)
+                            
+                        }
+                        self.tableView.reloadData()
+                    }
+                }else{
+                    print("음 그룹이 아직 없군요")
+                    //없으면 전체다 보여줘서 가입할 수 있게 하기
+                    // let ref = Database.database().reference()
+                    ref.child("group").observeSingleEvent(of:.value) { (snapshot) in
+                        self.groupList.removeAll() //배열을 안지워 주면 계속 중복해서 쌓이게 된다.
+                        for child in snapshot.children{
+                            
+                            let groupToShow = GroupInfo() //데이터를 담을 클래스
+                            let childSnapshot = child as! DataSnapshot //자식 DataSnapshot 가져오기
+                            let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
+                            groupToShow.groupid = childSnapshot.key
+                            
+                            print("만들어진 그룹 방 보여줘요.   \(childValue)")
+                            if let leaderid = childValue["leaderid"],  let leadername = childValue["leadername"], let groupname = childValue["groupname"], let count = childValue["count"],let password = childValue["password"]{
+                                
+                                groupToShow.leaderid = leaderid as! String
+                                groupToShow.leadername = leadername as! String
+                                groupToShow.groupname = groupname as! String
+                                groupToShow.password = password as! String
+                                groupToShow.count = String(describing: count)
+                                
+                                self.groupList.insert(groupToShow, at: 0)
+                            }
+                        }
+                        self.tableView.reloadData()
+                    }
                 }
             }
-            self.tableView.reloadData()
         }
+        
+        
+        
     }
+    //테이블 개수
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return groupList.count
     }
     
-    
+    //테이블 행 구성
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? GroupCell
         
-       let groupData = groupList[indexPath.row]
+        let groupData = groupList[indexPath.row]
         cell?.groupTitleLabel.text = groupData.groupname
         cell?.groupNameLabel.text = groupData.leadername
         cell?.groupCountLabel.text = "  \(groupData.count!) 명"
         cell?.passwordLabel.text = groupData.password
+        cell?.groupIdLabel.text = groupData.groupid
         return cell!
     }
     
+
     //묵상 그룹 리스트를 클릭했을 때
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as? GroupCell
@@ -223,7 +283,12 @@ class GroupListVC: UITableViewController {
         let name = cell?.groupNameLabel.text
         let count = cell?.groupCountLabel.text
         let password = cell?.passwordLabel.text
-
+        let groupid = cell?.groupIdLabel.text
+        
+        
+        //로그인한 유저 조회해서 클릭시 user 테이블에 groupid가 있으면 클릭시 포스트 페이지로 이동 시키기!!!!
+        //없으면 비번 치고 가입시키기
+        
         
         let alert = UIAlertController(title: "", message: "환영합니다 :)", preferredStyle: .alert)
         alert.addTextField { (myTextField) in
@@ -235,7 +300,6 @@ class GroupListVC: UITableViewController {
         
         let ok = UIAlertAction(title: "입장하기", style: .default) { (ok) in
             //기존의 방 비밀번호와 비교 해서 맞으면 후 추리
-           
             //틀리면 밖으로
             
             //빈칸 확인
@@ -254,13 +318,26 @@ class GroupListVC: UITableViewController {
                 return
             }else{
                 //user에 update 해주기 group 칼럼
-                print("비밀번호가 맞았어요, 방으로 입장합니다.")
+                //print("비밀번호가 맞았어요, 방으로 입장합니다.")
+                
+                let leader = ["leader" : "n",
+                              "group" : "y",
+                              "groupid" : groupid]
+                //유저키
+                let userKey = Auth.auth().currentUser?.uid
+                let ref = Database.database().reference()
+                ref.child("users").child(userKey!).updateChildValues(leader)
+                
+                
+                let alert = UIAlertController(title: "알림 ", message:"\(String(describing: title!)) 묵상방 가입성공", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
             
             
-//            let key = Auth.auth().currentUser?.uid
-//            let ref = Database.database().reference()
-//            ref.child("users").child(key!).updateChildValues(["stateMsg" : txt ?? ""])
+            //            let key = Auth.auth().currentUser?.uid
+            //            let ref = Database.database().reference()
+            //            ref.child("users").child(key!).updateChildValues(["stateMsg" : txt ?? ""])
         }
         
         let cancel = UIAlertAction(title: "취소", style: .cancel) { (cancel) in
@@ -279,8 +356,6 @@ class GroupListVC: UITableViewController {
     @objc func makeGroup(){
         var txt : String?
         var pass: String?
-        
-
         
         print("묵상 그룹을 만드시겠습니까?")
         let alert = UIAlertController(title: "", message: "묵상방 만들기", preferredStyle: .alert)
@@ -336,7 +411,7 @@ class GroupListVC: UITableViewController {
                 ref.child("users").child(userKey!).updateChildValues(leader)
             }
             
-
+            
             let alert = UIAlertController(title: "축하합니다", message:"묵상방이 생성되었습니다.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
