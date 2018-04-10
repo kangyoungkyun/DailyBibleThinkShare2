@@ -82,6 +82,24 @@ class WriteViewController: UIViewController,UITextViewDelegate {
             NSAttributedStringKey.foregroundColor: UIColor.lightGray], for: UIControlState())
         setNavTitle()
         setLayout()
+        checkGroupId()
+    }
+    //그룹에 가입한 유저인지 체크 해서 그룹아이디 변수에 할당해주기
+    var checkGroupid : String?
+    func checkGroupId(){
+        let ref = Database.database().reference()
+        let userKey = Auth.auth().currentUser?.uid
+        
+        ref.child("users").child(userKey!).observeSingleEvent(of: .value) { (snpat) in
+            
+            let childSnapshot = snpat //자식 DataSnapshot 가져오기
+            let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
+            
+            if let checkGroup = childValue["groupid"]{
+                self.checkGroupid = checkGroup as! String
+            }
+        }
+        ref.removeAllObservers()
     }
     
     //몇번째 시편인지 가져오기
@@ -145,18 +163,37 @@ class WriteViewController: UIViewController,UITextViewDelegate {
             //부모키 user를 만들고 그 밑에 각자의 아이디로 또 자식을 만든다.
             let PostReference = ref.child("posts").child(PostKey)
             
-            //데이터 객체 만들기
-            let postInfo: [String:Any] = ["pid" : PostKey,
-                                          "uid" : userId,
-                                          "name" : userName!,
-                                          "text" : textMsg!,
-                                          "hit": 0,
-                                          "date": ServerValue.timestamp(),
-                                          "reply":0,
-                                          "show":"y"]
+            //if문으로 groupid가 있으면 넣어주고
+            if(checkGroupid != nil){
+                //데이터 객체 만들기
+                print("그룹에 가입해서 그룹아이디가 있네요. 그룹에도 공개 되었습니다.")
+                print(self.checkGroupid)
+                let postInfo: [String:Any] = ["pid" : PostKey,
+                                              "uid" : userId,
+                                              "name" : userName!,
+                                              "text" : textMsg!,
+                                              "hit": 0,
+                                              "date": ServerValue.timestamp(),
+                                              "reply":0,
+                                              "show":"y",
+                                              "groupid":self.checkGroupid]
+                PostReference.setValue(postInfo)
+            }else{
+                print("그룹에 가입안해서 그룹아이디가 없네요. 그룹에는 안들어가요")
+                //탈퇴하면 그룹아이디를 없에 버려야함
+                //데이터 객체 만들기
+                let postInfo: [String:Any] = ["pid" : PostKey,
+                                              "uid" : userId,
+                                              "name" : userName!,
+                                              "text" : textMsg!,
+                                              "hit": 0,
+                                              "date": ServerValue.timestamp(),
+                                              "reply":0,
+                                              "show":"y"]
+                PostReference.setValue(postInfo)
+                
+            }
             //해당 경로에 삽입
-            PostReference.setValue(postInfo)
-            
             ref.removeAllObservers()
             //인디케이터 종료
             AppDelegate.instance().dissmissActivityIndicator()

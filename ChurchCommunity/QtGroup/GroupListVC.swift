@@ -122,16 +122,15 @@ class GroupListVC: UITableViewController {
             NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 15.0)!,
             NSAttributedStringKey.foregroundColor: UIColor.darkGray], for: UIControlState())
         
-        showGroupList()
+        //showGroupList()
         groupidAndLeaderCheck()
-        
-        
-        var timer: Timer?
-        //let str = "Timer"
-        //timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(showGroupList), userInfo: str, repeats: false)
+
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        showGroupList()
+    }
     
     //동적 테이블 함수
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -141,8 +140,6 @@ class GroupListVC: UITableViewController {
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
-    
-    
     
     
     //그룹을 만든 유저인지 or 그룹에 가입한 유저인지 체크
@@ -220,33 +217,33 @@ class GroupListVC: UITableViewController {
                         }
                         self.tableView.reloadData()
                     }
-                }else{
-                    print("음 그룹이 아직 없군요")
-                    //없으면 전체다 보여줘서 가입할 수 있게 하기
-                    // let ref = Database.database().reference()
-                    ref.child("group").observeSingleEvent(of:.value) { (snapshot) in
-                        self.groupList.removeAll() //배열을 안지워 주면 계속 중복해서 쌓이게 된다.
-                        for child in snapshot.children{
+                }
+            }else{
+                print("음 그룹이 아직 없군요")
+                //없으면 전체다 보여줘서 가입할 수 있게 하기
+                // let ref = Database.database().reference()
+                ref.child("group").observeSingleEvent(of:.value) { (snapshot) in
+                    self.groupList.removeAll() //배열을 안지워 주면 계속 중복해서 쌓이게 된다.
+                    for child in snapshot.children{
+                        
+                        let groupToShow = GroupInfo() //데이터를 담을 클래스
+                        let childSnapshot = child as! DataSnapshot //자식 DataSnapshot 가져오기
+                        let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
+                        groupToShow.groupid = childSnapshot.key
+                        
+                        print("만들어진 그룹 방 보여줘요.   \(childValue)")
+                        if let leaderid = childValue["leaderid"],  let leadername = childValue["leadername"], let groupname = childValue["groupname"], let count = childValue["count"],let password = childValue["password"]{
                             
-                            let groupToShow = GroupInfo() //데이터를 담을 클래스
-                            let childSnapshot = child as! DataSnapshot //자식 DataSnapshot 가져오기
-                            let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
-                            groupToShow.groupid = childSnapshot.key
+                            groupToShow.leaderid = leaderid as! String
+                            groupToShow.leadername = leadername as! String
+                            groupToShow.groupname = groupname as! String
+                            groupToShow.password = password as! String
+                            groupToShow.count = String(describing: count)
                             
-                            print("만들어진 그룹 방 보여줘요.   \(childValue)")
-                            if let leaderid = childValue["leaderid"],  let leadername = childValue["leadername"], let groupname = childValue["groupname"], let count = childValue["count"],let password = childValue["password"]{
-                                
-                                groupToShow.leaderid = leaderid as! String
-                                groupToShow.leadername = leadername as! String
-                                groupToShow.groupname = groupname as! String
-                                groupToShow.password = password as! String
-                                groupToShow.count = String(describing: count)
-                                
-                                self.groupList.insert(groupToShow, at: 0)
-                            }
+                            self.groupList.insert(groupToShow, at: 0)
                         }
-                        self.tableView.reloadData()
                     }
+                    self.tableView.reloadData()
                 }
             }
         }
@@ -273,7 +270,6 @@ class GroupListVC: UITableViewController {
         return cell!
     }
     
-
     //묵상 그룹 리스트를 클릭했을 때
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as? GroupCell
@@ -284,71 +280,104 @@ class GroupListVC: UITableViewController {
         let count = cell?.groupCountLabel.text
         let password = cell?.passwordLabel.text
         let groupid = cell?.groupIdLabel.text
-        
+    
         
         //로그인한 유저 조회해서 클릭시 user 테이블에 groupid가 있으면 클릭시 포스트 페이지로 이동 시키기!!!!
-        //없으면 비번 치고 가입시키기
-        
-        
-        let alert = UIAlertController(title: "", message: "환영합니다 :)", preferredStyle: .alert)
-        alert.addTextField { (myTextField) in
+        if checkGroupid != nil{
+            print("목록으로 들어갑니다.")
+            let groupInfo = GroupInfo()
+            groupInfo.groupid = groupid
+            groupInfo.groupname = name
+            groupInfo.count = count
+            groupInfo.password = password
             
-            myTextField.textColor = UIColor.black
-            myTextField.font = UIFont(name: "NanumMyeongjo-YetHangul", size: 13.5)
-            myTextField.placeholder = "묵상방 비밀번호를 입력해주세요."
-        }
-        
-        let ok = UIAlertAction(title: "입장하기", style: .default) { (ok) in
-            //기존의 방 비밀번호와 비교 해서 맞으면 후 추리
-            //틀리면 밖으로
+            let viewController = GroupPost()
+            viewController.groupInfo = groupInfo
+            navigationController?.pushViewController(viewController, animated: true)
             
-            //빈칸 확인
-            let txt = alert.textFields?[0].text
-            if(txt == ""){
-                let alert = UIAlertController(title: "알림 ", message:"빈칸을 확인해주세요.", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                return
-            }
-            //비번확인
-            if(password != txt){
-                let alert = UIAlertController(title: "알림 ", message:"비밀번호를 확인해주세요.", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                return
-            }else{
-                //user에 update 해주기 group 칼럼
-                //print("비밀번호가 맞았어요, 방으로 입장합니다.")
+            
+        }else{
+            //비번 치고 그룹에 가입시키기
+             print("비번 쳐야되용")
+            let alert = UIAlertController(title: "", message: "환영합니다 :)", preferredStyle: .alert)
+            alert.addTextField { (myTextField) in
                 
-                let leader = ["leader" : "n",
-                              "group" : "y",
-                              "groupid" : groupid]
-                //유저키
-                let userKey = Auth.auth().currentUser?.uid
-                let ref = Database.database().reference()
-                ref.child("users").child(userKey!).updateChildValues(leader)
-                
-                
-                let alert = UIAlertController(title: "알림 ", message:"\(String(describing: title!)) 묵상방 가입성공", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                myTextField.textColor = UIColor.black
+                myTextField.font = UIFont(name: "NanumMyeongjo-YetHangul", size: 13.5)
+                myTextField.placeholder = "묵상방 비밀번호를 입력해주세요."
             }
             
+            let ok = UIAlertAction(title: "입장하기", style: .default) { (ok) in
+                //기존의 방 비밀번호와 비교 해서 맞으면 후 추리
+                //틀리면 밖으로
+                
+                //빈칸 확인
+                let txt = alert.textFields?[0].text
+                if(txt == ""){
+                    let alert = UIAlertController(title: "알림 ", message:"빈칸을 확인해주세요.", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    return
+                }
+                //비번확인
+                if(password != txt){
+                    let alert = UIAlertController(title: "알림 ", message:"비밀번호를 확인해주세요.", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    return
+                }else{
+                    //user에 update 해주기 group 칼럼
+                    //print("비밀번호가 맞았어요, 방으로 입장합니다.")
+                    
+                    let leader = ["leader" : "n",
+                                  "group" : "y",
+                                  "groupid" : groupid]
+                    //유저키
+                    let userKey = Auth.auth().currentUser?.uid
+                    let ref = Database.database().reference()
+                    ref.child("users").child(userKey!).updateChildValues(leader)
+
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                    
+                    
+                    
+                    //가입성공하면
+                    let alert = UIAlertController(title: "알림 ", message:"\(String(describing: title!)) 가입을 축하합니다.", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: { (action) in
+                        
+                        self.tableView.reloadData()
+                        self.navigationItem.leftBarButtonItem = nil
+                        self.navigationItem.hidesBackButton = true
+                        self.navigationItem.rightBarButtonItem = nil
+                        let groupInfo = GroupInfo()
+                        groupInfo.groupid = groupid
+                        groupInfo.groupname = name
+                        groupInfo.count = count
+                        groupInfo.password = password
+                        
+                        let viewController = GroupPost()
+                        viewController.groupInfo = groupInfo
+                        self.navigationController?.pushViewController(viewController, animated: true)
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+
+                }
+
+            }
             
-            //            let key = Auth.auth().currentUser?.uid
-            //            let ref = Database.database().reference()
-            //            ref.child("users").child(key!).updateChildValues(["stateMsg" : txt ?? ""])
+            let cancel = UIAlertAction(title: "취소", style: .cancel) { (cancel) in
+                //code
+            }
+            
+            alert.addAction(cancel)
+            alert.addAction(ok)
+            self.present(alert, animated: true, completion: nil)
         }
-        
-        let cancel = UIAlertAction(title: "취소", style: .cancel) { (cancel) in
-            //code
-        }
-        
-        alert.addAction(cancel)
-        alert.addAction(ok)
-        self.present(alert, animated: true, completion: nil)
-        
-        //print(title,name,count,password)
+     
     }
     
     
