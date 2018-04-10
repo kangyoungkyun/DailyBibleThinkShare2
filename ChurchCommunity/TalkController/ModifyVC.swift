@@ -52,7 +52,7 @@ class ModifyVC: UIViewController,UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "닫기", style: .plain, target: self, action:  #selector(cancelAction))
+
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action:  #selector(writeAction))
         
         
@@ -101,11 +101,6 @@ class ModifyVC: UIViewController,UITextViewDelegate {
         placeholderLabel.isHidden = !textFiedlView.text.isEmpty
     }
     
-    //weak var pvc = self.presentingViewController
-    //취소 함수
-    @objc func cancelAction(){
-        self.dismiss(animated: true, completion: nil)
-    }
     
     //완료 함수
     @objc func writeAction(){

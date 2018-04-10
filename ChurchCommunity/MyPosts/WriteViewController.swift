@@ -21,6 +21,37 @@ class WriteViewController: UIViewController,UITextViewDelegate {
     }()
     
     
+
+    
+    
+    //버튼
+    lazy var switctButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        
+        button.setTitle("묵상공개", for: UIControlState())
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(.black, for: UIControlState())
+        button.titleLabel?.font = UIFont(name: "NanumMyeongjo-YetHangul", size: 12.5)
+        button.titleLabel?.textColor = .black
+        button.layer.cornerRadius = 5; // this value vary as per your desire
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(switchValueDidChange), for: .touchUpInside)
+        return button
+    }()
+    
+
+    @objc func switchValueDidChange(){
+        
+        if(switctButton.titleLabel?.text == "묵상공개"){
+            
+            switctButton.setTitle("나만보기", for: UIControlState())
+        }else{
+            switctButton.setTitle("묵상공개", for: UIControlState())
+        }
+    }
+    
     //글쓰기 텍스트 필드
     let textFiedlView : UITextView = {
         let tf = UITextView()
@@ -43,7 +74,6 @@ class WriteViewController: UIViewController,UITextViewDelegate {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "닫기", style: .plain, target: self, action:  #selector(cancelAction))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action:  #selector(writeAction))
         
-        
         //텍스트 뷰의 위임자를 자기자신으로 - 반드시 해줘야 함!
         textFiedlView.delegate = self
         
@@ -58,6 +88,14 @@ class WriteViewController: UIViewController,UITextViewDelegate {
         //placeholderLabel.frame.size = CGSize(width: 300, height: 50)
         placeholderLabel.textColor = UIColor.lightGray
         placeholderLabel.isHidden = !textFiedlView.text.isEmpty
+        
+        
+        textFiedlView.addSubview(switctButton)
+
+        switctButton.centerXAnchor.constraint(equalTo: textFiedlView.centerXAnchor).isActive = true
+        switctButton.centerYAnchor.constraint(equalTo: textFiedlView.centerYAnchor,constant: -15).isActive = true
+        switctButton.widthAnchor.constraint(equalToConstant: 55).isActive = true
+        switctButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.98, green:0.98, blue:0.98, alpha:1.0)
@@ -166,8 +204,12 @@ class WriteViewController: UIViewController,UITextViewDelegate {
             //if문으로 groupid가 있으면 넣어주고
             if(checkGroupid != nil){
                 //데이터 객체 만들기
+                
+                //question ? answer1 : answer2
+                
+                
                 print("그룹에 가입해서 그룹아이디가 있네요. 그룹에도 공개 되었습니다.")
-                print(self.checkGroupid)
+                //print(self.checkGroupid)
                 let postInfo: [String:Any] = ["pid" : PostKey,
                                               "uid" : userId,
                                               "name" : userName!,
@@ -175,7 +217,7 @@ class WriteViewController: UIViewController,UITextViewDelegate {
                                               "hit": 0,
                                               "date": ServerValue.timestamp(),
                                               "reply":0,
-                                              "show":"y",
+                                              "show":(self.switctButton.titleLabel?.text == "묵상공개" ? "y" : "n"),
                                               "groupid":self.checkGroupid]
                 PostReference.setValue(postInfo)
             }else{
@@ -189,7 +231,7 @@ class WriteViewController: UIViewController,UITextViewDelegate {
                                               "hit": 0,
                                               "date": ServerValue.timestamp(),
                                               "reply":0,
-                                              "show":"y"]
+                                              "show":(self.switctButton.titleLabel?.text == "묵상공개" ? "y" : "n")]
                 PostReference.setValue(postInfo)
                 
             }
