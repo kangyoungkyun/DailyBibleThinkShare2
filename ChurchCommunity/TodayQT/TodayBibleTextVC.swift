@@ -125,15 +125,19 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
         self.navigationController?.navigationBar.isTranslucent = false
         
         
-        //self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "home", style: .plain, target: self, action:  #selector(firstPage))
-        
-        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_date_range.png"), style: .plain, target: self, action:  #selector(calendar))
+ 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_account_balance.png"), style: .plain, target: self, action: #selector(firstPage))
         
         //ic_account_balance
         
         //네비게이션 바 버튼 아이템 글꼴 바꾸기
         self.navigationItem.leftBarButtonItem?.setTitleTextAttributes([
+            NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 13.0)!,
+            NSAttributedStringKey.foregroundColor: UIColor.lightGray], for: UIControlState())
+        
+        //네비게이션 바 버튼 오른쪽 아이템 글꼴 바꾸기
+        self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([
             NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 13.0)!,
             NSAttributedStringKey.foregroundColor: UIColor.lightGray], for: UIControlState())
         
@@ -159,6 +163,25 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
     }
 
     
+   
+    @objc func calendar (){
+       print("캘린더 얼러트 창")
+        
+        let vc = CalendarController()
+       
+        //present(vc, animated: true, completion: nil)
+        //vc.view.backgroundColor = UIColor.white
+        //self.addChildViewController(vc)
+        //view.addSubview(vc.view)
+        navigationController?.pushViewController(vc, animated: true)
+        
+//        vc.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 110).isActive = true
+//        vc.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+//        vc.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
+//        vc.view.widthAnchor.constraint(equalToConstant: 150).isActive = true
+//        vc.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
+        
+    }
     @objc func firstPage (){
         dismiss(animated: true, completion: nil)
     }

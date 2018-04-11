@@ -19,6 +19,11 @@
 		5237A96520665C1F0027D0AB /* ShowUserPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5237A96420665C1F0027D0AB /* ShowUserPageViewController.swift */; };
 		5238EC81207A216F00A481E9 /* heart1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5238EC80207A216F00A481E9 /* heart1.png */; };
 		523E790C2070604800C9E50E /* TodayBibleTextVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E790B2070604800C9E50E /* TodayBibleTextVC.swift */; };
+		524110CE207DB68000EA172A /* CalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524110CA207DB68000EA172A /* CalenderView.swift */; };
+		524110CF207DB68000EA172A /* WeekdaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524110CB207DB68000EA172A /* WeekdaysView.swift */; };
+		524110D0207DB68000EA172A /* CalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524110CC207DB68000EA172A /* CalendarController.swift */; };
+		524110D1207DB68000EA172A /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524110CD207DB68000EA172A /* MonthView.swift */; };
+		524110D3207DC31A00EA172A /* ic_date_range.png in Resources */ = {isa = PBXBuildFile; fileRef = 524110D2207DC31A00EA172A /* ic_date_range.png */; };
 		5242FF9320573A5800548FD4 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242FF9220573A5800548FD4 /* WriteViewController.swift */; };
 		5242FF952057634D00548FD4 /* TalkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242FF942057634D00548FD4 /* TalkCell.swift */; };
 		5242FF9720576FFD00548FD4 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242FF9620576FFD00548FD4 /* Post.swift */; };
@@ -89,6 +94,11 @@
 		523E790B2070604800C9E50E /* TodayBibleTextVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayBibleTextVC.swift; sourceTree = "<group>"; };
 		523E790D20706FA900C9E50E /* ic_chrome_reader_mode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_chrome_reader_mode.png; sourceTree = "<group>"; };
 		523E791120707FCC00C9E50E /* print.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = print.jpg; sourceTree = "<group>"; };
+		524110CA207DB68000EA172A /* CalenderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderView.swift; sourceTree = "<group>"; };
+		524110CB207DB68000EA172A /* WeekdaysView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekdaysView.swift; sourceTree = "<group>"; };
+		524110CC207DB68000EA172A /* CalendarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarController.swift; sourceTree = "<group>"; };
+		524110CD207DB68000EA172A /* MonthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = "<group>"; };
+		524110D2207DC31A00EA172A /* ic_date_range.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_date_range.png; sourceTree = "<group>"; };
 		5242FF9220573A5800548FD4 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		5242FF942057634D00548FD4 /* TalkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkCell.swift; sourceTree = "<group>"; };
 		5242FF9620576FFD00548FD4 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -190,6 +200,17 @@
 			path = TodayQT;
 			sourceTree = "<group>";
 		};
+		524110C9207DB65600EA172A /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				524110CC207DB68000EA172A /* CalendarController.swift */,
+				524110CA207DB68000EA172A /* CalenderView.swift */,
+				524110CD207DB68000EA172A /* MonthView.swift */,
+				524110CB207DB68000EA172A /* WeekdaysView.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
 		5250B5C32064948E0094F1B8 /* MyPosts */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +256,7 @@
 				52938A202060B01D0098F9A0 /* TalkController */,
 				52B463102079C9C4009FF82E /* QtGroup */,
 				52938A242060B0750098F9A0 /* MoreController */,
+				524110C9207DB65600EA172A /* Calendar */,
 				52858A4F2055E64D005C9BB9 /* Assets.xcassets */,
 				52858A4C2055E64D005C9BB9 /* Main.storyboard */,
 				52858A512055E64D005C9BB9 /* LaunchScreen.storyboard */,
@@ -249,6 +271,7 @@
 		52858A622055EBDE005C9BB9 /* Pic */ = {
 			isa = PBXGroup;
 			children = (
+				524110D2207DC31A00EA172A /* ic_date_range.png */,
 				52D8B78D207CB597004A9673 /* ic_group.png */,
 				5238EC80207A216F00A481E9 /* heart1.png */,
 				52AC441C2073BFDA00B9D753 /* ic_view_headline.png */,
@@ -396,6 +419,7 @@
 				52DA90B0207239960020B893 /* Main.storyboard in Resources */,
 				52DA90A5207238EF0020B893 /* ic_remove_red_eye.png in Resources */,
 				52DA90AF207239910020B893 /* LaunchScreen.storyboard in Resources */,
+				524110D3207DC31A00EA172A /* ic_date_range.png in Resources */,
 				52DA909B207238E00020B893 /* print.jpg in Resources */,
 				52DA90AA2072397E0020B893 /* Pods-ChurchCommunity.debug.xcconfig in Resources */,
 				52DA90A7207238EF0020B893 /* ic_view_headline.png in Resources */,
@@ -488,14 +512,18 @@
 				52EBE998207C4D2000D32857 /* GroupPost.swift in Sources */,
 				5242FF9320573A5800548FD4 /* WriteViewController.swift in Sources */,
 				521E738C206A152300C56EF6 /* TodayController+UICollectionCell.swift in Sources */,
+				524110CE207DB68000EA172A /* CalenderView.swift in Sources */,
 				5242FF9720576FFD00548FD4 /* Post.swift in Sources */,
 				52018A69207B053C00D66D12 /* ModifyVC.swift in Sources */,
 				521E7388206A142800C56EF6 /* Page.swift in Sources */,
 				5237A96520665C1F0027D0AB /* ShowUserPageViewController.swift in Sources */,
+				524110D0207DB68000EA172A /* CalendarController.swift in Sources */,
 				52B463122079C9FD009FF82E /* GroupListVC.swift in Sources */,
+				524110D1207DB68000EA172A /* MonthView.swift in Sources */,
 				521E738A206A14C500C56EF6 /* PageCell.swift in Sources */,
 				52F43810207B3E2B0057ABEC /* GroupCell.swift in Sources */,
 				52124EF7206C8D69000B65EA /* ShowUserPost.swift in Sources */,
+				524110CF207DB68000EA172A /* WeekdaysView.swift in Sources */,
 				52858A882055F524005C9BB9 /* SignViewController.swift in Sources */,
 				523E790C2070604800C9E50E /* TodayBibleTextVC.swift in Sources */,
 				52C2EB4A205A5F53005B4904 /* AlertTableViewController.swift in Sources */,
