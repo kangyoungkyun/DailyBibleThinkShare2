@@ -116,7 +116,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
             }
         }
         
-        showPost()
+        showPost(selectYear: syear, selectMonth: smonth, selectDay: sday)
         
         searchPosts.removeAll()
         //searchController.searchBar.delegate = self
@@ -312,8 +312,6 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
     var selectedYear:Int?
     var selectedMonth:Int?
     var selectedDay:Int?
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let aRow = indexPath1 {
@@ -321,12 +319,93 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
         }
         
         if let year = self.selectedYear, let month = self.selectedMonth, let day = self.selectedDay{
-            print("선택된 날짜는요?   \(year): \(month) : \(day)")
+            showPost(selectYear: "\(year)", selectMonth: "\(month)", selectDay: "\(day)")
+            print("오케 날짜 클릭하고 viewwill 에 왔어 ")
+            selectedPost(y: "\(year)", m: "\(month)", d: "\(day)")
         }
         
     }
     
-    var today = ""
+    
+    func selectedPost(y:String,m:String,d:String){
+        var todayPost = 0
+        let ref = Database.database().reference()
+
+        ref.child("posts").queryOrdered(byChild: "date").observe(.value) { (snapshot) in
+            self.posts.removeAll() //배열을 안지워 주면 계속 중복해서 쌓이게 된다.
+            for child in snapshot.children{
+                
+                let postToShow = Post() //데이터를 담을 클래스
+                let childSnapshot = child as! DataSnapshot //자식 DataSnapshot 가져오기
+                let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
+                
+                if let _ = childValue["name"],  let date = childValue["date"], let hit = childValue["hit"], let pid = childValue["pid"], let uid = childValue["uid"], let text = childValue["text"], let reply = childValue["reply"],let _ = childValue["show"] {
+                    
+                    //오늘 날짜에 작성된 글 개수 파악
+                    let t = date as? TimeInterval
+                    let todate = NSDate(timeIntervalSince1970: t!/1000)
+                    let calendar = Calendar.current //켈린더 객체 생성
+                    let year = calendar.component(.year, from: todate as Date)    //년
+                    let month = calendar.component(.month, from: todate as Date)  //월
+                    let day = calendar.component(.day, from: todate as Date)      //일
+                    
+//                    if("\(year)\(month)\(day)" == "\(y)\(m)\(d)"){
+//                        todayPost = todayPost + 1
+//                    }
+//                    self.countLable.text = "오늘 작성된 묵상/ \(todayPost)편"
+                    
+                    self.countLable.text = "✟"
+                    
+                    //공개를 허용한 글만 담벼락에 보이기
+                    if (uid as? String == "i1OyLDOK7zLC6mSt20qOz7vtTQv2" && "\(year)\(month)\(day)" == "\(y)\(m)\(d)"){
+                        //firebase에서 가져온 날짜 데이터를 ios 맞게 변환
+                        if let tt = date as? TimeInterval {
+                            let date = NSDate(timeIntervalSince1970: tt/1000)
+                            // print("---------------------\(NSDate(timeIntervalSince1970: t/1000))")
+                            let dayTimePeriodFormatter = DateFormatter()
+                            dayTimePeriodFormatter.dateFormat = "M월 d일"
+                            let dateString = dayTimePeriodFormatter.string(from: date as Date)
+                            print("날짜가 있다 대박~~~~~~~~~~~~~~")
+                            postToShow.date = dateString
+                        }
+                        
+                        ref.child("bless").observe(.value, with: { (snapshot) in
+                            for (childs ) in snapshot.children{
+                                
+                                let childSnapshot = childs as! DataSnapshot
+                                let key = childSnapshot.key
+                                let val = childSnapshot.value as! [String:Any]
+                                if (key == pid as? String) {
+                                    postToShow.blessCount = "\(val.count)"
+                                }
+                                
+                            }
+                            self.tableView.reloadData()
+                        })
+                        postToShow.name = ""
+                        //postToShow.name = name as! String
+                        postToShow.hit = String(describing: hit)
+                        postToShow.pid = pid as! String
+                        postToShow.text = text as! String
+                        postToShow.uid = uid as! String
+                        postToShow.reply = String(describing: reply)
+                        postToShow.show = "공개"
+                        self.posts.insert(postToShow, at: 0)
+                    }
+                }
+            }
+            todayPost = 0
+            //print("초기화 됐나요1? \(todayPost)")
+        }
+        //print("초기화 됐나요2? \(todayPost)")
+        ref.removeAllObservers()
+        //print("초기화 됐나요3? \(todayPost)")
+    }
+    
+    
+    var syear = ""
+    var smonth = ""
+    var sday = ""
     //현재 날짜 한글
     func getSingle(){
         let date = Date()
@@ -334,13 +413,15 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
         let year = calendar.component(.year, from: date)  //월
         let month = calendar.component(.month, from: date)  //월
         let day = calendar.component(.day, from: date)      //일
-        today = "\(year)\(month)\(day)"
-        //print("\(month)\(day)")
+        
+        syear = "\(year)"
+        smonth = "\(month)"
+        sday = "\(day)"
         
     }
     
     //포스트 조회 함수
-    func showPost(){
+    func showPost(selectYear:String, selectMonth: String, selectDay: String){
         var todayPost = 0
         let ref = Database.database().reference()
         //T9Hfsjqphlhj2P9Fwp5T2xpLK9A3
@@ -361,16 +442,17 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
                     let year = calendar.component(.year, from: todate as Date)    //년
                     let month = calendar.component(.month, from: todate as Date)  //월
                     let day = calendar.component(.day, from: todate as Date)      //일
-
                     
-                    if("\(year)\(month)\(day)" == self.today){
-                        todayPost = todayPost + 1
-                    }
-                    self.countLable.text = "오늘 작성된 묵상/ \(todayPost)편"
+                    //                    if("\(year)\(month)\(day)" == "\(y)\(m)\(d)"){
+                    //                        todayPost = todayPost + 1
+                    //                    }
+                    //                    self.countLable.text = "오늘 작성된 묵상/ \(todayPost)편"
+                    
+                    self.countLable.text = "✟"
                     
                     
                     //공개를 허용한 글만 담벼락에 보이기
-                    if (uid as? String == "i1OyLDOK7zLC6mSt20qOz7vtTQv2" && "\(year)\(month)\(day)" == self.today){
+                    if (uid as? String == "i1OyLDOK7zLC6mSt20qOz7vtTQv2" && "\(year)\(month)\(day)" == "\(self.syear)\(self.smonth)\(self.sday)"){
                         //firebase에서 가져온 날짜 데이터를 ios 맞게 변환
                         if let tt = date as? TimeInterval {
                             let date = NSDate(timeIntervalSince1970: tt/1000)
