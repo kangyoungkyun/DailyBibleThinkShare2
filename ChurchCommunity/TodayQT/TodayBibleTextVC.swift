@@ -15,9 +15,9 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
     var searchPosts = [Post]()
     let cellId = "cellId"
     
-
     
-     //테이블 뷰 당기면 리프레쉬
+    
+    //테이블 뷰 당기면 리프레쉬
     lazy var freshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
@@ -28,7 +28,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
         return refreshControl
     }()
     
-   @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         self.tableView.reloadData()
         freshControl.endRefreshing()
     }
@@ -83,7 +83,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
         return header
     }()
     
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,7 +126,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
         
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_date_range.png"), style: .plain, target: self, action:  #selector(calendar))
- 
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_account_balance.png"), style: .plain, target: self, action: #selector(firstPage))
         
         //ic_account_balance
@@ -159,17 +159,17 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
         //동적 테이블 셀 높이
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 140
-
+        
     }
-
     
-   
+    
+    
     @objc func calendar (){
-       print("캘린더 얼러트 창")
+        print("캘린더 얼러트 창")
         
         let vc = CalendarController()
         navigationController?.pushViewController(vc, animated: true)
-
+        
         
     }
     @objc func firstPage (){
@@ -252,13 +252,13 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
     var indexPath1: IndexPath?
     //셀을 클릭했을 때
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         //tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+        //tableView.deselectRow(at: indexPath as IndexPath, animated: true)
         //print("셀 클릭")
         
         //선택한 셀 정보 가져오기
         let cell = tableView.cellForRow(at: indexPath) as? TalkCell
         
-         indexPath1 = tableView.indexPath(for: cell!)
+        indexPath1 = tableView.indexPath(for: cell!)
         
         //값 할당
         let name = cell?.nameLabel.text
@@ -298,16 +298,16 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
         detailTalkViewController.onePost = onePost
         //글쓰기 화면을 rootView로 만들어 주기
         navigationController?.pushViewController(detailTalkViewController, animated: true)
-
+        
     }
     
     //상세 보기 후 다시 뒤로 가기 눌렀을 때 
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        if let aRow = indexPath1 {
-//             self.tableView.selectRow(at: aRow, animated: true, scrollPosition: .top)
-//        }
-//    }
+    //    override func viewDidAppear(_ animated: Bool) {
+    //        super.viewDidAppear(animated)
+    //        if let aRow = indexPath1 {
+    //             self.tableView.selectRow(at: aRow, animated: true, scrollPosition: .top)
+    //        }
+    //    }
     
     var selectedYear:Int?
     var selectedMonth:Int?
@@ -323,7 +323,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
         if let year = self.selectedYear, let month = self.selectedMonth, let day = self.selectedDay{
             print("선택된 날짜는요?   \(year): \(month) : \(day)")
         }
-       
+        
     }
     
     var today = ""
@@ -331,9 +331,10 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
     func getSingle(){
         let date = Date()
         let calendar = Calendar.current //켈린더 객체 생성
+        let year = calendar.component(.year, from: date)  //월
         let month = calendar.component(.month, from: date)  //월
         let day = calendar.component(.day, from: date)      //일
-        today = "\(month)\(day)"
+        today = "\(year)\(month)\(day)"
         //print("\(month)\(day)")
         
     }
@@ -354,20 +355,33 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
                 if let _ = childValue["name"],  let date = childValue["date"], let hit = childValue["hit"], let pid = childValue["pid"], let uid = childValue["uid"], let text = childValue["text"], let reply = childValue["reply"],let _ = childValue["show"] {
                     
                     //오늘 날짜에 작성된 글 개수 파악
-                    if let t = date as? TimeInterval {
-                        let date = NSDate(timeIntervalSince1970: t/1000)
-                        let calendar = Calendar.current //켈린더 객체 생성
-                        let month = calendar.component(.month, from: date as Date)  //월
-                        let day = calendar.component(.day, from: date as Date)      //일
-                        
-                        if("\(month)\(day)" == self.today){
-                            todayPost = todayPost + 1
-                        }
-                        self.countLable.text = "오늘 작성된 묵상/ \(todayPost)편"
-                       
+                    let t = date as? TimeInterval
+                    let todate = NSDate(timeIntervalSince1970: t!/1000)
+                    let calendar = Calendar.current //켈린더 객체 생성
+                    let year = calendar.component(.year, from: todate as Date)    //년
+                    let month = calendar.component(.month, from: todate as Date)  //월
+                    let day = calendar.component(.day, from: todate as Date)      //일
+
+                    
+                    if("\(year)\(month)\(day)" == self.today){
+                        todayPost = todayPost + 1
                     }
+                    self.countLable.text = "오늘 작성된 묵상/ \(todayPost)편"
+                    
+                    
                     //공개를 허용한 글만 담벼락에 보이기
-                    if (uid as? String == "i1OyLDOK7zLC6mSt20qOz7vtTQv2"){
+                    if (uid as? String == "i1OyLDOK7zLC6mSt20qOz7vtTQv2" && "\(year)\(month)\(day)" == self.today){
+                        //firebase에서 가져온 날짜 데이터를 ios 맞게 변환
+                        if let tt = date as? TimeInterval {
+                            let date = NSDate(timeIntervalSince1970: tt/1000)
+                            // print("---------------------\(NSDate(timeIntervalSince1970: t/1000))")
+                            let dayTimePeriodFormatter = DateFormatter()
+                            dayTimePeriodFormatter.dateFormat = "M월 d일"
+                            let dateString = dayTimePeriodFormatter.string(from: date as Date)
+                            print("날짜가 있다 대박~~~~~~~~~~~~~~")
+                            postToShow.date = dateString
+                        }
+
                         ref.child("bless").observe(.value, with: { (snapshot) in
                             for (childs ) in snapshot.children{
                                 
@@ -375,23 +389,12 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
                                 let key = childSnapshot.key
                                 let val = childSnapshot.value as! [String:Any]
                                 if (key == pid as? String) {
-                                    
                                     postToShow.blessCount = "\(val.count)"
                                 }
+                                
                             }
                             self.tableView.reloadData()
                         })
-                        
-                        //firebase에서 가져온 날짜 데이터를 ios 맞게 변환
-                        if let t = date as? TimeInterval {
-                            let date = NSDate(timeIntervalSince1970: t/1000)
-                            // print("---------------------\(NSDate(timeIntervalSince1970: t/1000))")
-                            let dayTimePeriodFormatter = DateFormatter()
-                            dayTimePeriodFormatter.dateFormat = "M월 d일"
-                            let dateString = dayTimePeriodFormatter.string(from: date as Date)
-                            postToShow.date = dateString
-                        }
-                        
                         postToShow.name = ""
                         //postToShow.name = name as! String
                         postToShow.hit = String(describing: hit)
@@ -402,7 +405,6 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
                         postToShow.show = "공개"
                         self.posts.insert(postToShow, at: 0)
                     }
-                    
                 }
             }
             todayPost = 0
