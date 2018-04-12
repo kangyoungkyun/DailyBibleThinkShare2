@@ -16,7 +16,8 @@ enum MyTheme {
 class CalendarController: UIViewController,Dissmiss {
     
     func dissmissAndReturnValue(year: Int, month: Int, day: Int) {
-        print("켈린더 컨트롤 창 반응!")
+        print(year,month,day)
+        self.navigationController?.popViewController(animated: true)
     }
     
     

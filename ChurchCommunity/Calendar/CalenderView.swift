@@ -132,29 +132,17 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     //일 :1 , 월:2, 화:3, 수:4, 목:5, 금:6, 토:7
     func getFirstWeekDay() -> Int {
         let day = ("\(currentYear)-\(currentMonthIndex)-01".date?.firstDayOfTheMonth.weekday)!
-        //return day == 7 ? 1 : day
-//        print("getFirstWeekDay 시작")
-//        print("currentYear - \(currentYear)")
-//        print("currentMonthIndex - \(currentMonthIndex)")
-//        print("day - \(day)")
-//         print("getFirstWeekDay 끝 -/")
+
         return day
     }
     
     //빈칸을 포함한 전체 섹션의 개수를 구한다.
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-       // print("collectionView 시작")
-       // print("numOfDaysInMonth - \(numOfDaysInMonth)")
-       // print("currentMonthIndex - \(currentMonthIndex)") //4월
-       // print("firstWeekDayOfMonth - \(firstWeekDayOfMonth)") //1 : 첫째 날이 일요일
-        //print(numOfDaysInMonth[currentMonthIndex-1] + firstWeekDayOfMonth - 1) //30
-        //print("collectionView 끝 -/")
         return numOfDaysInMonth[currentMonthIndex-1] + firstWeekDayOfMonth - 1 //칸의 전체 개수 , 비칸 까지 포함해서
     }
     
-    
-    
+
     let tmonth = Calendar.current.component(.month, from: Date())
     let tyear = Calendar.current.component(.year, from: Date())
     let tday = Calendar.current.component(.day, from: Date())
@@ -164,10 +152,6 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         let cell=collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! dateCVCell
         cell.backgroundColor=UIColor.clear
         
-        //print("collectionView - cellForItemAt - 시작")
-        //print("indexPath.item - \(indexPath.item)")
-        //print("firstWeekDayOfMonth - 2 - \(firstWeekDayOfMonth - 2)") //-1
-        //print("collectionView - cellForItemAt - 끝")
         
         //셀의 객체가 달의 첫번째 요일 - 2 보다 작으면
         if indexPath.item <= firstWeekDayOfMonth - 2 {
@@ -177,8 +161,6 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             //셀의 객체가 달의 첫번째 요일 - 2 보다 작지 않으면 날짜 day를 적어줘라
             
             let calcDate = indexPath.row-firstWeekDayOfMonth+2
-            //print("indexPath.row - \(indexPath.row)")
-            //print("calcDate - \(calcDate)")
 
             cell.isHidden=false
             cell.lbl.text="\(calcDate)"
@@ -187,10 +169,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
              
             cell.backgroundColor = .lightGray
             }
-            
-            
-            print(currentMonthIndex) //보여지는 달
-            print(presentMonthIndex) //현재 달
+  
             if calcDate > todaysDate && currentMonthIndex == presentMonthIndex || currentMonthIndex > presentMonthIndex || currentYear > presentYear{
                 cell.isUserInteractionEnabled=false
                 cell.lbl.textColor = UIColor.lightGray
@@ -200,12 +179,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             }
             
         }
-        
-        print("오늘은 무슨 요일인가요1? - \(presentYear): \(presentMonthIndex): \(self.tday)")
-        print("\n")
-        print("오늘은 무슨 요일인가요?2 - \(self.tyear): \(self.tmonth): \(self.tday)")
 
-        
         return cell
     }
     
@@ -215,8 +189,11 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         let lbl = cell?.subviews[1] as! UILabel
         //lbl.textColor=UIColor.white
         print(currentMonthIndex,lbl.text!)
+        //날짜 클릭, -> 델리게이트로 -> calendarController 꺼주기
         
-        self.dissmissDelegate?.dissmissAndReturnValue(year: 2018, month: 1, day: 1)
+     
+        
+        self.dissmissDelegate?.dissmissAndReturnValue(year: currentYear, month: currentMonthIndex, day: Int(lbl.text!)!)
        
     }
     
@@ -254,8 +231,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         firstWeekDayOfMonth=getFirstWeekDay()
         
         myCollectionView.reloadData()
-        
-        //monthView.btnLeft.isEnabled = !(currentMonthIndex == presentMonthIndex && currentYear == presentYear)
+
     }
     
     func setupViews() {
