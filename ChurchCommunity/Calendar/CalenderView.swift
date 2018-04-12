@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Firebase
 struct Colors {
     static var darkGray = #colorLiteral(red: 0.3764705882, green: 0.3647058824, blue: 0.3647058824, alpha: 1)
     static var darkRed = #colorLiteral(red: 0.5019607843, green: 0.1529411765, blue: 0.1764705882, alpha: 1)
@@ -54,8 +54,52 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     
     func MyPostClickCalenderSendMyId(myid: String) {
         print("calendarController에서 넘긴 아이디값을 CalenderView 에서 받았습니다. \(String(describing: myid))")
-        print(myid)
+        self.myId = myid
+        
+        
     }
+    //var cnt = 0
+    //var whenIWritePost = [String]()
+    //var emptySet2 : Set<String> = []
+    
+    var whenIWritePost = Set<String>()
+    func showWhenIWritePost(){
+        let ref = Database.database().reference()
+        ref.child("posts").observeSingleEvent(of:.value) { (snapshot) in
+            self.whenIWritePost.removeAll() //배열을 안지워 주면 계속 중복해서 쌓이게 된다.
+            for child in snapshot.children{
+                //let postToShow = Post() //데이터를 담을 클래스
+                let childSnapshot = child as! DataSnapshot //자식 DataSnapshot 가져오기
+                let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
+                
+                if let date = childValue["date"], let uid = childValue["uid"] {
+                    if(uid as? String == self.myId){
+                        //오늘 날짜에 작성된 글 개수 파악
+                        if let t = date as? TimeInterval {
+                            let date = NSDate(timeIntervalSince1970: t/1000)
+                            let calendar = Calendar.current //켈린더 객체 생성
+                            let year = calendar.component(.year, from: date as Date)  //월
+                            let month = calendar.component(.month, from: date as Date)  //월
+                            let day = calendar.component(.day, from: date as Date)      //일
+                            
+                            //print("\(year)\(month)\(day)")
+                            
+                                self.whenIWritePost.insert("\(year)\(month)\(day)")
+                            
+                            
+                        }
+                        //print("언제 썻니? \(date)")
+                    }
+                }
+            }
+            self.myCollectionView.reloadData()
+            print("대체 몇개를 쓴거니~? \(self.whenIWritePost.count)")
+           
+        }
+        ref.removeAllObservers()
+        
+    }
+    
     
     //나의 키
     var myId:String?
@@ -74,20 +118,16 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     var presentYear = 0
     var todaysDate = 0
     
-
-
+    
+    
     
     //
     var firstWeekDayOfMonth = 0   //(Sunday-Saturday 1-7)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-       
-        //CalendarController?.myPostClickCalenderSendMyIdDelegate = self
-        
-        
-        //CalendarController().myPostClickCalenderSendMyIdDelegate = self
-        
+        print("여기가 진입점 입니다.")
+        showWhenIWritePost()
         initializeView()
     }
     
@@ -99,13 +139,11 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         } else {
             Style.themeLight()
         }
-        
         initializeView()
     }
     
     func changeTheme() {
         myCollectionView.reloadData()
-        
         monthView.lblName.textColor = Style.monthViewLblColor
         monthView.btnRight.setTitleColor(Style.monthViewBtnRightColor, for: .normal)
         monthView.btnLeft.setTitleColor(Style.monthViewBtnLeftColor, for: .normal)
@@ -120,7 +158,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     
     func initializeView() {
         
-         //print("컬렉션 뷰에 넘어온 나의 키 \(String(describing: self.myId))")
+        //print("컬렉션 뷰에 넘어온 나의 키 \(String(describing: self.myId))")
         
         //현재 달 가져오기
         currentMonthIndex = Calendar.current.component(.month, from: Date())
@@ -154,26 +192,27 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     //일 :1 , 월:2, 화:3, 수:4, 목:5, 금:6, 토:7
     func getFirstWeekDay() -> Int {
         let day = ("\(currentYear)-\(currentMonthIndex)-01".date?.firstDayOfTheMonth.weekday)!
-
         return day
     }
     
     //빈칸을 포함한 전체 섹션의 개수를 구한다.
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
+        // 컬렉션 뷰 개수
+        print("컬랙션 뷰 개수")
         return numOfDaysInMonth[currentMonthIndex-1] + firstWeekDayOfMonth - 1 //칸의 전체 개수 , 비칸 까지 포함해서
     }
     
-
+    
     let tmonth = Calendar.current.component(.month, from: Date())
     let tyear = Calendar.current.component(.year, from: Date())
     let tday = Calendar.current.component(.day, from: Date())
     
+  
+   
     //숫자 채우기
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell=collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! dateCVCell
         cell.backgroundColor=UIColor.clear
-        
         
         //셀의 객체가 달의 첫번째 요일 - 2 보다 작으면
         if indexPath.item <= firstWeekDayOfMonth - 2 {
@@ -183,26 +222,41 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             //셀의 객체가 달의 첫번째 요일 - 2 보다 작지 않으면 날짜 day를 적어줘라
             
             let calcDate = indexPath.row-firstWeekDayOfMonth+2
-
+            
             cell.isHidden=false
             cell.lbl.text="\(calcDate)"
             
             if(currentYear == self.tyear && currentMonthIndex == self.tmonth && self.tday == calcDate){
-             
-            cell.backgroundColor = .lightGray
+                
+                cell.backgroundColor = .lightGray
+                
             }
-  
+            
             if calcDate > todaysDate && currentMonthIndex == presentMonthIndex || currentMonthIndex > presentMonthIndex || currentYear > presentYear{
                 cell.isUserInteractionEnabled=false
                 cell.lbl.textColor = UIColor.lightGray
             } else {
-                cell.isUserInteractionEnabled=true
-                cell.lbl.textColor = Style.activeCellLblColor
+                
+                //set에 넣어놓은 날짜와 비교 하기
+                
+                for i in self.whenIWritePost{
+                    if("\(i)"=="\(currentYear)\(currentMonthIndex)\(calcDate)"){
+                        print("여기는 왜 안들어오는거여?0----??")
+                        cell.isUserInteractionEnabled=true
+                         let doneView = UIImageView(image:#imageLiteral(resourceName: "done.png"))
+                        cell.backgroundView = doneView
+                    }else{
+                        cell.isUserInteractionEnabled=true
+                        cell.lbl.textColor = Style.activeCellLblColor
+                    }
+                }
+
             }
             
         }
-
+        print("컬렉션 뷰 구성")
         return cell
+       
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -213,10 +267,9 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         print(currentMonthIndex,lbl.text!)
         //날짜 클릭, -> 델리게이트로 -> calendarController 꺼주기
         
-     
         
         self.dissmissDelegate?.dissmissAndReturnValue(year: currentYear, month: currentMonthIndex, day: Int(lbl.text!)!)
-       
+        
     }
     
     
@@ -234,9 +287,10 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 8.0
     }
-
+    
     
     func didChangeMonth(monthIndex: Int, year: Int) {
+        //whenIWritePost.removeAll()
         currentMonthIndex=monthIndex+1
         currentYear = year
         
@@ -253,7 +307,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         firstWeekDayOfMonth=getFirstWeekDay()
         
         myCollectionView.reloadData()
-
+        //whenIWritePost.removeAll()
     }
     
     func setupViews() {

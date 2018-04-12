@@ -39,6 +39,7 @@
 		52AC441D2073BFDB00B9D753 /* ic_view_headline.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AC441C2073BFDA00B9D753 /* ic_view_headline.png */; };
 		52B463122079C9FD009FF82E /* GroupListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B463112079C9FD009FF82E /* GroupListVC.swift */; };
 		52B88EF2207F409D00DCEC98 /* ic_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B88EF1207F409D00DCEC98 /* ic_add.png */; };
+		52C2CA84207F925800BC4613 /* done.png in Resources */ = {isa = PBXBuildFile; fileRef = 52C2CA83207F925800BC4613 /* done.png */; };
 		52C2EB4A205A5F53005B4904 /* AlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C2EB49205A5F53005B4904 /* AlertTableViewController.swift */; };
 		52CFE0EA205F4B83006BADE7 /* MoreNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CFE0E9205F4B83006BADE7 /* MoreNoticeViewController.swift */; };
 		52D8B78E207CB597004A9673 /* ic_group.png in Resources */ = {isa = PBXBuildFile; fileRef = 52D8B78D207CB597004A9673 /* ic_group.png */; };
@@ -124,6 +125,7 @@
 		52AC441C2073BFDA00B9D753 /* ic_view_headline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_view_headline.png; path = "../../../../Downloads/ic_view_headline_black_24dp 2/ios/ic_view_headline.imageset/ic_view_headline.png"; sourceTree = "<group>"; };
 		52B463112079C9FD009FF82E /* GroupListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListVC.swift; sourceTree = "<group>"; };
 		52B88EF1207F409D00DCEC98 /* ic_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_add.png; sourceTree = "<group>"; };
+		52C2CA83207F925800BC4613 /* done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done.png; sourceTree = "<group>"; };
 		52C2EB49205A5F53005B4904 /* AlertTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTableViewController.swift; sourceTree = "<group>"; };
 		52C2EB4B205A674A005B4904 /* textAlert.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = textAlert.txt; sourceTree = "<group>"; };
 		52CAC7AE206ABA3400BFB176 /* NanumMyeongjo-YetHangul.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NanumMyeongjo-YetHangul.ttf"; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 		52858A622055EBDE005C9BB9 /* Pic */ = {
 			isa = PBXGroup;
 			children = (
+				52C2CA83207F925800BC4613 /* done.png */,
 				52B88EF1207F409D00DCEC98 /* ic_add.png */,
 				524110D2207DC31A00EA172A /* ic_date_range.png */,
 				52D8B78D207CB597004A9673 /* ic_group.png */,
@@ -418,6 +421,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52C2CA84207F925800BC4613 /* done.png in Resources */,
 				52DA90A2207238EF0020B893 /* pencil.png in Resources */,
 				52DA909F207238E80020B893 /* pencil4.png in Resources */,
 				52DA909C207238E20020B893 /* ic_chrome_reader_mode.png in Resources */,

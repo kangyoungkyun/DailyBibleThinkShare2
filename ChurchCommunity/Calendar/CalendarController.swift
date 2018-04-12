@@ -94,7 +94,11 @@ class CalendarController: UIViewController,Dissmiss {
         print("나의묵상페이지에서 넘긴 아이디값을 calendarController 에서 받았습니다. \(String(describing: self.Myid))")
         //calenderView.myId = Myid
         
-        self.myPostClickCalenderSendMyIdDelegate?.MyPostClickCalenderSendMyId(myid: Myid!)
+        //일일묵상 페이지에서 달력 눌렀을 때 처리해주기 즉 nil 값 처리 해주기!
+        if let myid = self.Myid{
+            self.myPostClickCalenderSendMyIdDelegate?.MyPostClickCalenderSendMyId(myid: Myid!)
+        }
+        
     }
     
     @objc func rightBarBtnAction(sender: UIBarButtonItem) {
