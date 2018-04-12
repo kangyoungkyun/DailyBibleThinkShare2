@@ -6,12 +6,11 @@
 //  Copyright © 2018년 MacBookPro. All rights reserved.
 //
 
+
 import UIKit
 import Firebase
 class MyPostVC: UITableViewController,UISearchBarDelegate {
-    
-    
-    
+
     /*   let searchController : UISearchController = {
      let uisearchController = UISearchController(searchResultsController: nil)
      uisearchController.searchBar.placeholder = "검색"
@@ -120,7 +119,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
     
     @objc func handleSelectName(){
         
-        let alert = UIAlertController(title: "", message: "좋아하는 말씀 또는 문장", preferredStyle: .alert)
+        let alert = UIAlertController(title: "", message: "좋아하는 말씀 또는 문장 작성", preferredStyle: .alert)
         alert.addTextField { (myTextField) in
             
             myTextField.textColor = UIColor.lightGray
@@ -251,9 +250,14 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
         //navigationItem.searchController = searchController
         
         
-       self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "글쓰기", style: .plain, target: self, action:  #selector(writeAction))
+      // self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "글쓰기", style: .plain, target: self, action:  #selector(writeAction))
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_add.png"), style: .plain, target: self, action:  #selector(writeAction))
         
 
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_date_range.png"), style: .plain, target: self, action:  #selector(dateRage))
+        
+        
         
         //네비게이션 바 버튼 아이템 글꼴 바꾸기
         self.navigationItem.leftBarButtonItem?.setTitleTextAttributes([
@@ -276,6 +280,15 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
         tableView.addSubview(writeButton)
     }
     
+    
+    @objc func dateRage(){
+        print("나의 페이지에서 열어라 캘린더 얼러트 창")
+        let myId = Auth.auth().currentUser?.uid
+        let vc = CalendarController()
+        vc.Myid = myId
+        navigationController?.pushViewController(vc, animated: true)
+
+    }
     
     //글쓰기 플로팅 버튼 함수
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -348,8 +361,6 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
         return 0
         
     }
-    
-    
     
     
     //행 개수

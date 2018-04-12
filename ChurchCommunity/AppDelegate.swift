@@ -126,9 +126,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         groupNavVC.tabBarItem.image = UIImage(named:"ic_group")?.withRenderingMode(.alwaysTemplate)
         settingNavVC.tabBarItem.selectedImage = UIImage(named:"ic_view_headline")?.withRenderingMode(.alwaysOriginal)
        
-        todayNavQT.tabBarItem.title = "묵상글"
-        talkNavVC.tabBarItem.title = "우리글"
-        noticeNavVC.tabBarItem.title = "나의글"
+        todayNavQT.tabBarItem.title = "일일묵상"
+        talkNavVC.tabBarItem.title = "묵상모음"
+        noticeNavVC.tabBarItem.title = "나의묵상"
         //writeNavVC.tabBarItem.title = "시편기록"
         groupNavVC.tabBarItem.title = "함께묵상"
         settingNavVC.tabBarItem.title = "더보기"

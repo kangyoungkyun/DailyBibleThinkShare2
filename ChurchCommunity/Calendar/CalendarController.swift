@@ -13,22 +13,34 @@ enum MyTheme {
     case dark
 }
 
+
+protocol MyPostClickCalenderSendMyId: class {
+    func MyPostClickCalenderSendMyId(myid:String)
+}
+
+
 class CalendarController: UIViewController,Dissmiss {
     
+    var myPostClickCalenderSendMyIdDelegate:MyPostClickCalenderSendMyId?
     
-    //달력의 날짜를 누르면 이곳이 반응하고 데이터가 넘어온다.
+    
+
+    //key
+    var Myid: String?
+    
+    //메인페이지에서 달력열고 달력의 날짜를 누르면 이곳이 반응하고 데이터가 넘어온다.
     func dissmissAndReturnValue(year: Int, month: Int, day: Int) {
         //print(year,month,day)
 
+        
+        //어디서 연건지 처리해줘야 한다.
+        
         let fontPage = self.navigationController?.viewControllers[0] as! TodayBibleTextVC
         fontPage.selectedYear = year
         fontPage.selectedMonth = month
         fontPage.selectedDay = day
         self.navigationController?.popToRootViewController(animated: true)
-
-        
     }
-    
     
     var theme = MyTheme.dark
     
@@ -38,6 +50,8 @@ class CalendarController: UIViewController,Dissmiss {
         
         //calenderView에 있는 dissmissDelegate에 이벤트가 발생하면 작동될 창은 나다.(내가 calenderView에 있는 프로토콜 메서드를 구현했다.!)
         calenderView.dissmissDelegate = self
+        
+        
         
         self.title = "묵상달력"
         self.navigationController?.navigationBar.isTranslucent=false
@@ -58,8 +72,7 @@ class CalendarController: UIViewController,Dissmiss {
         self.navigationController?.navigationBar.tintColor = UIColor.lightGray
         self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
         
-        
-        
+        calenderView.myId = Myid
         view.addSubview(calenderView)
         calenderView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30).isActive=true
         calenderView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -12).isActive=true
@@ -73,7 +86,15 @@ class CalendarController: UIViewController,Dissmiss {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         calenderView.myCollectionView.collectionViewLayout.invalidateLayout()
+    
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         
+        print("나의묵상페이지에서 넘긴 아이디값을 calendarController 에서 받았습니다. \(String(describing: self.Myid))")
+        //calenderView.myId = Myid
+        
+        self.myPostClickCalenderSendMyIdDelegate?.MyPostClickCalenderSendMyId(myid: Myid!)
     }
     
     @objc func rightBarBtnAction(sender: UIBarButtonItem) {
@@ -90,9 +111,11 @@ class CalendarController: UIViewController,Dissmiss {
         calenderView.changeTheme()
     }
     
-    let calenderView: CalenderView = {
+    lazy var calenderView: CalenderView = {
         let v=CalenderView(theme: MyTheme.light)
+        self.myPostClickCalenderSendMyIdDelegate = v //이게 핵심이었다!!!!!!!!!!!
         v.translatesAutoresizingMaskIntoConstraints=false
+        v.myId = "bbbbbbb"
         return v
     }()
     

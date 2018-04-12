@@ -38,6 +38,7 @@
 		52938A1F2060A7DB0098F9A0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52938A1E2060A7DB0098F9A0 /* MessageUI.framework */; };
 		52AC441D2073BFDB00B9D753 /* ic_view_headline.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AC441C2073BFDA00B9D753 /* ic_view_headline.png */; };
 		52B463122079C9FD009FF82E /* GroupListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B463112079C9FD009FF82E /* GroupListVC.swift */; };
+		52B88EF2207F409D00DCEC98 /* ic_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B88EF1207F409D00DCEC98 /* ic_add.png */; };
 		52C2EB4A205A5F53005B4904 /* AlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C2EB49205A5F53005B4904 /* AlertTableViewController.swift */; };
 		52CFE0EA205F4B83006BADE7 /* MoreNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CFE0E9205F4B83006BADE7 /* MoreNoticeViewController.swift */; };
 		52D8B78E207CB597004A9673 /* ic_group.png in Resources */ = {isa = PBXBuildFile; fileRef = 52D8B78D207CB597004A9673 /* ic_group.png */; };
@@ -55,7 +56,6 @@
 		52DA90A4207238EF0020B893 /* ic_person_outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 521936D220688BB600FB624C /* ic_person_outline.png */; };
 		52DA90A5207238EF0020B893 /* ic_remove_red_eye.png in Resources */ = {isa = PBXBuildFile; fileRef = 521936CE2068794E00FB624C /* ic_remove_red_eye.png */; };
 		52DA90A6207238EF0020B893 /* ic_favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 521936CC2068790300FB624C /* ic_favorite.png */; };
-		52DA90A7207238EF0020B893 /* ic_view_headline.png in Resources */ = {isa = PBXBuildFile; fileRef = 52858A822055ED5D005C9BB9 /* ic_view_headline.png */; };
 		52DA90A8207239130020B893 /* NanumMyeongjo-YetHangul.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52CAC7AE206ABA3400BFB176 /* NanumMyeongjo-YetHangul.ttf */; };
 		52DA90AA2072397E0020B893 /* Pods-ChurchCommunity.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = FB6A786059CB56446D190FDF /* Pods-ChurchCommunity.debug.xcconfig */; };
 		52DA90AB207239810020B893 /* Pods-ChurchCommunity.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 83D6E73A6D1352F5B9816186 /* Pods-ChurchCommunity.release.xcconfig */; };
@@ -116,7 +116,6 @@
 		52858A542055E64D005C9BB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52858A5A2055E7EA005C9BB9 /* TalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkViewController.swift; sourceTree = "<group>"; };
 		52858A602055E8BC005C9BB9 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		52858A822055ED5D005C9BB9 /* ic_view_headline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_view_headline.png; sourceTree = "<group>"; };
 		52858A872055F524005C9BB9 /* SignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignViewController.swift; sourceTree = "<group>"; };
 		52858A8D20561228005C9BB9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		52858A8F20562515005C9BB9 /* HideKeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyBoard.swift; sourceTree = "<group>"; };
@@ -124,6 +123,7 @@
 		52AC44192073BF3C00B9D753 /* ChurchCommunity.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChurchCommunity.entitlements; sourceTree = "<group>"; };
 		52AC441C2073BFDA00B9D753 /* ic_view_headline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_view_headline.png; path = "../../../../Downloads/ic_view_headline_black_24dp 2/ios/ic_view_headline.imageset/ic_view_headline.png"; sourceTree = "<group>"; };
 		52B463112079C9FD009FF82E /* GroupListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListVC.swift; sourceTree = "<group>"; };
+		52B88EF1207F409D00DCEC98 /* ic_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_add.png; sourceTree = "<group>"; };
 		52C2EB49205A5F53005B4904 /* AlertTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTableViewController.swift; sourceTree = "<group>"; };
 		52C2EB4B205A674A005B4904 /* textAlert.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = textAlert.txt; sourceTree = "<group>"; };
 		52CAC7AE206ABA3400BFB176 /* NanumMyeongjo-YetHangul.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NanumMyeongjo-YetHangul.ttf"; sourceTree = "<group>"; };
@@ -257,6 +257,7 @@
 				52B463102079C9C4009FF82E /* QtGroup */,
 				52938A242060B0750098F9A0 /* MoreController */,
 				524110C9207DB65600EA172A /* Calendar */,
+				52B88EF3207F419D00DCEC98 /* MyCalendar */,
 				52858A4F2055E64D005C9BB9 /* Assets.xcassets */,
 				52858A4C2055E64D005C9BB9 /* Main.storyboard */,
 				52858A512055E64D005C9BB9 /* LaunchScreen.storyboard */,
@@ -271,6 +272,7 @@
 		52858A622055EBDE005C9BB9 /* Pic */ = {
 			isa = PBXGroup;
 			children = (
+				52B88EF1207F409D00DCEC98 /* ic_add.png */,
 				524110D2207DC31A00EA172A /* ic_date_range.png */,
 				52D8B78D207CB597004A9673 /* ic_group.png */,
 				5238EC80207A216F00A481E9 /* heart1.png */,
@@ -289,7 +291,6 @@
 				521936D220688BB600FB624C /* ic_person_outline.png */,
 				521936CE2068794E00FB624C /* ic_remove_red_eye.png */,
 				521936CC2068790300FB624C /* ic_favorite.png */,
-				52858A822055ED5D005C9BB9 /* ic_view_headline.png */,
 			);
 			path = Pic;
 			sourceTree = "<group>";
@@ -323,6 +324,13 @@
 				52EBE997207C4D2000D32857 /* GroupPost.swift */,
 			);
 			path = QtGroup;
+			sourceTree = "<group>";
+		};
+		52B88EF3207F419D00DCEC98 /* MyCalendar */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MyCalendar;
 			sourceTree = "<group>";
 		};
 		52C2EB48205A5F20005B4904 /* Func */ = {
@@ -422,7 +430,6 @@
 				524110D3207DC31A00EA172A /* ic_date_range.png in Resources */,
 				52DA909B207238E00020B893 /* print.jpg in Resources */,
 				52DA90AA2072397E0020B893 /* Pods-ChurchCommunity.debug.xcconfig in Resources */,
-				52DA90A7207238EF0020B893 /* ic_view_headline.png in Resources */,
 				52DA90A3207238EF0020B893 /* heart.png in Resources */,
 				52DA909D207238E40020B893 /* ic_account_circle.png in Resources */,
 				52DA90AD207239880020B893 /* read.txt in Resources */,
@@ -434,6 +441,7 @@
 				52AC441D2073BFDB00B9D753 /* ic_view_headline.png in Resources */,
 				52DA909A207238DE0020B893 /* bac2.jpg in Resources */,
 				52DA90A4207238EF0020B893 /* ic_person_outline.png in Resources */,
+				52B88EF2207F409D00DCEC98 /* ic_add.png in Resources */,
 				5238EC81207A216F00A481E9 /* heart1.png in Resources */,
 				52018A67207AE09D00D66D12 /* ic_account_balance.png in Resources */,
 				52D8B78E207CB597004A9673 /* ic_group.png in Resources */,

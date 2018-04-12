@@ -165,8 +165,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
     
     
     @objc func calendar (){
-        print("캘린더 얼러트 창")
-        
+        print("메인화면에서 열어라 캘린더 얼러트 창")
         let vc = CalendarController()
         navigationController?.pushViewController(vc, animated: true)
         
@@ -354,7 +353,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
 //                    }
 //                    self.countLable.text = "오늘 작성된 묵상/ \(todayPost)편"
                     
-                    self.countLable.text = "✟"
+                    self.countLable.text = ""
                     
                     //공개를 허용한 글만 담벼락에 보이기
                     if (uid as? String == "i1OyLDOK7zLC6mSt20qOz7vtTQv2" && "\(year)\(month)\(day)" == "\(y)\(m)\(d)"){
@@ -443,12 +442,10 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
                     let month = calendar.component(.month, from: todate as Date)  //월
                     let day = calendar.component(.day, from: todate as Date)      //일
                     
-                    //                    if("\(year)\(month)\(day)" == "\(y)\(m)\(d)"){
-                    //                        todayPost = todayPost + 1
-                    //                    }
-                    //                    self.countLable.text = "오늘 작성된 묵상/ \(todayPost)편"
-                    
-                    self.countLable.text = "✟"
+                    if("\(year)\(month)\(day)" == "\(self.syear)\(self.smonth)\(self.sday)"){
+                        todayPost = todayPost + 1
+                    }
+                    self.countLable.text = "오늘 작성된 묵상/ \(todayPost)편"
                     
                     
                     //공개를 허용한 글만 담벼락에 보이기

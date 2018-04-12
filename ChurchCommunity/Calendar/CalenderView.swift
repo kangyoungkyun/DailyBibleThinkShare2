@@ -47,7 +47,18 @@ protocol Dissmiss: class {
     func dissmissAndReturnValue(year:Int,month:Int,day:Int)
 }
 
-class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MonthViewDelegate {
+
+
+
+class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MonthViewDelegate,MyPostClickCalenderSendMyId {
+    
+    func MyPostClickCalenderSendMyId(myid: String) {
+        print("calendarController에서 넘긴 아이디값을 CalenderView 에서 받았습니다. \(String(describing: myid))")
+        print(myid)
+    }
+    
+    //나의 키
+    var myId:String?
     
     var dissmissDelegate : Dissmiss?
     
@@ -63,11 +74,19 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     var presentYear = 0
     var todaysDate = 0
     
+
+
+    
     //
     var firstWeekDayOfMonth = 0   //(Sunday-Saturday 1-7)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+       
+        //CalendarController?.myPostClickCalenderSendMyIdDelegate = self
+        
+        
+        //CalendarController().myPostClickCalenderSendMyIdDelegate = self
         
         initializeView()
     }
@@ -98,7 +117,11 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     
     
     
+    
     func initializeView() {
+        
+         //print("컬렉션 뷰에 넘어온 나의 키 \(String(describing: self.myId))")
+        
         //현재 달 가져오기
         currentMonthIndex = Calendar.current.component(.month, from: Date())
         //현재 년 가져오기
@@ -122,7 +145,6 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         
         //레이아웃 지정 해주기
         setupViews()
-        
         myCollectionView.delegate=self
         myCollectionView.dataSource=self
         myCollectionView.register(dateCVCell.self, forCellWithReuseIdentifier: "Cell")
