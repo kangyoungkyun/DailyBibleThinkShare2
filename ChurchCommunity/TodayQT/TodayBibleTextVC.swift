@@ -168,18 +168,8 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
        print("캘린더 얼러트 창")
         
         let vc = CalendarController()
-       
-        //present(vc, animated: true, completion: nil)
-        //vc.view.backgroundColor = UIColor.white
-        //self.addChildViewController(vc)
-        //view.addSubview(vc.view)
         navigationController?.pushViewController(vc, animated: true)
-        
-//        vc.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 110).isActive = true
-//        vc.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
-//        vc.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
-//        vc.view.widthAnchor.constraint(equalToConstant: 150).isActive = true
-//        vc.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
+
         
     }
     @objc func firstPage (){

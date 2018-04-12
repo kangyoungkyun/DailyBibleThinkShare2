@@ -43,7 +43,13 @@ struct Style {
     }
 }
 
+protocol Dissmiss: class {
+    func dissmissAndReturnValue(year:Int,month:Int,day:Int)
+}
+
 class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MonthViewDelegate {
+    
+    var dissmissDelegate : Dissmiss?
     
     var numOfDaysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31]
     //이번달
@@ -209,14 +215,10 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         let lbl = cell?.subviews[1] as! UILabel
         //lbl.textColor=UIColor.white
         print(currentMonthIndex,lbl.text!)
+        
+        self.dissmissDelegate?.dissmissAndReturnValue(year: 2018, month: 1, day: 1)
+       
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        let cell=collectionView.cellForItem(at: indexPath)
-//        cell?.backgroundColor=UIColor.clear
-//        let lbl = cell?.subviews[1] as! UILabel
-//        lbl.textColor = Style.activeCellLblColor
-//    }
     
     
     //컬렉션 뷰 레이아웃 크기

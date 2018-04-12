@@ -13,7 +13,12 @@ enum MyTheme {
     case dark
 }
 
-class CalendarController: UIViewController {
+class CalendarController: UIViewController,Dissmiss {
+    
+    func dissmissAndReturnValue(year: Int, month: Int, day: Int) {
+        print("켈린더 컨트롤 창 반응!")
+    }
+    
     
     var theme = MyTheme.dark
     
@@ -22,6 +27,11 @@ class CalendarController: UIViewController {
 
         
         super.viewDidLoad()
+        
+        
+        //calenderView에 있는 dissmissDelegate에 이벤트가 발생하면 작동될 창은 나다.(내가 calenderView에 있는 프로토콜 메서드를 구현했다.!)
+        calenderView.dissmissDelegate = self
+        
         self.title = "묵상달력"
         self.navigationController?.navigationBar.isTranslucent=false
         self.view.backgroundColor=Style.bgColor
@@ -56,6 +66,7 @@ class CalendarController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         calenderView.myCollectionView.collectionViewLayout.invalidateLayout()
+        
     }
     
     @objc func rightBarBtnAction(sender: UIBarButtonItem) {
