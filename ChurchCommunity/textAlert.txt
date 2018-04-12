@@ -607,3 +607,27 @@ nameLabel.topAnchor.constraint(equalTo: txtLabel.bottomAnchor, constant: 45).isA
 nameLabel.centerXAnchor.constraint(equalTo: myView.centerXAnchor).isActive = true
 nameLabel.bottomAnchor.constraint(equalTo: myView.bottomAnchor, constant: -45).isActive = true
 
+
+
+
+
+
+
+
+//네비게이션 컨트롤이 여러개 일때 데이터를 넘겨주는 법
+
+class CalendarController: UIViewController,Dissmiss {
+
+
+//달력의 날짜를 누르면 이곳이 반응하고 데이터가 넘어온다.
+func dissmissAndReturnValue(year: Int, month: Int, day: Int) {
+//print(year,month,day)
+
+let fontPage = self.navigationController?.viewControllers[0] as! TodayBibleTextVC
+fontPage.selectedYear = year
+fontPage.selectedMonth = month
+fontPage.selectedDay = day
+self.navigationController?.popToRootViewController(animated: true)
+
+
+}

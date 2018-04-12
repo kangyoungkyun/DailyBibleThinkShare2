@@ -309,12 +309,21 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
 //        }
 //    }
     
+    var selectedYear:Int?
+    var selectedMonth:Int?
+    var selectedDay:Int?
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let aRow = indexPath1 {
             self.tableView.selectRow(at: aRow, animated: true, scrollPosition: .top)
         }
+        
+        if let year = self.selectedYear, let month = self.selectedMonth, let day = self.selectedDay{
+            print("선택된 날짜는요?   \(year): \(month) : \(day)")
+        }
+       
     }
     
     var today = ""

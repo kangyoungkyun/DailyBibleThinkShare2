@@ -15,20 +15,26 @@ enum MyTheme {
 
 class CalendarController: UIViewController,Dissmiss {
     
+    
+    //달력의 날짜를 누르면 이곳이 반응하고 데이터가 넘어온다.
     func dissmissAndReturnValue(year: Int, month: Int, day: Int) {
-        print(year,month,day)
-        self.navigationController?.popViewController(animated: true)
+        //print(year,month,day)
+
+        let fontPage = self.navigationController?.viewControllers[0] as! TodayBibleTextVC
+        fontPage.selectedYear = year
+        fontPage.selectedMonth = month
+        fontPage.selectedDay = day
+        self.navigationController?.popToRootViewController(animated: true)
+
+        
     }
     
     
     var theme = MyTheme.dark
     
     override func viewDidLoad() {
-        //네비게이션 바 버튼 아이템 글꼴 바꾸기
 
-        
         super.viewDidLoad()
-        
         
         //calenderView에 있는 dissmissDelegate에 이벤트가 발생하면 작동될 창은 나다.(내가 calenderView에 있는 프로토콜 메서드를 구현했다.!)
         calenderView.dissmissDelegate = self
