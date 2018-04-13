@@ -10,6 +10,9 @@
 import UIKit
 import Firebase
 class MyPostVC: UITableViewController,UISearchBarDelegate {
+    
+
+    
 
     /*   let searchController : UISearchController = {
      let uisearchController = UISearchController(searchResultsController: nil)
@@ -495,14 +498,133 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
     //             self.tableView.selectRow(at: aRow, animated: true, scrollPosition: .top)
     //        }
     //    }
+
     
-    
+    var selectedYear:Int?
+    var selectedMonth:Int?
+    var selectedDay:Int?
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         if let aRow = indexPath1 {
             self.tableView.selectRow(at: aRow, animated: true, scrollPosition: .top)
         }
+        
+        if let year = self.selectedYear, let month = self.selectedMonth, let day = self.selectedDay{
+           
+            print("오케 날짜 클릭하고 나의묵상 페이지 viewwill 에 왔어 \(year) \(month) \(day)")
+            selectedPost(y: "\(year)", m: "\(month)", d: "\(day)")
+
+        }
+        
+        selectedDay = nil
+        selectedYear = nil
+        selectedMonth = nil
+        //self.tableView.reloadData()
     }
+    //달력에서 선택된 날짜의 글 가져오기
+    func selectedPost(y:String,m:String,d:String){
+        var allCount = 0
+        var showPostCount = 0
+        let myId = Auth.auth().currentUser?.uid
+        let myName = Auth.auth().currentUser?.displayName
+        self.nameLable.text = "\(myName!)의 묵상"
+        //print("start showPost")
+        let ref = Database.database().reference()
+        
+        //user db에서 한줄 글 불러오기
+        ref.child("users").child(myId!).observe(.value) { (snapt) in
+            let childValue = snapt.value as! [String:Any] //자식의 value 값 가져오기
+            if let myStateMsg = childValue["stateMsg"] as? String{
+                self.introLable.text = myStateMsg
+            }else{
+                self.introLable.text = "좋아하는 말씀 또는 문장"
+            }
+            
+        }
+        ref.child("posts").queryOrdered(byChild: "date").observe(.value) { (snapshot) in
+            self.posts.removeAll() //배열을 안지워 주면 계속 중복해서 쌓이게 된다.
+            for child in snapshot.children{
+                
+                let postToShow = Post() //데이터를 담을 클래스
+                let childSnapshot = child as! DataSnapshot //자식 DataSnapshot 가져오기
+                let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
+                
+                if let name = childValue["name"],  let date = childValue["date"], let hit = childValue["hit"], let pid = childValue["pid"], let uid = childValue["uid"], let text = childValue["text"], let reply = childValue["reply"], let show = childValue["show"]{
+                    
+                    //오늘 날짜에 작성된 글 개수 파악
+                    let t = date as? TimeInterval
+                    let todate = NSDate(timeIntervalSince1970: t!/1000)
+                    let calendar = Calendar.current //켈린더 객체 생성
+                    let year = calendar.component(.year, from: todate as Date)    //년
+                    let month = calendar.component(.month, from: todate as Date)  //월
+                    let day = calendar.component(.day, from: todate as Date)      //일
+                    
+                    
+                    if(myId == String(describing: uid) && "\(year)\(month)\(day)" == "\(y)\(m)\(d)"){
+                        ref.child("bless").observe(.value, with: { (snapshot) in
+                            for (childs ) in snapshot.children{
+                                let childSnapshot = childs as! DataSnapshot
+                                let key = childSnapshot.key
+                                let val = childSnapshot.value as! [String:Any]
+                                //let val = childSnapshot.value(forKeyPath: key!)
+                                //print(pid,key,val.count)
+                                if (key == pid as? String) {
+                                    postToShow.blessCount = "\(val.count)"
+                                    print("all Cnt 안\(allCount)")
+                                }
+                            }
+                            self.tableView.reloadData()
+                            
+                        })
+                        //firebase에서 가져온 날짜 데이터를 ios 맞게 변환
+                        if let t = date as? TimeInterval {
+                            let date = NSDate(timeIntervalSince1970: t/1000)
+                            // print("---------------------\(NSDate(timeIntervalSince1970: t/1000))")
+                            let dayTimePeriodFormatter = DateFormatter()
+                            dayTimePeriodFormatter.dateFormat = "M월 d일 hh시"
+                            let dateString = dayTimePeriodFormatter.string(from: date as Date)
+                            postToShow.date = dateString
+                        }
+                        postToShow.name = name as! String
+                        postToShow.hit = String(describing: hit)
+                        postToShow.pid = pid as! String
+                        postToShow.text = text as! String
+                        postToShow.uid = uid as! String
+                        postToShow.reply = String(describing: reply)
+                        if(show as? String == "y"){
+                            postToShow.show = "공개"
+                            showPostCount = showPostCount + 1
+                        }else{
+                            postToShow.show = "비공개"
+                        }
+                        
+                        allCount = allCount + 1
+                        print("all Cnt 밖\(allCount)")
+                        self.posts.insert(postToShow, at: 0) //
+                    }else{
+                                //묵상날짜가 없으면 일단 여기..
+                    }
+                }
+            }
+            self.countLable.text = "총 \(allCount)편 / \(showPostCount)편 공개"
+            print("all Cnt 밖\(allCount)")
+            
+            if allCount == 0 {
+                //self.posts.removeAll()
+                self.tableView.reloadData()
+            }
+            
+            allCount = 0
+            showPostCount = 0
+
+        }
+        //tableView.reloadData()
+        ref.removeAllObservers()
+        
+    }
+    
+    
     
     //포스트 조회 함수
     func showPost(){

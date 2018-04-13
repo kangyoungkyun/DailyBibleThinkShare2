@@ -167,6 +167,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
     @objc func calendar (){
         print("메인화면에서 열어라 캘린더 얼러트 창")
         let vc = CalendarController()
+        vc.adminId = "i1OyLDOK7zLC6mSt20qOz7vtTQv2"
         navigationController?.pushViewController(vc, animated: true)
         
         
@@ -318,7 +319,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
         }
         
         if let year = self.selectedYear, let month = self.selectedMonth, let day = self.selectedDay{
-            showPost(selectYear: "\(year)", selectMonth: "\(month)", selectDay: "\(day)")
+            //showPost(selectYear: "\(year)", selectMonth: "\(month)", selectDay: "\(day)")
             print("오케 날짜 클릭하고 viewwill 에 왔어 ")
             selectedPost(y: "\(year)", m: "\(month)", d: "\(day)")
         }
@@ -393,7 +394,15 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
                     }
                 }
             }
+            
+            if todayPost == 0 {
+                //self.posts.removeAll()
+                self.tableView.reloadData()
+            }
+            
             todayPost = 0
+            
+            
             //print("초기화 됐나요1? \(todayPost)")
         }
         //print("초기화 됐나요2? \(todayPost)")

@@ -47,16 +47,23 @@ protocol Dissmiss: class {
     func dissmissAndReturnValue(year:Int,month:Int,day:Int)
 }
 
+protocol DissmissToMyPostList: class {
+    func dissmissToMyPostListAndReturnValue(year:Int,month:Int,day:Int)
+}
 
 
 
-class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MonthViewDelegate,MyPostClickCalenderSendMyId {
+class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MonthViewDelegate,MyPostClickCalenderSendMyId,AdminPostClickCalenderSendMyId {
+    func AdminPostClickCalenderSendMyId(adminId: String) {
+        print("calendarController에서 넘긴 관리자 아이디값을 CalenderView 에서 받았습니다. \(String(describing: adminId))")
+        self.adminId = adminId
+    }
+    
     
     func MyPostClickCalenderSendMyId(myid: String) {
         print("calendarController에서 넘긴 아이디값을 CalenderView 에서 받았습니다. \(String(describing: myid))")
         self.myId = myid
-        
-        
+
     }
     //var cnt = 0
     //var whenIWritePost = [String]()
@@ -73,7 +80,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
                 let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
                 
                 if let date = childValue["date"], let uid = childValue["uid"] {
-                    if(uid as? String == self.myId){
+                    if(uid as? String == (self.myId != nil ? self.myId! : self.adminId!)){
                         //오늘 날짜에 작성된 글 개수 파악
                         if let t = date as? TimeInterval {
                             let date = NSDate(timeIntervalSince1970: t/1000)
@@ -83,10 +90,8 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
                             let day = calendar.component(.day, from: date as Date)      //일
                             
                             //print("\(year)\(month)\(day)")
-                            
-                                self.whenIWritePost.insert("\(year)\(month)\(day)")
-                            
-                            
+                            self.whenIWritePost.insert("\(year)\(month)\(day)")
+
                         }
                         //print("언제 썻니? \(date)")
                     }
@@ -95,7 +100,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             
             self.myCollectionView.reloadData()
             print("대체 몇개를 쓴거니~? \(self.whenIWritePost.count)")
-           
+            
         }
         ref.removeAllObservers()
         
@@ -104,8 +109,10 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     
     //나의 키
     var myId:String?
+    var adminId:String?
     
     var dissmissDelegate : Dissmiss?
+    var dissmissToMyPostList : DissmissToMyPostList?
     
     var numOfDaysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31]
     //이번달
@@ -128,6 +135,8 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     override init(frame: CGRect) {
         super.init(frame: frame)
         print("여기가 진입점 입니다.")
+        
+        
         showWhenIWritePost()
         initializeView()
     }
@@ -209,8 +218,8 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     let tyear = Calendar.current.component(.year, from: Date())
     let tday = Calendar.current.component(.day, from: Date())
     
-  
-   
+    
+    
     //숫자 채우기
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell=collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! dateCVCell
@@ -229,10 +238,11 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             
             cell.isHidden=false
             cell.lbl.text="\(calcDate)"
-            
+            // let doneView2 = UIImageView(image:nil) -----
+            //cell.backgroundView = doneView2 ----------
             //오늘 날짜면 색첼
             if(currentYear == self.tyear && currentMonthIndex == self.tmonth && self.tday == calcDate){
-                cell.backgroundColor = .green
+                cell.backgroundColor = .red
             }
             
             //오늘 이후 날짜는 비활성화 및 회색으로 표시
@@ -248,33 +258,58 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
                         cell.isUserInteractionEnabled=true
                         let doneView = UIImageView(image:#imageLiteral(resourceName: "done.png"))
                         cell.backgroundView = doneView
+                        cell.lbl.textColor = .black
                     }else{
                         
                         print("같은 날짜에 적은 글이 없습니다. ㅠㅠ")
                         cell.isUserInteractionEnabled=true
+
                         cell.lbl.textColor = Style.activeCellLblColor
                     }
                 }
-
+                
             }
             
         }
         print("컬렉션 뷰 구성-3")
         return cell
-       
+        
     }
     
+    func alertNoPost(){
+
+    }
+    
+    //날짜 클릭, -> 델리게이트로 -> calendarController 꺼주기
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell=collectionView.cellForItem(at: indexPath)
-        //cell?.backgroundColor=Colors.darkRed
-        let lbl = cell?.subviews[1] as! UILabel
-        //lbl.textColor=UIColor.white
-        print(currentMonthIndex,lbl.text!)
-        //날짜 클릭, -> 델리게이트로 -> calendarController 꺼주기
         
+        print("날짜가 클릭되었습니다.")
+        let subviewsCnt = cell?.subviews.count
+        //일일묵상에서 달력 날짜를 클릭하면 subviews 개수는 2개다
+        //나의 묵상 달력에서 날짜를 클릭하면 subviews 개수는 3개다 왜냐면 묵상한 날짜를 표시하기 위한 UIImageView를 넣었기 때문이다.
         
-        self.dissmissDelegate?.dissmissAndReturnValue(year: currentYear, month: currentMonthIndex, day: Int(lbl.text!)!)
-        
+        //묵상글이 없을때
+        if(subviewsCnt == 2){
+            //일일 묵상 달력에서 클릭했을 때
+            if let lblcheck = cell?.subviews[1]{
+                if(lblcheck is UILabel){
+                    let lbl = lblcheck as! UILabel
+                    self.dissmissDelegate?.dissmissAndReturnValue(year: currentYear, month: currentMonthIndex, day: Int(lbl.text!)!)
+                
+                }
+            }
+            //묵상글이 있을때 *
+        }else if (subviewsCnt == 3){
+            //나의 묵상 달력에서 클릭했을 때
+            if let a2 = cell?.subviews[2]{
+                if(a2 is UILabel){
+                    let lbl = a2 as! UILabel
+                    self.dissmissToMyPostList?.dissmissToMyPostListAndReturnValue(year: currentYear, month: currentMonthIndex, day: Int(lbl.text!)!)
+                }
+                
+            }
+        }
     }
     
     
@@ -425,16 +460,6 @@ extension String {
         return String.dateFormatter.date(from: self)
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
