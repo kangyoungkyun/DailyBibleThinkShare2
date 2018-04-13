@@ -29,6 +29,12 @@
 		5242FF9720576FFD00548FD4 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242FF9620576FFD00548FD4 /* Post.swift */; };
 		5250B5BE20648FC70094F1B8 /* MyPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5250B5BD20648FC70094F1B8 /* MyPostVC.swift */; };
 		5250B5C7206497710094F1B8 /* MyPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5250B5C6206497710094F1B8 /* MyPostCell.swift */; };
+		526E730D20805FC7003AA683 /* aaa.png in Resources */ = {isa = PBXBuildFile; fileRef = 526E730920805FC6003AA683 /* aaa.png */; };
+		526E730E20805FC7003AA683 /* ccc.png in Resources */ = {isa = PBXBuildFile; fileRef = 526E730A20805FC6003AA683 /* ccc.png */; };
+		526E730F20805FC7003AA683 /* bbb.png in Resources */ = {isa = PBXBuildFile; fileRef = 526E730B20805FC6003AA683 /* bbb.png */; };
+		526E731020805FC7003AA683 /* d.png in Resources */ = {isa = PBXBuildFile; fileRef = 526E730C20805FC7003AA683 /* d.png */; };
+		526E7313208060CF003AA683 /* ddd.png in Resources */ = {isa = PBXBuildFile; fileRef = 526E7311208060CF003AA683 /* ddd.png */; };
+		526E7314208060CF003AA683 /* eee.png in Resources */ = {isa = PBXBuildFile; fileRef = 526E7312208060CF003AA683 /* eee.png */; };
 		52858A492055E64D005C9BB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52858A482055E64D005C9BB9 /* AppDelegate.swift */; };
 		52858A4B2055E64D005C9BB9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52858A4A2055E64D005C9BB9 /* MainViewController.swift */; };
 		52858A5B2055E7EA005C9BB9 /* TalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52858A5A2055E7EA005C9BB9 /* TalkViewController.swift */; };
@@ -108,6 +114,12 @@
 		526DD63A206E306F00E5C8D2 /* pencil4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencil4.png; sourceTree = "<group>"; };
 		526DD63E206E32BD00E5C8D2 /* ic_inbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_inbox.png; sourceTree = "<group>"; };
 		526DD644206E5E7E00E5C8D2 /* ic_account_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_account_circle.png; sourceTree = "<group>"; };
+		526E730920805FC6003AA683 /* aaa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aaa.png; sourceTree = "<group>"; };
+		526E730A20805FC6003AA683 /* ccc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ccc.png; sourceTree = "<group>"; };
+		526E730B20805FC6003AA683 /* bbb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bbb.png; sourceTree = "<group>"; };
+		526E730C20805FC7003AA683 /* d.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = d.png; sourceTree = "<group>"; };
+		526E7311208060CF003AA683 /* ddd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ddd.png; sourceTree = "<group>"; };
+		526E7312208060CF003AA683 /* eee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eee.png; sourceTree = "<group>"; };
 		52858A452055E64D005C9BB9 /* ChurchCommunity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChurchCommunity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52858A482055E64D005C9BB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52858A4A2055E64D005C9BB9 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -274,6 +286,12 @@
 		52858A622055EBDE005C9BB9 /* Pic */ = {
 			isa = PBXGroup;
 			children = (
+				526E7311208060CF003AA683 /* ddd.png */,
+				526E7312208060CF003AA683 /* eee.png */,
+				526E730920805FC6003AA683 /* aaa.png */,
+				526E730B20805FC6003AA683 /* bbb.png */,
+				526E730A20805FC6003AA683 /* ccc.png */,
+				526E730C20805FC7003AA683 /* d.png */,
 				52C2CA83207F925800BC4613 /* done.png */,
 				52B88EF1207F409D00DCEC98 /* ic_add.png */,
 				524110D2207DC31A00EA172A /* ic_date_range.png */,
@@ -421,10 +439,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				526E731020805FC7003AA683 /* d.png in Resources */,
 				52C2CA84207F925800BC4613 /* done.png in Resources */,
 				52DA90A2207238EF0020B893 /* pencil.png in Resources */,
 				52DA909F207238E80020B893 /* pencil4.png in Resources */,
+				526E730D20805FC7003AA683 /* aaa.png in Resources */,
 				52DA909C207238E20020B893 /* ic_chrome_reader_mode.png in Resources */,
+				526E7313208060CF003AA683 /* ddd.png in Resources */,
 				52DA909E207238E60020B893 /* ic_inbox.png in Resources */,
 				52DA9098207238D70020B893 /* bac.jpg in Resources */,
 				52DA90AC207239850020B893 /* textAlert.txt in Resources */,
@@ -435,6 +456,7 @@
 				52DA909B207238E00020B893 /* print.jpg in Resources */,
 				52DA90AA2072397E0020B893 /* Pods-ChurchCommunity.debug.xcconfig in Resources */,
 				52DA90A3207238EF0020B893 /* heart.png in Resources */,
+				526E730E20805FC7003AA683 /* ccc.png in Resources */,
 				52DA909D207238E40020B893 /* ic_account_circle.png in Resources */,
 				52DA90AD207239880020B893 /* read.txt in Resources */,
 				52DA9097207238720020B893 /* GoogleService-Info.plist in Resources */,
@@ -445,11 +467,13 @@
 				52AC441D2073BFDB00B9D753 /* ic_view_headline.png in Resources */,
 				52DA909A207238DE0020B893 /* bac2.jpg in Resources */,
 				52DA90A4207238EF0020B893 /* ic_person_outline.png in Resources */,
+				526E730F20805FC7003AA683 /* bbb.png in Resources */,
 				52B88EF2207F409D00DCEC98 /* ic_add.png in Resources */,
 				5238EC81207A216F00A481E9 /* heart1.png in Resources */,
 				52018A67207AE09D00D66D12 /* ic_account_balance.png in Resources */,
 				52D8B78E207CB597004A9673 /* ic_group.png in Resources */,
 				52DA90B120725F250020B893 /* Assets.xcassets in Resources */,
+				526E7314208060CF003AA683 /* eee.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

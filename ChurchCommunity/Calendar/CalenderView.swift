@@ -242,7 +242,10 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             //cell.backgroundView = doneView2 ----------
             //오늘 날짜면 색첼
             if(currentYear == self.tyear && currentMonthIndex == self.tmonth && self.tday == calcDate){
-                cell.backgroundColor = .red
+                //
+                let todayView = UIImageView(image:#imageLiteral(resourceName: "eee.png"))
+                cell.backgroundView = todayView
+                
             }
             
             //오늘 이후 날짜는 비활성화 및 회색으로 표시
