@@ -92,6 +92,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
                     }
                 }
             }
+            
             self.myCollectionView.reloadData()
             print("대체 몇개를 쓴거니~? \(self.whenIWritePost.count)")
            
@@ -198,7 +199,8 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     //빈칸을 포함한 전체 섹션의 개수를 구한다.
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 컬렉션 뷰 개수
-        print("컬랙션 뷰 개수")
+        print("컬랙션 뷰 개수-1")
+        //whenIWritePost.removeAll()
         return numOfDaysInMonth[currentMonthIndex-1] + firstWeekDayOfMonth - 1 //칸의 전체 개수 , 비칸 까지 포함해서
     }
     
@@ -213,6 +215,8 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell=collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! dateCVCell
         cell.backgroundColor=UIColor.clear
+        cell.backgroundView = nil
+        print("컬랙션 뷰 구성 - 2")
         
         //셀의 객체가 달의 첫번째 요일 - 2 보다 작으면
         if indexPath.item <= firstWeekDayOfMonth - 2 {
@@ -226,26 +230,27 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             cell.isHidden=false
             cell.lbl.text="\(calcDate)"
             
+            //오늘 날짜면 색첼
             if(currentYear == self.tyear && currentMonthIndex == self.tmonth && self.tday == calcDate){
-                
-                cell.backgroundColor = .lightGray
-                
+                cell.backgroundColor = .green
             }
             
+            //오늘 이후 날짜는 비활성화 및 회색으로 표시
             if calcDate > todaysDate && currentMonthIndex == presentMonthIndex || currentMonthIndex > presentMonthIndex || currentYear > presentYear{
                 cell.isUserInteractionEnabled=false
                 cell.lbl.textColor = UIColor.lightGray
             } else {
                 
                 //set에 넣어놓은 날짜와 비교 하기
-                
                 for i in self.whenIWritePost{
                     if("\(i)"=="\(currentYear)\(currentMonthIndex)\(calcDate)"){
-                        print("여기는 왜 안들어오는거여?0----??")
+                        print("같은 날짜에 적은 글이 있네요 체크 표시를 합니다 - \(i)")
                         cell.isUserInteractionEnabled=true
-                         let doneView = UIImageView(image:#imageLiteral(resourceName: "done.png"))
+                        let doneView = UIImageView(image:#imageLiteral(resourceName: "done.png"))
                         cell.backgroundView = doneView
                     }else{
+                        
+                        print("같은 날짜에 적은 글이 없습니다. ㅠㅠ")
                         cell.isUserInteractionEnabled=true
                         cell.lbl.textColor = Style.activeCellLblColor
                     }
@@ -254,7 +259,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             }
             
         }
-        print("컬렉션 뷰 구성")
+        print("컬렉션 뷰 구성-3")
         return cell
        
     }
@@ -290,7 +295,11 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     
     
     func didChangeMonth(monthIndex: Int, year: Int) {
-        //whenIWritePost.removeAll()
+        print("이전달 이후 달 이 눌렀씁니다.")
+        print("\n")
+        whenIWritePost.removeAll()
+        showWhenIWritePost()
+        
         currentMonthIndex=monthIndex+1
         currentYear = year
         
@@ -308,6 +317,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         
         myCollectionView.reloadData()
         //whenIWritePost.removeAll()
+        whenIWritePost.removeAll()
     }
     
     func setupViews() {

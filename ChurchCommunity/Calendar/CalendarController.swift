@@ -118,8 +118,9 @@ class CalendarController: UIViewController,Dissmiss {
     lazy var calenderView: CalenderView = {
         let v=CalenderView(theme: MyTheme.light)
         self.myPostClickCalenderSendMyIdDelegate = v //이게 핵심이었다!!!!!!!!!!!
+        //v.whenIWritePost.removeAll()
         v.translatesAutoresizingMaskIntoConstraints=false
-        v.myId = "bbbbbbb"
+        
         return v
     }()
     
