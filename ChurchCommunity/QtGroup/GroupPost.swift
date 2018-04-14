@@ -6,9 +6,17 @@
 //  Copyright © 2018년 MacBookPro. All rights reserved.
 //
 
+protocol bye:class {
+    func byebye()
+}
+
+
 import UIKit
 import Firebase
 class GroupPost: UITableViewController,UISearchBarDelegate {
+    
+    var byebyeDelegate:bye?
+    
     var activityIndicatorView: UIActivityIndicatorView!
     //테이블 뷰 셀에서 이름이 클릭되었을 때
     func userClickCell(uid: String) {
@@ -457,6 +465,7 @@ class GroupPost: UITableViewController,UISearchBarDelegate {
             
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { (alert) in
                 print("데이터 베이스 단 처리")
+                //self.byebyeDelegate?.byebye()
                 let currentUid = Auth.auth().currentUser?.uid
                 let ref = Database.database().reference()
                 
@@ -468,13 +477,18 @@ class GroupPost: UITableViewController,UISearchBarDelegate {
                     if let leader = childValue["leader"]{
                         print("leader 있음")
                         if(leader as! String == "y"){
-                            print("방 리더는 띠로 문의해 주세요.")
+                            print("방 리더는 삭제 완료")
+                            ref.child("users").child(currentUid!).child("groupid").removeValue()
+                            let change = ["group" : "n", "leader" : "n"]
+                            ref.child("users").child(currentUid!).updateChildValues(change)
+                            self.byebyeDelegate?.byebye()
+                            self.navigationController?.popViewController(animated: true)
                         }else{
-                            print("삭제완료!")
+                            print("묵상방 인원 삭제완료!")
                             ref.child("users").child(currentUid!).child("groupid").removeValue()
                             let change = ["group" : "n"]
                             ref.child("users").child(currentUid!).updateChildValues(change)
-                            
+                            self.byebyeDelegate?.byebye()
                             self.navigationController?.popViewController(animated: true)
                         }
                     }

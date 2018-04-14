@@ -8,7 +8,13 @@
 
 import UIKit
 import Firebase
-class GroupListVC: UITableViewController {
+class GroupListVC: UITableViewController,bye {
+    
+    func byebye() {
+        print("안녕 아이디값 변경했어nil 로")
+        checkGroupid = nil
+    }
+    
     let cellId = "cellId"
     var groupList = [GroupInfo]()
     var activityIndicatorView: UIActivityIndicatorView!
@@ -108,10 +114,7 @@ class GroupListVC: UITableViewController {
         
         self.navigationController?.navigationBar.isTranslucent = false
         
-        
-        
 
-        
         //네비게이션 바 버튼 아이템 글꼴 바꾸기
         self.navigationItem.leftBarButtonItem?.setTitleTextAttributes([
             NSAttributedStringKey.font: UIFont(name: "NanumMyeongjo-YetHangul", size: 15.0)!,
@@ -129,11 +132,16 @@ class GroupListVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         showGroupList()
         
-        //groupidAndLeaderCheck()
+//        //groupidAndLeaderCheck()
+//        if (checkGroupid != nil){
+//
+//        }else{
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "그룹생성", style: .plain, target: self, action:  #selector(makeGroup))
+            
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "그룹찾기", style: .plain, target: self, action:  #selector(searcgGroup))
+//        }
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "그룹생성", style: .plain, target: self, action:  #selector(makeGroup))
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "그룹찾기", style: .plain, target: self, action:  #selector(searcgGroup))
+
     }
     
     //동적 테이블 함수
@@ -148,7 +156,7 @@ class GroupListVC: UITableViewController {
     
     
     
-    
+    var hide = true
     //그룹을 만든 유저인지 or 그룹에 가입한 유저인지 체크
     func groupidAndLeaderCheck(){
         print("groupidAndLeaderCheck 입장")
@@ -169,7 +177,7 @@ class GroupListVC: UITableViewController {
                     self.navigationItem.leftBarButtonItem = nil
                     self.navigationItem.hidesBackButton = true
                     self.navigationItem.rightBarButtonItem = nil
-//                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "설정", style: .plain, target: self, action:  #selector(self.setting))
+                    
                     return
                 }else{
                     print("방 탈퇴~! 네비바 보여라")
@@ -207,6 +215,11 @@ class GroupListVC: UITableViewController {
                 self.checkGroupid = checkGroup as? String
                 
                 if checkGroup as? String != nil{
+                    
+                    self.navigationItem.leftBarButtonItem = nil
+                    self.navigationItem.hidesBackButton = true
+                    self.navigationItem.rightBarButtonItem = nil
+                    
                     print("그룹이 있네요")
                     ref.child("group").child(self.checkGroupid!).observeSingleEvent(of:.value) { (snapshot) in
                         self.groupList.removeAll() //배열을 안지워 주면 계속 중복해서 쌓이게 된다.
@@ -304,6 +317,7 @@ class GroupListVC: UITableViewController {
             groupInfo.password = password
             
             let viewController = GroupPost()
+            viewController.byebyeDelegate = self
             viewController.groupInfo = groupInfo
             navigationController?.pushViewController(viewController, animated: true)
             
