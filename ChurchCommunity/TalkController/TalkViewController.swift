@@ -12,10 +12,7 @@ class TalkViewController: UITableViewController,UISearchBarDelegate {
     var activityIndicatorView: UIActivityIndicatorView!
     //테이블 뷰 셀에서 이름이 클릭되었을 때
     func userClickCell(uid: String) {
-        //let viewController = ShowPageViewController()
-        //viewController.userUid = uid
-        //userProfile 화면을 rootView로 만들어 주기
-       // navigationController?.pushViewController(viewController, animated: true)
+
     }
     
     var posts = [Post]()

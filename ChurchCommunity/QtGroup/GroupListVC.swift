@@ -272,13 +272,24 @@ class GroupListVC: UITableViewController,bye {
                 }
             }
         }
-        
-        
-        
     }
     //테이블 개수
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        print("테이블 개수! \(searchBarActive)")
+        
+        print("찾은 검색 개수! \(searchPosts.count)")
+        
+        if (searchPosts.count > 0){
+            print("0번째 방이름 \(searchPosts[0].groupname!)")
+            //print("1번째 방이름! \(searchPosts[1].groupname)")
+        }
+
+        if(searchBarActive){
+            
+            
+            return searchPosts.count
+        }
+        print("그룹 리스트에는 안왔을꺼야 ->.   \(groupList.count)")
         return groupList.count
     }
     
@@ -286,12 +297,26 @@ class GroupListVC: UITableViewController,bye {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? GroupCell
         
-        let groupData = groupList[indexPath.row]
-        cell?.groupTitleLabel.text = groupData.groupname
-        cell?.groupNameLabel.text = groupData.leadername
-        cell?.groupCountLabel.text = "  \(groupData.count!) 명"
-        cell?.passwordLabel.text = groupData.password
-        cell?.groupIdLabel.text = groupData.groupid
+        if(searchBarActive){
+         let searcgroupData = searchPosts[indexPath.row]
+         cell?.groupTitleLabel.text = searcgroupData.groupname
+         cell?.groupNameLabel.text = searcgroupData.leadername
+        cell?.groupCountLabel.text = "  \(searcgroupData.count) 명"
+         cell?.passwordLabel.text = searcgroupData.password
+         cell?.groupIdLabel.text = searcgroupData.groupid
+            searchBarActive = false
+            print("테이블 행 구성에서 서치바 액션 새로고침 -> \(searchBarActive)")
+         }else{
+         let groupData = groupList[indexPath.row]
+         cell?.groupTitleLabel.text = groupData.groupname
+         cell?.groupNameLabel.text = groupData.leadername
+         cell?.groupCountLabel.text = "  \(groupData.count!) 명"
+         cell?.passwordLabel.text = groupData.password
+         cell?.groupIdLabel.text = groupData.groupid
+         }
+         
+        
+        
         return cell!
     }
     
@@ -483,9 +508,7 @@ class GroupListVC: UITableViewController,bye {
                 viewController.groupInfo = groupInfo
                 self.navigationController?.pushViewController(viewController, animated: true)
             }))
-            
-            
-            
+
             self.present(alert, animated: true, completion: nil)
         }
         
@@ -496,13 +519,60 @@ class GroupListVC: UITableViewController,bye {
         alert.addAction(cancel)
         alert.addAction(ok)
         self.present(alert, animated: true, completion: nil)
+
+    }
+    var searchBarActive = false
+    var searchPosts = [GroupInfo]()
+    @objc func searcgGroup(){
         
+        print("묵상 그룹 찾기")
+        let alert = UIAlertController(title: "", message: "묵상방의 이름을 입력해주세요.", preferredStyle: .alert)
+        alert.addTextField { (myTextField) in
+            myTextField.textColor = UIColor.darkGray
+            myTextField.font = UIFont(name: "NanumMyeongjo-YetHangul", size: 12.5)
+            myTextField.placeholder = "묵상방 이름"
+        }
         
+        let ok = UIAlertAction(title: "찾기", style: .default) { (ok) in
+           let txt = alert.textFields?[0].text
+
+            //유효성 검사
+            if(txt == "") {
+                let alert = UIAlertController(title: "알림 ", message:"빈칸을 확인해주세요.", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+            
+                //print(txt!)
+
+                    self.searchPosts.removeAll()
+            
+                        self.searchPosts = self.groupList.filter({ (post) -> Bool in
+                         //guard let text = searchController.searchBar.text else{return false}
+                            self.searchBarActive = true
+                            print("방이름 제목- \(post.groupname!)")
+                            print("내가 검색한 제목과 같은건 몇개? - \(post.groupname.contains(txt!))")
+                            return post.groupname.contains(txt!)
+                            
+                    })
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+  
+        }
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel) { (cancel) in
+            //code
+        }
+        
+        alert.addAction(cancel)
+        alert.addAction(ok)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    @objc func searcgGroup(){
-        print("묵상 그룹 찾기")
-    }
+    
     //헤더뷰 레이아웃
     func setHeaderViewLayout(){
         headerView.addSubview(todayPostsCountLable)
