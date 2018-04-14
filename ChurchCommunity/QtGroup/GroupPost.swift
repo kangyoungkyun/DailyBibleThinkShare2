@@ -163,8 +163,9 @@ class GroupPost: UITableViewController,UISearchBarDelegate {
         searchPosts.removeAll()
         //searchController.searchBar.delegate = self
         
-        //네비게이션 바 색깔 변경
+         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "설정", style: .plain, target: self, action:  #selector(setting))
         
+        //네비게이션 바 색깔 변경
         self.navigationController?.navigationBar.isTranslucent = false
         
         
@@ -415,9 +416,6 @@ class GroupPost: UITableViewController,UISearchBarDelegate {
                             self.posts.insert(postToShow, at: 0)
                         }
                     }
-                    
-
-                    
                 }
             }
             todayPost = 0
@@ -427,6 +425,80 @@ class GroupPost: UITableViewController,UISearchBarDelegate {
         ref.removeAllObservers()
         //print("초기화 됐나요3? \(todayPost)")
     }
+    
+    @objc func setting(){
+        print("그룹 설정이 클릭되었습니다.")
+        
+        //얼러트창 띄워서
+        
+        //탈퇴
+        
+        //취소
+        
+        //탈퇴를 클릭하면 한번더 질문 "정말로 탈퇴하시겠습니까?"
+        
+        // 확인을 누르면
+        
+        //user db에 group id 지워주고
+        //group n 변경
+        
+        //단 leader가 y 면 방개설자는 탈퇴 할 수 없습니다....
+        
+        let alertController = UIAlertController(
+            title: "",
+            message: "설정",
+            preferredStyle: UIAlertControllerStyle.alert)
+        
+        
+        
+        let deleteAction = UIAlertAction(title: "묵상방 나가기", style: .destructive) { (alert) in
+            
+            let alert = UIAlertController(title: "", message:"정말로 나가시겠습니까?", preferredStyle: UIAlertControllerStyle.alert)
+            
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { (alert) in
+                print("데이터 베이스 단 처리")
+                let currentUid = Auth.auth().currentUser?.uid
+                let ref = Database.database().reference()
+                
+                ref.child("users").child(currentUid!).observeSingleEvent(of: .value) { (snpat) in
+                    print(currentUid!)
+                    let childSnapshot = snpat //자식 DataSnapshot 가져오기
+                    let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
+                    
+                    if let leader = childValue["leader"]{
+                        print("leader 있음")
+                        if(leader as! String == "y"){
+                            print("방 리더는 띠로 문의해 주세요.")
+                        }else{
+                            print("삭제완료!")
+                            ref.child("users").child(currentUid!).child("groupid").removeValue()
+                            let change = ["group" : "n"]
+                            ref.child("users").child(currentUid!).updateChildValues(change)
+                            
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                }
+            }))
+            alert.addAction(UIAlertAction(title: "취소", style: .default, handler: { (alert) in
+                print("취소")
+                return
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (alert) in
+            //print("취소")
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+        
+        self.present(
+            alertController,
+            animated: true,
+            completion: nil)
+    }
+    
     
 }
 
