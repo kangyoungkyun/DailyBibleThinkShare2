@@ -136,7 +136,7 @@ class DetailTalkViewController: UIViewController,ChildViewControllerDelegate {
             let alert = UIAlertController(title: "", message: "좋아요를 취소하시겠습니까?", preferredStyle: .alert)
             
             let ok = UIAlertAction(title: "확인", style: .default) { (ok) in
-                print("좋아요 버튼 클릭1 \(self.blessCheck)")
+                //print("좋아요 버튼 클릭1 \(self.blessCheck)")
                 ref.child("bless").child(self.pidLabel.text!).observeSingleEvent(of:.value) { (snapshot) in
                     for child in snapshot.children{
                         let childSnapshot = child as! DataSnapshot //자식 DataSnapshot 가져오기
@@ -145,7 +145,7 @@ class DetailTalkViewController: UIViewController,ChildViewControllerDelegate {
                         if let checkUid = childValue["uid"]{
                             if(checkUid as? String == currentUid){
                                 
-                                print("좋아요 누를 수 없어요. 이미 좋아요를 눌렀었어요 , 그래서 좋아요가 취소되었어요.")
+                               // print("좋아요 누를 수 없어요. 이미 좋아요를 눌렀었어요 , 그래서 좋아요가 취소되었어요.")
                                 ref.child("bless").child(self.pidLabel.text!).child(childKey).removeValue()
                                 ref.child("bless").child(self.pidLabel.text!).observeSingleEvent(of:.value, with: { (snapshot) in
                                     self.likesLabel.text = "좋아요 \(snapshot.childrenCount)"
@@ -153,14 +153,14 @@ class DetailTalkViewController: UIViewController,ChildViewControllerDelegate {
                                 self.likeBtnClicked()
                                 //ref.removeAllObservers()
                             }else{
-                                print("내아이디가 아닌 것")
+                               // print("내아이디가 아닌 것")
                                 //ref.removeAllObservers()
                                 
                             }
                         }
                     }
                     self.blessCheck = true
-                    print("좋아요 버튼 클릭2 \(self.blessCheck)")
+                   // print("좋아요 버튼 클릭2 \(self.blessCheck)")
                 }
                 
                 ref.removeAllObservers()
@@ -187,7 +187,7 @@ class DetailTalkViewController: UIViewController,ChildViewControllerDelegate {
     }
     
     @objc func updateMethod(){
-        print("좋아요 버튼 클릭3 \(self.blessCheck)")
+       // print("좋아요 버튼 클릭3 \(self.blessCheck)")
         let ref = Database.database().reference()
         let blessRef = ref.child("bless").child(self.pidLabel.text!)
         let blessKey = ref.child("bless").childByAutoId().key
@@ -199,14 +199,14 @@ class DetailTalkViewController: UIViewController,ChildViewControllerDelegate {
         self.likeButton.setImage(image, for: .normal)
         self.likeButton.tintColor = UIColor.red
         
-        print("좋아요를 안눌러서 좋아요가 눌러져서 빨간색 하트가 됐어요")
+        //print("좋아요를 안눌러서 좋아요가 눌러져서 빨간색 하트가 됐어요")
         (0...10).forEach { (_) in
             self.generateAnimatedView()
         }
         
         self.blessCheck = false
         self.blessId = nil
-        print("좋아요 버튼 클릭4 \(self.blessCheck)")
+        //print("좋아요 버튼 클릭4 \(self.blessCheck)")
         
         ref.child("bless").child(self.pidLabel.text!).observeSingleEvent(of:.value, with: { (snapshot) in
             self.likesLabel.text = "좋아요 \(snapshot.childrenCount)"
@@ -423,15 +423,15 @@ class DetailTalkViewController: UIViewController,ChildViewControllerDelegate {
                 let childKey = childSnapshot.key
                 if let checkUid = childValue["uid"]{
                     if(checkUid as? String == currentUid){
-                        print("이미 좋아요를 눌렀네요?")
-                        print("childKey - \(childKey)")
+                        //print("이미 좋아요를 눌렀네요?")
+                        //print("childKey - \(childKey)")
                         let image = UIImage(named: "heart1")?.withRenderingMode(.alwaysTemplate)
                         self.likeButton.setImage(image, for: .normal)
                         self.likeButton.tintColor = UIColor.red
                         self.blessCheck = false //좋아요 눌러진 상태면 false
                         
                     }else{
-                        print("좋아요 눌러볼래요?")
+                       // print("좋아요 눌러볼래요?")
                         let image = UIImage(named: "ic_favorite")?.withRenderingMode(.alwaysTemplate)
                         self.likeButton.setImage(image, for: .normal)
                         self.likeButton.tintColor = UIColor.lightGray

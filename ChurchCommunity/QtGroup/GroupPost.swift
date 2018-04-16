@@ -15,6 +15,28 @@ import UIKit
 import Firebase
 class GroupPost: UITableViewController,UISearchBarDelegate {
     
+    //글쓰기 플로팅 버튼
+    lazy var writeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.layer.borderColor = UIColor.lightGray.cgColor
+        button.layer.borderWidth = 0.8
+        button.frame = CGRect(x: view.frame.width - 60, y: view.frame.height - 90 , width: 45, height: 45)
+        button.layer.cornerRadius = button.frame.width/2
+        button.clipsToBounds = true
+        button.layer.masksToBounds = true
+        button.setBackgroundImage(#imageLiteral(resourceName: "pencil.png"), for: UIControlState())
+        button.addTarget(self, action: #selector(writeActionFlotingButton), for: .touchUpInside)
+        return button
+    }()
+    //플로팅 액션 버튼
+    @objc func writeActionFlotingButton(){
+        //print("바탕화면에서 글쓰기 버튼 클릭!")
+        let writeView = GroupWrite()
+        //글쓰기 화면을 rootView로 만들어 주기
+        let navController = UINavigationController(rootViewController: writeView)
+        self.present(navController, animated: true, completion: nil)
+    }
+    
     var byebyeDelegate:bye?
     
     var activityIndicatorView: UIActivityIndicatorView!
@@ -197,15 +219,15 @@ class GroupPost: UITableViewController,UISearchBarDelegate {
         
         //테이블 뷰에 플로팅 버튼 추가
         //tableView.addSubview(writeButton)
-        
+        tableView.addSubview(writeButton)
         
         
     }
     //플로팅 버튼 관련 함수
-    /* override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
      let  off = self.tableView.contentOffset.y
      writeButton.frame = CGRect(x: view.frame.width - 60, y: off + (view.frame.height - 135), width: writeButton.frame.size.width, height: writeButton.frame.size.height)
-     }*/
+     }
     
     //동적 테이블 함수
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -386,9 +408,9 @@ class GroupPost: UITableViewController,UISearchBarDelegate {
                     //-L9e6afeIaY1BhgaVL8z 그룹 아이디
                     if let groupid = childValue["groupid"]{
                         //공개를 허용한 글만 담벼락에 보이기
-                        print("공개를 허용한 글만 담벼락에 보이기")
-                        print("1  \(groupid)")
-                        print("2 \(self.groupInfo?.groupid)")
+                      //  print("공개를 허용한 글만 담벼락에 보이기")
+                      //  print("1  \(groupid)")
+                      //  print("2 \(self.groupInfo?.groupid)")
                         if (show as? String == "y" && groupid as? String == self.groupInfo?.groupid){
                             ref.child("bless").observe(.value, with: { (snapshot) in
                                 for (childs ) in snapshot.children{
@@ -435,7 +457,7 @@ class GroupPost: UITableViewController,UISearchBarDelegate {
     }
     
     @objc func setting(){
-        print("그룹 설정이 클릭되었습니다.")
+        //print("그룹 설정이 클릭되었습니다.")
         
         //얼러트창 띄워서
         
@@ -464,27 +486,27 @@ class GroupPost: UITableViewController,UISearchBarDelegate {
             let alert = UIAlertController(title: "", message:"정말로 나가시겠습니까?", preferredStyle: UIAlertControllerStyle.alert)
             
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { (alert) in
-                print("데이터 베이스 단 처리")
+               // print("데이터 베이스 단 처리")
                 //self.byebyeDelegate?.byebye()
                 let currentUid = Auth.auth().currentUser?.uid
                 let ref = Database.database().reference()
                 
                 ref.child("users").child(currentUid!).observeSingleEvent(of: .value) { (snpat) in
-                    print(currentUid!)
+                  //  print(currentUid!)
                     let childSnapshot = snpat //자식 DataSnapshot 가져오기
                     let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
                     
                     if let leader = childValue["leader"]{
-                        print("leader 있음")
+                       // print("leader 있음")
                         if(leader as! String == "y"){
-                            print("방 리더는 삭제 완료")
+                         //   print("방 리더는 삭제 완료")
                             ref.child("users").child(currentUid!).child("groupid").removeValue()
                             let change = ["group" : "n", "leader" : "n"]
                             ref.child("users").child(currentUid!).updateChildValues(change)
                             self.byebyeDelegate?.byebye()
                             self.navigationController?.popViewController(animated: true)
                         }else{
-                            print("묵상방 인원 삭제완료!")
+                          //  print("묵상방 인원 삭제완료!")
                             ref.child("users").child(currentUid!).child("groupid").removeValue()
                             let change = ["group" : "n"]
                             ref.child("users").child(currentUid!).updateChildValues(change)
@@ -495,7 +517,7 @@ class GroupPost: UITableViewController,UISearchBarDelegate {
                 }
             }))
             alert.addAction(UIAlertAction(title: "취소", style: .default, handler: { (alert) in
-                print("취소")
+               // print("취소")
                 return
             }))
             self.present(alert, animated: true, completion: nil)

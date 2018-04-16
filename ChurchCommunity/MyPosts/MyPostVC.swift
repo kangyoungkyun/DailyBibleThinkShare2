@@ -285,7 +285,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
     
     
     @objc func dateRage(){
-        print("나의 페이지에서 열어라 캘린더 얼러트 창")
+       // print("나의 페이지에서 열어라 캘린더 얼러트 창")
         let myId = Auth.auth().currentUser?.uid
         let vc = CalendarController()
         vc.Myid = myId
@@ -512,7 +512,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
         
         if let year = self.selectedYear, let month = self.selectedMonth, let day = self.selectedDay{
            
-            print("오케 날짜 클릭하고 나의묵상 페이지 viewwill 에 왔어 \(year) \(month) \(day)")
+            //print("오케 날짜 클릭하고 나의묵상 페이지 viewwill 에 왔어 \(year) \(month) \(day)")
             selectedPost(y: "\(year)", m: "\(month)", d: "\(day)")
 
         }
@@ -571,7 +571,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
                                 //print(pid,key,val.count)
                                 if (key == pid as? String) {
                                     postToShow.blessCount = "\(val.count)"
-                                    print("all Cnt 안\(allCount)")
+                                    //print("all Cnt 안\(allCount)")
                                 }
                             }
                             self.tableView.reloadData()
@@ -600,7 +600,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
                         }
                         
                         allCount = allCount + 1
-                        print("all Cnt 밖\(allCount)")
+                        //print("all Cnt 밖\(allCount)")
                         self.posts.insert(postToShow, at: 0) //
                     }else{
                                 //묵상날짜가 없으면 일단 여기..
@@ -608,7 +608,7 @@ class MyPostVC: UITableViewController,UISearchBarDelegate {
                 }
             }
             self.countLable.text = "총 \(allCount)편 / \(showPostCount)편 공개"
-            print("all Cnt 밖\(allCount)")
+           // print("all Cnt 밖\(allCount)")
             
             if allCount == 0 {
                 //self.posts.removeAll()

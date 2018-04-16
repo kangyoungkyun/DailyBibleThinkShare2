@@ -11,7 +11,7 @@ import Firebase
 class GroupListVC: UITableViewController,bye {
     
     func byebye() {
-        print("안녕 아이디값 변경했어nil 로")
+       // print("안녕 아이디값 변경했어nil 로")
         checkGroupid = nil
     }
     
@@ -38,7 +38,7 @@ class GroupListVC: UITableViewController,bye {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         //라벨 줄 간격
-        let attributedString = NSMutableAttributedString(string: "우리교회 큐티 묵상방을 찾아보세요")
+        let attributedString = NSMutableAttributedString(string: "그룹을 생성해서 교회 공동체별로\n묵상나눔을 할 수 있어요.")
         // *** Create instance of `NSMutableParagraphStyle`
         let paragraphStyle = NSMutableParagraphStyle()
         // *** set LineSpacing property in points ***
@@ -159,7 +159,7 @@ class GroupListVC: UITableViewController,bye {
     var hide = true
     //그룹을 만든 유저인지 or 그룹에 가입한 유저인지 체크
     func groupidAndLeaderCheck(){
-        print("groupidAndLeaderCheck 입장")
+        //print("groupidAndLeaderCheck 입장")
         let ref = Database.database().reference()
         let userKey = Auth.auth().currentUser?.uid
         
@@ -173,25 +173,25 @@ class GroupListVC: UITableViewController,bye {
                 //print("내 그룹 아이디를 보여줘: \(self.checkGroupid)")
                 
                 if (groupid != "" && leader == "y"){
-                    print("방을 이미 만드셨습니다.")
+                   // print("방을 이미 만드셨습니다.")
                     self.navigationItem.leftBarButtonItem = nil
                     self.navigationItem.hidesBackButton = true
                     self.navigationItem.rightBarButtonItem = nil
                     
                     return
                 }else{
-                    print("방 탈퇴~! 네비바 보여라")
+                    //print("방 탈퇴~! 네비바 보여라")
                 }
                 
                 if(groupid != "" && group == "y"){
-                    print("가입한 방이 있습니다.")
+                    //print("가입한 방이 있습니다.")
                     self.navigationItem.leftBarButtonItem = nil
                     self.navigationItem.hidesBackButton = true
                     self.navigationItem.rightBarButtonItem = nil
 //                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "설정", style: .plain, target: self, action:  #selector(self.setting))
                     return
                 }else{
-                    print("방 탈퇴~! 네비바 보여라")
+                   // print("방 탈퇴~! 네비바 보여라")
                 }
                 
             }
@@ -203,7 +203,7 @@ class GroupListVC: UITableViewController,bye {
     //그룹 리스트 가져오기
     var checkGroupid:String?
     @objc func showGroupList(){
-        print("showGroupList 입장")
+       // print("showGroupList 입장")
         let ref = Database.database().reference()
         let userKey = Auth.auth().currentUser?.uid
         ref.child("users").child(userKey!).observeSingleEvent(of: .value) { (snpat) in
@@ -220,7 +220,7 @@ class GroupListVC: UITableViewController,bye {
                     self.navigationItem.hidesBackButton = true
                     self.navigationItem.rightBarButtonItem = nil
                     
-                    print("그룹이 있네요")
+                    //print("그룹이 있네요")
                     ref.child("group").child(self.checkGroupid!).observeSingleEvent(of:.value) { (snapshot) in
                         self.groupList.removeAll() //배열을 안지워 주면 계속 중복해서 쌓이게 된다.
                         let groupToShow = GroupInfo() //데이터를 담을 클래스
@@ -228,7 +228,7 @@ class GroupListVC: UITableViewController,bye {
                         groupToShow.groupid = self.checkGroupid
                         
                         
-                        print("만들어진 그룹 방 보여줘요.   \(childValue)")
+                        //print("만들어진 그룹 방 보여줘요.   \(childValue)")
                         if let leaderid = childValue["leaderid"],  let leadername = childValue["leadername"], let groupname = childValue["groupname"], let count = childValue["count"],let password = childValue["password"]{
                             
                             groupToShow.leaderid = leaderid as! String
@@ -244,7 +244,7 @@ class GroupListVC: UITableViewController,bye {
                     }
                 }
             }else{
-                print("음 그룹이 아직 없군요")
+               // print("음 그룹이 아직 없군요")
                 //없으면 전체다 보여줘서 가입할 수 있게 하기
                 // let ref = Database.database().reference()
                 ref.child("group").observeSingleEvent(of:.value) { (snapshot) in
@@ -256,7 +256,7 @@ class GroupListVC: UITableViewController,bye {
                         let childValue = childSnapshot.value as! [String:Any] //자식의 value 값 가져오기
                         groupToShow.groupid = childSnapshot.key
                         
-                        print("만들어진 그룹 방 보여줘요.   \(childValue)")
+                        //print("만들어진 그룹 방 보여줘요.   \(childValue)")
                         if let leaderid = childValue["leaderid"],  let leadername = childValue["leadername"], let groupname = childValue["groupname"], let count = childValue["count"],let password = childValue["password"]{
                             
                             groupToShow.leaderid = leaderid as! String
@@ -275,9 +275,9 @@ class GroupListVC: UITableViewController,bye {
     }
     //테이블 개수
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("테이블 개수! \(searchBarActive)")
+       // print("테이블 개수! \(searchBarActive)")
         
-        print("찾은 검색 개수! \(searchPosts.count)")
+        //print("찾은 검색 개수! \(searchPosts.count)")
         
         if (searchPosts.count > 0){
             print("0번째 방이름 \(searchPosts[0].groupname!)")
@@ -289,7 +289,7 @@ class GroupListVC: UITableViewController,bye {
             
             return searchPosts.count
         }
-        print("그룹 리스트에는 안왔을꺼야 ->.   \(groupList.count)")
+       // print("그룹 리스트에는 안왔을꺼야 ->.   \(groupList.count)")
         return groupList.count
     }
     
@@ -305,7 +305,7 @@ class GroupListVC: UITableViewController,bye {
          cell?.passwordLabel.text = searcgroupData.password
          cell?.groupIdLabel.text = searcgroupData.groupid
             searchBarActive = false
-            print("테이블 행 구성에서 서치바 액션 새로고침 -> \(searchBarActive)")
+            //print("테이블 행 구성에서 서치바 액션 새로고침 -> \(searchBarActive)")
          }else{
          let groupData = groupList[indexPath.row]
          cell?.groupTitleLabel.text = groupData.groupname
@@ -334,7 +334,7 @@ class GroupListVC: UITableViewController,bye {
         
         //로그인한 유저 조회해서 클릭시 user 테이블에 groupid가 있으면 클릭시 포스트 페이지로 이동 시키기!!!!
         if checkGroupid != nil{
-            print("목록으로 들어갑니다.")
+           // print("목록으로 들어갑니다.")
             let groupInfo = GroupInfo()
             groupInfo.groupid = groupid
             groupInfo.groupname = title
@@ -349,7 +349,7 @@ class GroupListVC: UITableViewController,bye {
             
         }else{
             //비번 치고 그룹에 가입시키기
-            print("비번 쳐야되용")
+            //print("비번 쳐야되용")
             let alert = UIAlertController(title: "", message: "환영합니다 :)", preferredStyle: .alert)
             alert.addTextField { (myTextField) in
                 
@@ -439,7 +439,7 @@ class GroupListVC: UITableViewController,bye {
         var txt : String?
         var pass: String?
         
-        print("묵상 그룹을 만드시겠습니까?")
+        //print("묵상 그룹을 만드시겠습니까?")
         let alert = UIAlertController(title: "", message: "묵상방 만들기", preferredStyle: .alert)
         alert.addTextField { (myTextField) in
             
@@ -525,7 +525,7 @@ class GroupListVC: UITableViewController,bye {
     var searchPosts = [GroupInfo]()
     @objc func searcgGroup(){
         
-        print("묵상 그룹 찾기")
+       // print("묵상 그룹 찾기")
         let alert = UIAlertController(title: "", message: "묵상방의 이름을 입력해주세요.", preferredStyle: .alert)
         alert.addTextField { (myTextField) in
             myTextField.textColor = UIColor.darkGray
@@ -551,8 +551,8 @@ class GroupListVC: UITableViewController,bye {
                         self.searchPosts = self.groupList.filter({ (post) -> Bool in
                          //guard let text = searchController.searchBar.text else{return false}
                             self.searchBarActive = true
-                            print("방이름 제목- \(post.groupname!)")
-                            print("내가 검색한 제목과 같은건 몇개? - \(post.groupname.contains(txt!))")
+                            //print("방이름 제목- \(post.groupname!)")
+                            //print("내가 검색한 제목과 같은건 몇개? - \(post.groupname.contains(txt!))")
                             return post.groupname.contains(txt!)
                             
                     })

@@ -55,13 +55,13 @@ protocol DissmissToMyPostList: class {
 
 class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MonthViewDelegate,MyPostClickCalenderSendMyId,AdminPostClickCalenderSendMyId {
     func AdminPostClickCalenderSendMyId(adminId: String) {
-        print("calendarController에서 넘긴 관리자 아이디값을 CalenderView 에서 받았습니다. \(String(describing: adminId))")
+       // print("calendarController에서 넘긴 관리자 아이디값을 CalenderView 에서 받았습니다. \(String(describing: adminId))")
         self.adminId = adminId
     }
     
     
     func MyPostClickCalenderSendMyId(myid: String) {
-        print("calendarController에서 넘긴 아이디값을 CalenderView 에서 받았습니다. \(String(describing: myid))")
+        //print("calendarController에서 넘긴 아이디값을 CalenderView 에서 받았습니다. \(String(describing: myid))")
         self.myId = myid
 
     }
@@ -99,7 +99,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             }
             
             self.myCollectionView.reloadData()
-            print("대체 몇개를 쓴거니~? \(self.whenIWritePost.count)")
+           // print("대체 몇개를 쓴거니~? \(self.whenIWritePost.count)")
             
         }
         ref.removeAllObservers()
@@ -134,7 +134,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        print("여기가 진입점 입니다.")
+        //print("여기가 진입점 입니다.")
         
         
         showWhenIWritePost()
@@ -208,7 +208,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     //빈칸을 포함한 전체 섹션의 개수를 구한다.
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 컬렉션 뷰 개수
-        print("컬랙션 뷰 개수-1")
+        //print("컬랙션 뷰 개수-1")
         //whenIWritePost.removeAll()
         return numOfDaysInMonth[currentMonthIndex-1] + firstWeekDayOfMonth - 1 //칸의 전체 개수 , 비칸 까지 포함해서
     }
@@ -225,7 +225,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         let cell=collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! dateCVCell
         cell.backgroundColor=UIColor.clear
         cell.backgroundView = nil
-        print("컬랙션 뷰 구성 - 2")
+       // print("컬랙션 뷰 구성 - 2")
         
         //셀의 객체가 달의 첫번째 요일 - 2 보다 작으면
         if indexPath.item <= firstWeekDayOfMonth - 2 {
@@ -257,14 +257,14 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
                 //set에 넣어놓은 날짜와 비교 하기
                 for i in self.whenIWritePost{
                     if("\(i)"=="\(currentYear)\(currentMonthIndex)\(calcDate)"){
-                        print("같은 날짜에 적은 글이 있네요 체크 표시를 합니다 - \(i)")
+                       // print("같은 날짜에 적은 글이 있네요 체크 표시를 합니다 - \(i)")
                         cell.isUserInteractionEnabled=true
                         let doneView = UIImageView(image:#imageLiteral(resourceName: "done.png"))
                         cell.backgroundView = doneView
                         cell.lbl.textColor = .black
                     }else{
                         
-                        print("같은 날짜에 적은 글이 없습니다. ㅠㅠ")
+                        //print("같은 날짜에 적은 글이 없습니다. ㅠㅠ")
                         cell.isUserInteractionEnabled=true
 
                         cell.lbl.textColor = Style.activeCellLblColor
@@ -274,7 +274,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             }
             
         }
-        print("컬렉션 뷰 구성-3")
+        //print("컬렉션 뷰 구성-3")
         return cell
         
     }
@@ -287,7 +287,7 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell=collectionView.cellForItem(at: indexPath)
         
-        print("날짜가 클릭되었습니다.")
+        //print("날짜가 클릭되었습니다.")
         let subviewsCnt = cell?.subviews.count
         //일일묵상에서 달력 날짜를 클릭하면 subviews 개수는 2개다
         //나의 묵상 달력에서 날짜를 클릭하면 subviews 개수는 3개다 왜냐면 묵상한 날짜를 표시하기 위한 UIImageView를 넣었기 때문이다.
@@ -333,8 +333,8 @@ class CalenderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     
     
     func didChangeMonth(monthIndex: Int, year: Int) {
-        print("이전달 이후 달 이 눌렀씁니다.")
-        print("\n")
+        //print("이전달 이후 달 이 눌렀씁니다.")
+        //print("\n")
         whenIWritePost.removeAll()
         showWhenIWritePost()
         

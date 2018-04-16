@@ -44,6 +44,7 @@ class GroupCell: UITableViewCell {
     let groupCountLabel: UILabel = {
         let label = UILabel()
         label.text = "1명,묵상중"
+        label.isHidden = true
         label.font = UIFont(name: "NanumMyeongjo-YetHangul", size: 11.5)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.white
@@ -72,7 +73,6 @@ class GroupCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        
         //선택됐을 때 no hover
         selectionStyle = .none
         addSubview(containerView)
@@ -86,7 +86,6 @@ class GroupCell: UITableViewCell {
         containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
         containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
         containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true
-        
         
         containerView.addSubview(groupTitleLabel)
         containerView.addSubview(groupNameLabel)
@@ -110,9 +109,7 @@ class GroupCell: UITableViewCell {
        
         passwordLabel.leadingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
         passwordLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15).isActive = true
-        
-        passwordLabel.trailingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        passwordLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15).isActive = true
+
         
     }
     

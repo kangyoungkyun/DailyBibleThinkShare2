@@ -39,7 +39,7 @@ class CalendarController: UIViewController,Dissmiss,DissmissToMyPostList {
     //묵상글이 있을 때
     func dissmissToMyPostListAndReturnValue(year: Int, month: Int, day: Int) {
         
-        print("나의 묵상 달력에서 클릭했을 때 먼저 델리게이트인 여기로 온다. \(year) \(month) \(day)")
+       // print("나의 묵상 달력에서 클릭했을 때 먼저 델리게이트인 여기로 온다. \(year) \(month) \(day)")
         
         
          if(self.navigationController?.viewControllers[0] is TodayBibleTextVC){
@@ -139,13 +139,13 @@ class CalendarController: UIViewController,Dissmiss,DissmissToMyPostList {
         
         //일일묵상 페이지에서 달력 눌렀을 때 처리해주기 즉 nil 값 처리 해주기!
         if let myid = self.Myid{
-            print("나의묵상페이지에서 넘긴 아이디값을 calendarController 에서 받았습니다. \(myid)")
+           // print("나의묵상페이지에서 넘긴 아이디값을 calendarController 에서 받았습니다. \(myid)")
             self.myPostClickCalenderSendMyIdDelegate?.MyPostClickCalenderSendMyId(myid: myid)
         }
         
         
         if let adminid = self.adminId {
-            print("일일묵상페이지에서 넘긴 관리자 아이디값을 calendarController 에서 받았습니다. \(adminid)")
+          //  print("일일묵상페이지에서 넘긴 관리자 아이디값을 calendarController 에서 받았습니다. \(adminid)")
             self.adminPostClickCalenderSendMyIdDelegate?.AdminPostClickCalenderSendMyId(adminId: adminid)
         }
         

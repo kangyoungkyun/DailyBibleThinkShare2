@@ -165,7 +165,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
     
     
     @objc func calendar (){
-        print("메인화면에서 열어라 캘린더 얼러트 창")
+        //print("메인화면에서 열어라 캘린더 얼러트 창")
         let vc = CalendarController()
         vc.adminId = "i1OyLDOK7zLC6mSt20qOz7vtTQv2"
         navigationController?.pushViewController(vc, animated: true)
@@ -320,7 +320,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
         
         if let year = self.selectedYear, let month = self.selectedMonth, let day = self.selectedDay{
             //showPost(selectYear: "\(year)", selectMonth: "\(month)", selectDay: "\(day)")
-            print("오케 날짜 클릭하고 viewwill 에 왔어 ")
+            //print("오케 날짜 클릭하고 viewwill 에 왔어 ")
             selectedPost(y: "\(year)", m: "\(month)", d: "\(day)")
         }
         
@@ -458,7 +458,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
                     
                     
                     //공개를 허용한 글만 담벼락에 보이기
-                    if (uid as? String == "i1OyLDOK7zLC6mSt20qOz7vtTQv2" && "\(year)\(month)\(day)" == "\(self.syear)\(self.smonth)\(self.sday)"){
+                    if (uid as? String == "i1OyLDOK7zLC6mSt20qOz7vtTQv2" && "\(year)\(month)" == "\(self.syear)\(self.smonth)"){
                         //firebase에서 가져온 날짜 데이터를 ios 맞게 변환
                         if let tt = date as? TimeInterval {
                             let date = NSDate(timeIntervalSince1970: tt/1000)
@@ -466,7 +466,7 @@ class TodayBibleTextVC: UITableViewController,UISearchBarDelegate {
                             let dayTimePeriodFormatter = DateFormatter()
                             dayTimePeriodFormatter.dateFormat = "M월 d일"
                             let dateString = dayTimePeriodFormatter.string(from: date as Date)
-                            print("날짜가 있다 대박~~~~~~~~~~~~~~")
+                            //print("날짜가 있다 대박~~~~~~~~~~~~~~")
                             postToShow.date = dateString
                         }
 
